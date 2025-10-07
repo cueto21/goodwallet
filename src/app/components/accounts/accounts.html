@@ -1,0 +1,229 @@
+<div class="accounts-container" [class.dark]="isDarkMode()">
+  <!-- Header -->
+  <header class="accounts-header">
+    <div class="header-content">
+      <h1>Mis Cuentas</h1>
+      <p class="subtitle">{{ accounts().length }} cuenta(s) registrada(s)</p>
+    </div>
+    <button class="btn-new-account" (click)="openNewAccountForm()">
+      <span>+ Nueva Cuenta</span>
+    </button>
+  </header>
+
+  <!-- Accounts List -->
+  <main class="accounts-main">
+    <div class="accounts-grid" *ngIf="accounts().length > 0; else noAccounts">
+      <article class="account-card" *ngFor="let account of accounts()"
+               [class.credit]="account.type === 'credit'"
+               [class.savings]="account.type === 'savings'">
+
+        <!-- Card Visual -->
+        <div class="card-visual" [style.background]="getCardGradient(account)">
+          <div class="card-type">
+            {{ account.type === 'credit' ? 'CRÉDITO' : 'AHORROS' }}
+          </div>
+          <div class="card-name">{{ account.name }}</div>
+        </div>
+
+        <!-- Card Info -->
+        <div class="card-info">
+          <!-- Balance -->
+          <div class="balance-section">
+            <span class="label">{{ account.type === 'credit' ? 'Disponible' : 'Saldo' }}</span>
+            <span class="amount" [class.negative]="account.balance < 0">
+              USD {{ formatBalance(account) }}
+            </span>
+          </div>
+
+          <!-- Credit Details -->
+          <div class="credit-info" *ngIf="account.type === 'credit' && account.creditLimit">
+            <div class="info-row">
+              <span>Límite:</span>
+              <span>USD {{ formatNumber(account.creditLimit) }}</span>
+            </div>
+            <div class="info-row">
+              <span>Usado:</span>
+              <span>USD {{ formatNumber(getAbsoluteValue(account.balance)) }}</span>
+            </div>
+          </div>
+
+          <!-- Goals -->
+          <div class="goals-info" *ngIf="account.goals?.isActive">
+            <div class="goal-label">
+              {{ account.type === 'savings' ? 'Meta de Ahorro' : 'Límite de Gasto' }}
+            </div>
+            <div class="goal-value">
+              USD
+              {{ formatNumber(account.type === 'savings' ? (account.goals?.balanceTarget || 0) : (account.goals?.spendingLimit || 0)) }}
+            </div>
+            <div class="progress-bar" *ngIf="account.type === 'savings' && account.goals?.balanceTarget">
+              <div class="progress-fill"
+                   [style.width.%]="getGoalProgress(account)">
+              </div>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="card-actions">
+            <button class="btn-action" (click)="editAccount(account.id)" title="Editar">
+              ✏️
+            </button>
+            <button class="btn-action" (click)="deleteAccount(account.id)" title="Eliminar">
+              🗑️
+            </button>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <ng-template #noAccounts>
+      <div class="empty-state">
+        <div class="empty-icon">💳</div>
+        <h2>No hay cuentas registradas</h2>
+        <p>Agrega tu primera cuenta para comenzar</p>
+        <button class="btn-primary" (click)="openNewAccountForm()">
+          Agregar Primera Cuenta
+        </button>
+      </div>
+    </ng-template>
+  </main>
+
+   <!-- Modals -->
+   <div class="modal-overlay" *ngIf="showNewAccountForm" (click)="cancelNewAccount()" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+     <div class="modal-content" (click)="$event.stopPropagation()">
+       <!-- Step Indicator -->
+       <div class="step-indicator">
+         <div class="step" [class.active]="currentStep >= 1">
+           <span class="step-number">1</span>
+           <span class="step-label">Información</span>
+         </div>
+         <div class="step-line" [class.active]="currentStep >= 2"></div>
+         <div class="step" [class.active]="currentStep >= 2">
+           <span class="step-number">2</span>
+           <span class="step-label">Diseño</span>
+         </div>
+       </div>
+
+       <form (keydown.escape)="cancelNewAccount()" style="display: flex; flex-direction: column; height: 100%;">
+         <!-- Step 1: Account Information -->
+         <div class="step-content" [class.active]="currentStep === 1" [class.slide-left]="currentStep > 1">
+           <div class="form-grid">
+             <!-- Left Column -->
+             <div class="form-column">
+               <div class="form-group">
+                 <label for="account-name">Nombre:</label>
+                 <input type="text" id="account-name" [(ngModel)]="newAccount.name" name="name" aria-describedby="name-help" autocomplete="off">
+                 <small id="name-help" class="form-text">Nombre descriptivo para tu cuenta</small>
+               </div>
+
+               <div class="form-group">
+                 <label>Tipo de Cuenta:</label>
+                 <div class="account-type-buttons" role="radiogroup" aria-labelledby="account-type-label">
+                   <button
+                     type="button"
+                     class="account-type-btn"
+                     [class.active]="newAccount.type === 'savings'"
+                     (click)="newAccount.type = 'savings'"
+                     aria-pressed="newAccount.type === 'savings'">
+                     💰 Cuenta de Ahorros
+                   </button>
+                   <button
+                     type="button"
+                     class="account-type-btn"
+                     [class.active]="newAccount.type === 'credit'"
+                     (click)="newAccount.type = 'credit'"
+                     aria-pressed="newAccount.type === 'credit'">
+                     💳 Tarjeta de Crédito
+                   </button>
+                 </div>
+                 <small id="type-help" class="form-text">Selecciona el tipo de cuenta</small>
+               </div>
+             </div>
+
+             <!-- Right Column -->
+             <div class="form-column">
+               <div class="form-group">
+                 <label for="initial-balance">{{ newAccount.type === 'credit' ? 'Monto Disponible:' : 'Saldo Inicial:' }}</label>
+                 <input type="number" id="initial-balance" [(ngModel)]="newAccount.balance" name="balance" step="0.01" placeholder="0.00" aria-describedby="balance-help">
+                 <small id="balance-help" class="form-text">{{ newAccount.type === 'credit' ? 'Monto disponible en la tarjeta' : 'Saldo actual de la cuenta' }}</small>
+               </div>
+
+               <div class="form-group" *ngIf="newAccount.type === 'credit'">
+                 <label for="credit-limit">Límite de Crédito:</label>
+                 <input type="number" id="credit-limit" [(ngModel)]="newAccount.creditLimit" name="creditLimit" step="0.01" placeholder="0.00" aria-describedby="limit-help">
+                 <small id="limit-help" class="form-text">Límite total de la tarjeta de crédito</small>
+               </div>
+             </div>
+           </div>
+         </div>
+
+         <!-- Step 2: Card Design Selection -->
+         <div class="step-content" [class.active]="currentStep === 2" [class.slide-in]="currentStep === 2">
+           <div class="card-style-section">
+             <h3 class="section-title">Elige el diseño de tu tarjeta</h3>
+             <p class="section-subtitle">Personaliza el aspecto visual de tu cuenta</p>
+
+             <div class="card-style-grid">
+               <div
+                 class="card-style-option"
+                 [class.selected]="newAccount.selectedCardStyle === style"
+                 *ngFor="let style of availableCardStyles()"
+                 (click)="selectCardStyle(style)"
+                 [attr.aria-label]="'Seleccionar diseño ' + style.name">
+                 <div class="card-preview" [style.background]="style.gradient">
+                   <div class="card-content">
+                     <div class="card-name">{{ style.name }}</div>
+                     <div class="card-type">{{ newAccount.type === 'credit' ? 'CRÉDITO' : 'AHORROS' }}</div>
+                   </div>
+                 </div>
+                 <div class="card-info">
+                   <span class="card-description">{{ style.description }}</span>
+                 </div>
+               </div>
+             </div>
+           </div>
+         </div>
+
+         <div class="form-actions" [class.step-2]="currentStep === 2">
+           <!-- Step 1 and default layout -->
+           <div class="form-actions-row" *ngIf="currentStep !== 2">
+             <button type="button" class="btn-cancel" (click)="cancelNewAccount()" aria-label="Cancelar y cerrar modal">Cancelar</button>
+
+             <button
+               type="button"
+               class="btn-primary"
+               (click)="nextStep()"
+               [disabled]="!newAccount.name.trim()"
+               aria-label="Continuar al siguiente paso">
+               Siguiente
+             </button>
+           </div>
+
+           <!-- Step 2 layout -->
+           <div class="form-actions-step2" *ngIf="currentStep === 2">
+             <div class="form-actions-row">
+               <button
+                 type="button"
+                 class="btn-secondary"
+                 (click)="previousStep()"
+                 aria-label="Volver al paso anterior">
+                 Anterior
+               </button>
+
+               <button type="button" class="btn-cancel" (click)="cancelNewAccount()" aria-label="Cancelar y cerrar modal">Cancelar</button>
+             </div>
+
+             <button
+               type="button"
+               class="btn-save-full"
+               (click)="saveNewAccount()"
+               [disabled]="!newAccount.selectedCardStyle"
+               aria-label="Guardar nueva cuenta">
+               Guardar
+             </button>
+           </div>
+         </div>
+       </form>
+     </div>
+   </div>
+</div>

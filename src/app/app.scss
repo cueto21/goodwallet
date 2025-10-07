@@ -1,0 +1,438 @@
+
+.app-main { padding: 10px; flex: 1 1 auto; display: flex; flex-direction: column; }
+/* When dashboard container is in dark mode, set the main app background to the requested color */
+.app-main.dark, .dashboard.dark ~ .app-main, .dashboard.dark + .app-main, .dashboard.dark .app-main, .app-container .dashboard.dark ~ .app-main {
+	background-color: #2e2f32 !important;
+	transition: background-color 220ms ease;
+}
+/* ...otros estilos globales si son necesarios... */
+
+/* Global Header */
+.app-header {
+	background-color: white;
+	border-bottom: 1px solid #e9ecef;
+	box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+	position: sticky;
+	top: 0;
+	z-index: 100;
+}
+
+/* Dark mode for header */
+.app-container.dark .app-header {
+	background-color: #2e2f32;
+	border-bottom-color: #424348;
+	color: #e6eef6;
+}
+
+/* When the app main or dashboard is dark, make the bottom-nav spacer match the dark background.
+   app-bottom-nav is a sibling of .app-main, so we target it via sibling combinators. */
+.app-main.dark ~ app-bottom-nav .nav-spacer,
+.app-main.dark + app-bottom-nav .nav-spacer,
+.dashboard.dark ~ app-bottom-nav .nav-spacer {
+	background-color: #2e2f32;
+}
+
+/* Custom Dark Mode Toggle */
+.dark-mode-toggle {
+	position: relative;
+	display: inline-block;
+	width: 60px;
+	height: 30px;
+	cursor: pointer;
+}
+
+.dark-mode-toggle input {
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+.toggle-slider {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: linear-gradient(135deg, var(--theme-switch-bg, var(--color-columbia-blue)) 0%, var(--theme-switch-bg-light, var(--color-columbia-blue-light)) 100%);
+	border-radius: 30px;
+	transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+	box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.toggle-slider:before {
+	position: absolute;
+	content: "";
+	height: 22px;
+	width: 22px;
+	left: 4px;
+	bottom: 4px;
+	background: linear-gradient(135deg, var(--theme-switch-knob-bg, #FFF8DC) 0%, var(--theme-switch-knob-bg-light, #FFE4B5) 100%);
+	border-radius: 50%;
+	transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+	box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 12px;
+}
+
+.toggle-icon {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	font-size: 14px;
+	transition: all 0.3s ease;
+	opacity: 0;
+}
+
+.toggle-icon.sun {
+	right: 6px;
+}
+
+.toggle-icon.moon {
+	left: 6px;
+}
+
+.dark-mode-toggle input:checked + .toggle-slider {
+	background: linear-gradient(135deg, var(--theme-switch-checked-bg, var(--color-prussian-blue)) 0%, var(--theme-switch-checked-bg-light, var(--color-prussian-blue-light)) 100%);
+	box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.dark-mode-toggle input:checked + .toggle-slider:before {
+	transform: translateX(30px);
+	background: linear-gradient(135deg, var(--theme-switch-knob-bg, #E8E8E8) 0%, var(--theme-switch-knob-bg-light, #D3D3D3) 100%);
+	box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.dark-mode-toggle input:checked + .toggle-slider .sun {
+	opacity: 0;
+}
+
+.dark-mode-toggle input:checked + .toggle-slider .moon {
+	opacity: 1;
+}
+
+.dark-mode-toggle input:not(:checked) + .toggle-slider .sun {
+	opacity: 1;
+}
+
+.dark-mode-toggle input:not(:checked) + .toggle-slider .moon {
+	opacity: 0;
+}
+
+/* Hover effects */
+.dark-mode-toggle:hover .toggle-slider {
+	transform: scale(1.05);
+	box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.dark-mode-toggle:hover .toggle-slider:before {
+	box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+/* Account Panel Overlay */
+.account-panel-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 1000;
+}
+
+.account-panel {
+	background-color: white;
+	border-radius: 12px;
+	padding: 24px;
+	min-width: 300px;
+	max-width: 400px;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.account-header {
+	display: flex;
+	align-items: center;
+	margin-bottom: 20px;
+}
+
+.account-avatar {
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	background-color: #007bff;
+	color: white;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: bold;
+	font-size: 18px;
+	margin-right: 16px;
+}
+
+.account-info {
+	flex: 1;
+}
+
+.account-name {
+	font-weight: bold;
+	font-size: 16px;
+	margin-bottom: 4px;
+}
+
+.account-email {
+	font-size: 14px;
+	color: #666;
+}
+
+.account-actions {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.account-btn {
+	display: flex;
+	align-items: center;
+	padding: 12px 16px;
+	border: none;
+	border-radius: 8px;
+	background-color: #f8f9fa;
+	color: #333;
+	cursor: pointer;
+	transition: background-color 0.2s;
+	font-size: 14px;
+}
+
+.account-btn:hover {
+	background-color: #e9ecef;
+}
+
+.account-btn .btn-icon {
+	margin-right: 12px;
+	font-size: 16px;
+}
+
+.logout-btn {
+	background-color: #dc3545;
+	color: white;
+}
+
+.logout-btn:hover {
+	background-color: #c82333;
+}
+/* Dark mode styles for Accounts component */
+.dark .accounts-page {
+	background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+}
+
+.dark .page-header {
+	background: #2e2f32;
+	border-bottom-color: #424348;
+	color: #e6eef6;
+}
+
+.dark .page-title {
+	color: #ffffff;
+}
+
+.dark .accounts-summary {
+	color: #94a3b8;
+}
+
+.dark .account-card-modern {
+	background: #374151;
+	border-color: #4b5563;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.dark .account-card-modern:hover {
+	box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+.dark .card-header-modern {
+	background: linear-gradient(135deg, #4b5563 0%, #374151 100%);
+	border-bottom-color: #6b7280;
+}
+
+.dark .account-name {
+	color: #f9fafb;
+}
+
+.dark .account-type {
+	color: #9ca3af;
+}
+
+.dark .balance-label {
+	color: #9ca3af;
+}
+
+.dark .balance-amount {
+	color: #f9fafb;
+}
+
+.dark .balance-amount.negative {
+	color: #f87171;
+}
+
+.dark .detail-label {
+	color: #9ca3af;
+}
+
+.dark .detail-value {
+	color: #f9fafb;
+}
+
+.dark .goal-title {
+	color: #9ca3af;
+}
+
+.dark .goal-target {
+	color: #f9fafb;
+}
+
+.dark .progress-bar-modern {
+	background: #6b7280;
+}
+
+.dark .progress-text-modern {
+	color: #9ca3af;
+}
+
+.dark .action-btn-modern {
+	border-color: #6b7280;
+	background: #4b5563;
+	color: #f9fafb;
+}
+
+.dark .action-btn-modern:hover {
+	background: #374151;
+	border-color: #9ca3af;
+}
+
+.dark .action-btn-modern.delete-btn:hover {
+	background: #451a1a;
+	border-color: #dc2626;
+	color: #fca5a5;
+}
+
+.dark .empty-state-modern {
+	background: #374151;
+	border-color: #6b7280;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.dark .empty-icon {
+	color: #6b7280;
+}
+
+.dark .empty-title {
+	color: #f9fafb;
+}
+
+.dark .empty-description {
+	color: #9ca3af;
+}
+
+.dark .account-form {
+	background: #374151;
+	color: #f9fafb;
+}
+
+.dark .account-form h3 {
+	color: #f9fafb;
+}
+
+.dark .account-form label {
+	color: #d1d5db;
+}
+
+.dark .account-form input,
+.dark .account-form select {
+	background: #4b5563;
+	border-color: #6b7280;
+	color: #f9fafb;
+}
+
+.dark .account-form small {
+	color: #9ca3af;
+}
+
+.dark .goals-section {
+	background: linear-gradient(135deg, #4b5563 0%, #374151 100%);
+	border-color: #6b7280;
+}
+
+.dark .goals-section h4 {
+	color: #f9fafb;
+}
+
+/* Header Metrics Styles */
+.header-metrics {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.metric-card {
+	border-radius: 8px;
+	padding: 0.5rem 0.75rem;
+	font-size: 0.875rem;
+	font-weight: 600;
+	box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+	transition: transform 0.2s ease;
+
+	&:hover {
+		transform: translateY(-1px);
+	}
+}
+
+.metric-card.bg-balance {
+	background: var(--theme-balance-bg, linear-gradient(135deg, #BFD7EA 0%, #87CEEB 100%));
+	/* color defined inline in HTML */
+}
+
+.metric-card.bg-prestado {
+	background: var(--theme-cards-bg);
+	/* color defined inline in HTML */
+}
+
+.metric-card.bg-adeudado {
+	background: var(--theme-cards-bg);
+	/* color defined inline in HTML */
+}
+
+.text-theme {
+	color: var(--theme-cards-text) !important;
+	opacity: 1 !important;
+}
+
+.text-balance {
+	color: var(--theme-balance-text, #0B3954) !important;
+	opacity: 1 !important;
+}
+
+/* Friends button theming */
+.friends-btn {
+  background-color: var(--theme-friends-btn-bg, #CFE2F1) !important;
+  border-color: var(--theme-friends-btn-bg, #CFE2F1) !important;
+  color: var(--theme-friends-btn-color, #000) !important;
+  border-radius: 20px !important;
+  transition: all 0.2s ease !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+  height: 30px !important;
+  padding: 0 8px !important;
+
+  &:hover {
+    transform: scale(1.05) !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
+  }
+
+  span {
+    font-size: 0.875rem !important;
+  }
+}
+
+/* Header metrics keep original colors regardless of theme */

@@ -1,0 +1,45 @@
+<div class="auth-page">
+	<div class="auth-card" role="main">
+		<header class="auth-header">
+			<div class="logo-wrap">
+		<img src="/logo.png" alt="" class="logo" />
+			</div>
+			<h1 class="title">GoodWallet</h1>
+			<p class="subtitle">Organiza tus finanzas personales con confianza</p>
+		</header>
+
+		<form class="auth-form" (submit)="submit($event)" novalidate>
+			<div class="field">
+				<label for="email" class="label">Correo electrónico</label>
+				<input id="email" name="email" type="email" class="input" [(ngModel)]="email" placeholder="tucorreo@ejemplo.com" />
+			</div>
+
+			<div class="field">
+				<label for="password" class="label">Contraseña</label>
+				<input id="password" name="password" type="password" class="input" [(ngModel)]="password" placeholder="Contraseña" />
+			</div>
+
+			<div class="row between small-gap">
+				<a routerLink="/forgot" class="link muted">¿Olvidaste tu contraseña?</a>
+				<label class="remember">
+					<input type="checkbox" name="remember" [(ngModel)]="remember" />
+					<span>Recordar contraseña</span>
+				</label>
+				<a routerLink="/register" class="link muted">Crear cuenta</a>
+			</div>
+
+			<div class="actions">
+				<button class="btn btn-danger primary-action" type="submit">Iniciar sesión</button>
+
+				<div *ngIf="showBiometric()" class="biometric">
+					<button type="button" class="btn btn-secondary biometric-btn" (click)="submit()">
+						<span class="icon">🔒</span>
+						Acceso rápido
+					</button>
+				</div>
+			</div>
+
+			<div *ngIf="error()" class="error">{{ error() }}</div>
+		</form>
+	</div>
+</div>

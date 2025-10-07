@@ -1,0 +1,43 @@
+<!-- Modal que se renderiza al final del body -->
+<div *ngIf="isVisible" class="modal-overlay" (click)="onClose()" style="position: fixed !important; top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important; z-index: 999999 !important; background: rgba(0,0,0,0.7) !important; display: flex !important; justify-content: center !important; align-items: center !important;">
+  <div class="modal-content" (click)="$event.stopPropagation()" style="background: white !important; border-radius: 16px !important; width: 900px !important; max-width: 95vw !important; max-height: 90vh !important;">
+    <div class="modal-header">
+      <h3>Seleccionar Estilo de Tarjeta</h3>
+      <button class="close-button" (click)="onClose()" aria-label="Cerrar">×</button>
+    </div>
+    
+    <div class="modal-body">
+      <div class="card-types-grid">
+        <div *ngFor="let cardType of cardTypeGroups" class="card-type-section">
+          <h4 class="card-type-title">{{ cardType.name }}</h4>
+          <div class="stacked-cards-container">
+            <div 
+              *ngFor="let style of cardType.styles; let i = index; trackBy: trackByStyle" 
+              class="card-preview"
+              [style.background]="style.gradient"
+              [class.selected]="isSelected(style)"
+              (click)="selectStyle(style)"
+            >
+              <div class="card-content">
+                <div class="card-type">{{ getShortName(style.name) }}</div>
+                <div class="card-number">•••• •••• •••• 1234</div>
+                <div class="card-holder">GOODWALLET USER</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="modal-footer">
+      <button class="btn btn-secondary" (click)="onClose()">Cancelar</button>
+      <button 
+        class="btn btn-primary" 
+        [disabled]="!selectedStyle"
+        (click)="onConfirm()"
+      >
+        Aplicar Estilo
+      </button>
+    </div>
+  </div>
+</div>

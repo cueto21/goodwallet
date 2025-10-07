@@ -1,0 +1,163 @@
+<div class="backup-container">
+  <div class="backup-header">
+    <h2>📂 Respaldo de Datos</h2>
+    <p>Exporta e importa todos tus datos financieros</p>
+  </div>
+
+  <!-- Resumen de datos actuales -->
+  <div class="data-summary">
+    <h3>📊 Datos actuales</h3>
+    <div class="summary-grid">
+      <div class="summary-item">
+        <span class="summary-icon">🏦</span>
+        <div class="summary-info">
+          <div class="summary-count">{{ dataSummary().accounts }}</div>
+          <div class="summary-label">Cuentas</div>
+        </div>
+      </div>
+      <div class="summary-item">
+        <span class="summary-icon">💳</span>
+        <div class="summary-info">
+          <div class="summary-count">{{ dataSummary().transactions }}</div>
+          <div class="summary-label">Transacciones</div>
+        </div>
+      </div>
+      <div class="summary-item">
+        <span class="summary-icon">💰</span>
+        <div class="summary-info">
+          <div class="summary-count">{{ dataSummary().loans }}</div>
+          <div class="summary-label">Préstamos</div>
+        </div>
+      </div>
+      <div class="summary-item">
+        <span class="summary-icon">🔄</span>
+        <div class="summary-info">
+          <div class="summary-count">{{ dataSummary().recurringTransactions }}</div>
+          <div class="summary-label">Trans. Recurrentes</div>
+        </div>
+      </div>
+    </div>
+    
+    @if (dataSummary().lastBackup) {
+      <div class="last-backup">
+        <span class="backup-icon">🕐</span>
+        Último respaldo: {{ formatDate(dataSummary().lastBackup!) }}
+      </div>
+    }
+  </div>
+
+  <!-- Sección de Exportación -->
+  <div class="export-section">
+    <h3>📤 Exportar Datos</h3>
+    <p>Descarga un archivo con todos tus datos financieros para crear un respaldo o Transferenciair a otro dispositivo.</p>
+    
+    <button 
+      class="btn-export" 
+      (click)="exportData()"
+      [disabled]="isExporting()"
+      [class.loading]="isExporting()">
+      
+      @if (isExporting()) {
+        <span class="loading-spinner"></span>
+        Exportando...
+      } @else {
+        <span class="export-icon">💾</span>
+        Descargar Respaldo
+      }
+    </button>
+
+    @if (exportSuccess()) {
+      <div class="success-message">
+        ✅ Datos exportados exitosamente
+      </div>
+    }
+
+    @if (exportError()) {
+      <div class="error-message">
+        ❌ {{ exportError() }}
+      </div>
+    }
+  </div>
+
+  <!-- Sección de Importación -->
+  <div class="import-section">
+    <h3>📥 Importar Datos</h3>
+    <p><strong>⚠️ Advertencia:</strong> Importar datos reemplazará toda la información actual. Se creará un respaldo automático antes de proceder.</p>
+
+    <div class="file-input-container">
+      <input 
+        type="file" 
+        accept=".json"
+        (change)="onFileSelected($event)"
+        #fileInput
+        class="file-input"
+        id="importFile">
+      <label for="importFile" class="file-input-label">
+        <span class="file-icon">📁</span>
+        {{ selectedFile() ? selectedFile()!.name : 'Seleccionar archivo de respaldo' }}
+      </label>
+    </div>
+
+    @if (selectedFile()) {
+      <div class="file-info">
+        <div class="file-details">
+          <span class="file-name">📄 {{ selectedFile()!.name }}</span>
+          <span class="file-size">{{ formatFileSize(selectedFile()!.size) }}</span>
+        </div>
+        
+        <button 
+          class="btn-import" 
+          (click)="importData()"
+          [disabled]="isImporting()"
+          [class.loading]="isImporting()">
+          
+          @if (isImporting()) {
+            <span class="loading-spinner"></span>
+            Importando...
+          } @else {
+            <span class="import-icon">📥</span>
+            Importar Datos
+          }
+        </button>
+      </div>
+    }
+
+    @if (importSuccess()) {
+      <div class="success-message">
+        ✅ Datos importados exitosamente. ¡Recarga la página para ver los cambios!
+      </div>
+    }
+
+    @if (importError()) {
+      <div class="error-message">
+        ❌ {{ importError() }}
+      </div>
+    }
+  </div>
+
+  <!-- Zona de peligro -->
+  <div class="danger-zone">
+    <h3>⚠️ Zona de Peligro</h3>
+    <p>Estas acciones son irreversibles.</p>
+    
+    <button 
+      class="btn-danger" 
+      (click)="showResetConfirm = !showResetConfirm">
+      🗑️ Resetear todos los datos
+    </button>
+
+    @if (showResetConfirm) {
+      <div class="reset-confirm">
+        <p><strong>¿Estás seguro?</strong> Esta acción eliminará TODOS los datos permanentemente.</p>
+        <div class="confirm-buttons">
+          <button class="btn-confirm-reset" (click)="resetAllData()">
+            Sí, eliminar todo
+          </button>
+          <button class="btn-cancel" (click)="showResetConfirm = false">
+            Cancelar
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+</div>

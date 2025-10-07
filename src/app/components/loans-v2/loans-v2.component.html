@@ -1,0 +1,453 @@
+<div class="loans-v2-container mb-5 pb-4" [class.dark]="isDarkMode()">
+  <!-- Header -->
+  <header class="loans-header">
+    <div class="header-content">
+      <h1 class="header-title">Préstamos</h1>
+      <button class="btn btn-create-loan" (click)="openLoanModal()" title="Crear nuevo préstamo">
+        <span class="icon-plus">+</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Statistics Cards -->
+  <section class="stats-section">
+    <div class="stats-grid">
+      <div class="stat-card stat-lent">
+        <div class="stat-content">
+          <h3 class="stat-label">Prestado</h3>
+          <p class="stat-amount">{{ formatCurrency(totalLent()) }}</p>
+          <span class="stat-count stat-count--visible">{{ lentLoans().length }} préstamos</span>
+        </div>
+      </div>
+      
+      <div class="stat-card stat-borrowed">
+        <div class="stat-content">
+          <h3 class="stat-label">Adeudado</h3>
+          <p class="stat-amount">{{ formatCurrency(totalBorrowed()) }}</p>
+          <span class="stat-count stat-count--visible">{{ borrowedLoans().length }} préstamos</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filters -->
+  <section class="filters-section">
+    <div class="filters-grid">
+      <div class="filter-item">
+        <label class="filter-label">Tipo:</label>
+  <select class="filter-select" [ngModel]="filterType()" (ngModelChange)="filterType.set($event)">
+          <option value="all">Todos</option>
+          <option value="lent">Prestado</option>
+          <option value="borrowed">Adeudado</option>
+        </select>
+      </div>
+      
+      <div class="filter-item">
+        <label class="filter-label">Estado:</label>
+  <select class="filter-select" [ngModel]="filterStatus()" (ngModelChange)="filterStatus.set($event)">
+          <option value="all">Todos</option>
+          <option value="pending">Pendientes</option>
+          <option value="paid">Pagados</option>
+          <option value="overdue">Vencidos</option>
+        </select>
+      </div>
+    </div>
+  </section>
+
+  <!-- Loans Grid -->
+  <section class="loans-section">
+    @if (isLoadingLoans()) {
+      <div class="loading-state">
+        <div class="loader-container">
+          <div class="loader-spinner"></div>
+          <p class="loading-text">Cargando préstamos...</p>
+        </div>
+      </div>
+    } @else if (filteredLoans().length === 0) {
+      <div class="empty-state">
+        <h3 class="empty-title">No hay préstamos</h3>
+        <p class="empty-description">No se encontraron préstamos con los filtros seleccionados.</p>
+        <button class="btn btn-primary" (click)="openLoanModal()">
+          Crear Primer Préstamo
+        </button>
+      </div>
+    } @else {
+      <div class="loans-grid">
+        @for (loan of filteredLoans(); track loan.id) {
+          <article class="loan-card" [class]="'loan-' + loan.type + ' loan-' + loan.status + (isOverdue(loan) ? ' loan-overdue' : '')">
+            
+            <!-- Card Header -->
+            <header class="card-header">
+              <div class="loan-type-badge" [class]="'badge-' + loan.type">
+                    <span class="badge-text">{{ loan.type === 'lent' ? 'Prestado' : (loan.type === 'borrowed' ? 'Adeudado' : 'Sin tipo') }} - {{ loan.personName || '' }}</span>
+              </div>
+              
+              <div class="status-container">
+                <div class="loan-status-badge" [class]="'status-' + loan.status + (isOverdue(loan) ? ' status-overdue' : '')">
+                  @if (loan.status === 'paid') {
+                    COMPLETADO
+                  } @else {
+                    ACTIVO
+                    @if (isOverdue(loan)) {
+                      <span class="overdue-indicator-text"> - VENCIDO</span>
+                    }
+                  }
+                </div>
+              </div>
+            </header>
+
+            <!-- Card Body -->
+            <div class="card-body">
+              
+              <!-- Row 1: Main Info Layout -->
+              <div class="info-row main-layout-row">
+                <!-- Left Column: Amount and Description -->
+                <div class="main-left-column">
+                  <div class="loan-amount">{{ formatCurrency(loan.amount) }}</div>
+                  @if (loan.notes || loan.description) {
+                    <div class="loan-description-compact">{{ loan['notes'] ?? loan.description }}</div>
+                  }
+                </div>
+
+                <!-- Right Column: Dates and Status -->
+                <div class="main-right-column">
+                  <!-- Dates -->
+                  <div class="loan-dates-compact">
+                    <div class="date-item">
+                      <span class="date-label">Prestado:</span>
+                      <span class="date-value">{{ formatDate(loan.date) }}</span>
+                    </div>
+                    <div class="date-item">
+                      <span class="date-label">Vence:</span>
+                      <span class="date-value" [class.overdue]="isOverdue(loan)">{{ formatDate(loan.dueDate) }}</span>
+                    </div>
+                  </div>
+
+                  <!-- Status badges -->
+                  @if (loan.installments?.enabled && loan.status !== 'paid') {
+                    <div class="installments-badge">{{ getPaidInstallments(loan) }}/{{ loan.installments?.totalInstallments || 0 }}</div>
+                  }
+                  @if (!loan.installments?.enabled && loan.status === 'pending') {
+                    <div class="days-badge" [class]="getDaysUntilDue(loan.dueDate) < 0 ? 'overdue' : (getDaysUntilDue(loan.dueDate) <= 7 ? 'warning' : 'safe')">
+                      @if (getDaysUntilDue(loan.dueDate) < 0) {
+                        -{{ Math.abs(getDaysUntilDue(loan.dueDate)) }}d
+                      } @else if (getDaysUntilDue(loan.dueDate) === 0) {
+                        HOY
+                      } @else {
+                        {{ getDaysUntilDue(loan.dueDate) }}d
+                      }
+                    </div>
+                  }
+                </div>
+              </div>
+
+              <!-- Row 3: Installments Progress (if enabled) -->
+              @if (loan.installments?.enabled && loan.status !== 'paid') {
+                <div class="info-row progress-row">
+                  <div class="progress-section">
+                    <div class="progress-header-compact">
+                      <span class="progress-text">Cuotas</span>
+                      <span class="progress-percentage">{{ getProgressPercentage(loan) }}%</span>
+                    </div>
+                    <div class="progress-bar">
+                      <div class="progress-fill" [style.width.%]="getProgressPercentage(loan)"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Row 4: Summary Info Compact -->
+                <div class="info-row summary-row">
+                  <div class="summary-compact">
+                    <div class="summary-item">
+                      <span class="summary-label">Cuota</span>
+                      <span class="summary-value">{{ formatCurrency(loan.installments?.installmentAmount || 0) }}</span>
+                    </div>
+                    <div class="summary-item">
+                      <span class="summary-label">Pendientes</span>
+                      <span class="summary-value" [class.urgent]="isOverdue(loan)">{{ getRemainingInstallments(loan) }}</span>
+                    </div>
+                    <div class="summary-item">
+                      <span class="summary-label">Restante</span>
+                      <span class="summary-value" [class.urgent]="isOverdue(loan)">{{ formatCurrency(getRemainingAmount(loan)) }}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Row 5: Payment Controls (if has remaining installments) -->
+                @if (getRemainingInstallments(loan) > 0) {
+                  <!-- Row 6: Installment Buttons Grid -->
+                  <div class="info-row installments-row">
+                    <div class="installments-grid">
+                      @for (installment of loan.installments?.installmentsList; track installment.id) {
+                        <button 
+                          class="installment-btn"
+                          [class]="'btn-' + installment.status"
+                          (click)="toggleInstallmentPayment(loan, installment)"
+                          [disabled]="installment.status === 'paid'"
+                          [title]="installment.status === 'partial' ? 
+                            ('Pagado: ' + formatCurrency(getInstallmentPaidAmount(installment)) + 
+                            ' / Restante: ' + formatCurrency(getInstallmentRemainingAmount(installment))) : 
+                            ('Cuota ' + installment.installmentNumber + ': ' + formatCurrency(installment.amount))"
+                          [style.--progress-width]="installment.status === 'partial' ? getInstallmentProgress(installment) + '%' : '0%'"
+                        >
+                          <div class="installment-content">
+                            @if (installment.status === 'paid') {
+                              <span class="installment-icon">✓</span>
+                            } @else {
+                              <span class="installment-number">{{ installment.installmentNumber }}</span>
+                            }
+                          </div>
+                        </button>
+                      }
+                    </div>
+                  </div>
+                  
+                  <!-- Row 7: Installment Dates -->
+                  <div class="info-row dates-row">
+                    <div class="loan-dates-compact" [class.dates-overdue]="getDaysUntilNextPayment(loan) < 0">
+                      <div class="date-pair">
+                        @if (getNextPaymentDate(loan)) {
+                          <div class="date-item">
+                            <span class="date-label">Próximo pago:</span>
+                            <div class="date-value" [class.overdue]="getDaysUntilNextPayment(loan) < 0">
+                              <span>{{ formatDate(getNextPaymentDate(loan)!) }}</span>
+                              <div class="days-badge-small" [class]="getDaysUntilNextPayment(loan) < 0 ? 'overdue' : (getDaysUntilNextPayment(loan) <= 7 ? 'warning' : 'safe')">
+                                @if (getDaysUntilNextPayment(loan) < 0) {
+                                  -{{ Math.abs(getDaysUntilNextPayment(loan)) }}d
+                                } @else if (getDaysUntilNextPayment(loan) === 0) {
+                                  Hoy
+                                } @else {
+                                  {{ getDaysUntilNextPayment(loan) }}d
+                                }
+                              </div>
+                            </div>
+                          </div>
+                        }
+                        @if (getFinalPaymentDate(loan)) {
+                          <div class="date-item">
+                            <span class="date-label">Pago final:</span>
+                            <span class="date-value">{{ formatDate(getFinalPaymentDate(loan)!) }}</span>
+                          </div>
+                        }
+                      </div>
+                    </div>
+                  </div>
+                }
+              }
+
+            </div>
+
+            <!-- Card Actions -->
+            <footer 
+              class="card-actions"
+              [class.no-primary-action]="!(loan.status === 'pending' && !loan.installments?.enabled) && !(loan.installments?.enabled && getRemainingInstallments(loan) > 0)"
+            >
+              <!-- Botón principal: Completar o Pagar Monto -->
+              @if (loan.status === 'pending' && !loan.installments?.enabled) {
+                  <button [class]="'btn btn-success btn-primary-action' + (isOverdue(loan) ? ' overdue-payment' : '') + (loan.type === 'borrowed' ? ' loan-borrowed-btn' : (loan.type === 'lent' ? ' loan-lent-btn' : ''))" (click)="markAsPaid(loan)" [attr.style]="isOverdue(loan) ? 'background:#FF6663 !important;color:#ffffff !important;border-color:rgba(255,102,99,0.12) !important;' : null">
+                    Completar
+                  </button>
+              } @else if (loan.installments?.enabled && getRemainingInstallments(loan) > 0) {
+                <button [class]="'btn btn-success btn-primary-action' + (isOverdue(loan) ? ' overdue-payment' : '') + (loan.type === 'borrowed' ? ' loan-borrowed-btn' : (loan.type === 'lent' ? ' loan-lent-btn' : ''))" (click)="openPartialPaymentModal(loan)" [attr.style]="isOverdue(loan) ? 'background:#FF6663 !important;color:#ffffff !important;border-color:rgba(255,102,99,0.12) !important;' : null">
+                  Pagar Monto
+                </button>
+              }
+              
+              <!-- Botones secundarios con iconos -->
+              <button class="btn btn-secondary btn-icon-action btn-edit-loan" (click)="editLoan(loan)" title="Editar préstamo">
+                <span class="icon-edit">✎</span>
+              </button>
+              
+              <button class="btn btn-danger btn-icon-action" (click)="deleteLoan(loan)" title="Eliminar préstamo">
+                <span class="icon-delete">✕</span>
+              </button>
+            </footer>
+          </article>
+        }
+      </div>
+    }
+  </section>
+
+  <!-- Payment Confirmation Modal -->
+  @if (showPaymentModal()) {
+    <div class="modal-backdrop" (click)="closePaymentModal()">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        <header class="modal-header">
+          <h3>
+            @if (selectedInstallment()) {
+              Confirmar Pago de Cuota
+            } @else {
+              Confirmar Pago de Préstamo
+            }
+          </h3>
+          <button class="modal-close" (click)="closePaymentModal()">✕</button>
+        </header>
+        
+        <div class="modal-body">
+          @if (selectedLoan() && selectedInstallment()) {
+            <!-- Modal para préstamos con cuotas -->
+            <div class="payment-details">
+              <div class="detail-row">
+                <span class="detail-label">Préstamo:</span>
+                <span class="detail-value">{{ selectedLoan()!.description }}</span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">Persona:</span>
+                <span class="detail-value">{{ selectedLoan()!.personName }}</span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">Cuota:</span>
+                <span class="detail-value">{{ selectedInstallment()!.installmentNumber }}</span>
+              </div>
+              @if (selectedInstallment()!.status === 'partial') {
+                <div class="detail-row">
+                  <span class="detail-label">Monto total:</span>
+                  <span class="detail-value">{{ formatCurrency(selectedInstallment()!.amount) }}</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">Ya pagado:</span>
+                  <span class="detail-value">{{ formatCurrency(getInstallmentPaidAmount(selectedInstallment()!)) }}</span>
+                </div>
+                <div class="detail-row remaining-amount">
+                  <span class="detail-label">Monto restante:</span>
+                  <span class="detail-value amount">{{ formatCurrency(selectedInstallmentAmount()) }}</span>
+                </div>
+              } @else {
+                <div class="detail-row">
+                  <span class="detail-label">Monto:</span>
+                  <span class="detail-value amount">{{ formatCurrency(selectedInstallmentAmount()) }}</span>
+                </div>
+              }
+            </div>
+          } @else if (selectedLoan() && !selectedLoan()?.installments?.enabled) {
+            <!-- Modal para préstamos directos (sin cuotas) -->
+            <div class="payment-details">
+              <div class="detail-row">
+                <span class="detail-label">Préstamo:</span>
+                <span class="detail-value">{{ selectedLoan()!.description }}</span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">Persona:</span>
+                <span class="detail-value">{{ selectedLoan()!.personName }}</span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">Monto total:</span>
+                <span class="detail-value amount">{{ formatCurrency(selectedLoan()!.amount) }}</span>
+              </div>
+                <div class="detail-row">
+                <span class="detail-label">Tipo:</span>
+                <span class="detail-value">{{ selectedLoan()!.type === 'lent' ? 'Dinero prestado' : (selectedLoan()!.type === 'borrowed' ? 'Dinero pedido' : 'Sin tipo') }}</span>
+              </div>
+            </div>
+          }
+          
+          @if (selectedLoan()) {
+            <div class="account-selection">
+              <label class="input-label">Selecciona la cuenta donde se registrará el dinero:</label>
+              <select 
+                class="form-select" 
+                [(ngModel)]="selectedAccountId"
+                [disabled]="!shouldRegisterTransaction()"
+                required>
+                <option value="">Seleccionar cuenta...</option>
+                @for (account of accounts(); track account.id) {
+                  <option [value]="account.id">{{ account.name }} - {{ formatCurrency(account.balance) }}</option>
+                }
+              </select>
+            </div>
+
+            <div class="transaction-option">
+              <label class="checkbox-container">
+                <input 
+                  type="checkbox" 
+                  [(ngModel)]="shouldRegisterTransaction"
+                  class="checkbox-input">
+                <span class="checkbox-label">Registrar movimiento en las cuentas</span>
+              </label>
+              <p class="option-description">
+                Si está marcado, este pago se registrará como una transacción y afectará el balance de la cuenta seleccionada.
+              </p>
+            </div>
+            
+            <p class="confirm-message">
+              @if (selectedLoan()!.type === 'lent') {
+                ¿Confirmas que has recibido este pago?
+              } @else {
+                ¿Confirmas que has realizado este pago?
+              }
+            </p>
+          }
+        </div>
+        
+        <footer class="modal-footer">          <button class="btn btn-secondary" (click)="closePaymentModal()">Cancelar</button>
+          <button class="btn btn-primary" (click)="confirmPayment()">Confirmar Pago</button>
+        </footer>
+      </div>
+    </div>
+  }
+
+  <!-- Partial Payment Modal -->
+  @if (showPartialPaymentModal()) {
+    <div class="modal-backdrop" (click)="closePartialPaymentModal()">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        <header class="modal-header">
+          <h3>Pagar Monto Parcial</h3>
+          <button class="modal-close" (click)="closePartialPaymentModal()">✕</button>
+        </header>
+        
+        <div class="modal-body">
+          <div class="input-group">
+            <label class="input-label">Monto a pagar:</label>
+            <input 
+              type="number" 
+              class="input-field"
+              [(ngModel)]="partialPaymentAmount"
+              min="1"
+              placeholder="0.00"
+            >
+          </div>
+          
+          <div class="account-selection">
+            <label class="input-label">Selecciona la cuenta donde se registrará el dinero:</label>
+            <select 
+              class="form-select" 
+              [(ngModel)]="selectedAccountId"
+              [disabled]="!shouldRegisterTransaction()"
+              required>
+              <option value="">Seleccionar cuenta...</option>
+              @for (account of accounts(); track account.id) {
+                <option [value]="account.id">{{ account.name }} - {{ formatCurrency(account.balance) }}</option>
+              }
+            </select>
+          </div>
+
+          <div class="transaction-option">
+            <label class="checkbox-container">
+              <input 
+                type="checkbox" 
+                [(ngModel)]="shouldRegisterTransaction"
+                class="checkbox-input">
+              <span class="checkbox-label">Registrar movimiento en las cuentas</span>
+            </label>
+            <p class="option-description">
+              Si está marcado, este pago se registrará como una transacción y afectará el balance de la cuenta seleccionada.
+            </p>
+          </div>
+        </div>
+        
+        <footer class="modal-footer">
+          <button class="btn btn-secondary" (click)="closePartialPaymentModal()">Cancelar</button>
+          <button class="btn btn-primary" (click)="processPartialPayment()">Pagar</button>
+        </footer>
+      </div>
+    </div>
+  }
+
+  <!-- Loan Form Modal -->
+  <app-loan-form-modal
+    [isOpen]="showLoanModal()"
+    [editingLoan]="editingLoan()"
+    (onClose)="closeLoanModal()"
+    (onLoanAdded)="handleLoanAdded()">
+  </app-loan-form-modal>
+</div>

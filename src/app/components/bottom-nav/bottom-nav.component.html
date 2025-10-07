@@ -1,0 +1,35 @@
+
+
+<nav class="bottom-nav">
+    <ul>
+        <li>
+            <a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                <span class="nav-img icon-home" aria-hidden="true"></span>
+                <span>Inicio</span>
+            </a>
+        </li>
+        <li>
+            <a routerLink="/accounts" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                <span class="nav-img icon-accounts" aria-hidden="true"></span>
+                <span>Cuentas</span>
+            </a>
+        </li>
+        <li> <a routerLink="/loans" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                <span class="nav-img icon-loans" aria-hidden="true"></span>
+                <span>Préstamos</span>
+            </a>
+        </li>
+        <li>
+            <a routerLink="/recurring-transactions" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                <span class="nav-img icon-recurring" aria-hidden="true"></span>
+                <span>Recurrentes</span>
+            </a>
+        </li>
+        <li>
+            <a (click)="emitToggleAccount()">
+                <span class="nav-img icon-user" aria-hidden="true"></span>
+                <span>Cuenta</span>
+            </a>
+        </li>
+    </ul>
+</nav>

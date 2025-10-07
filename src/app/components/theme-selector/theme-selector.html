@@ -1,0 +1,17 @@
+<div class="theme-selector">
+  <button class="theme-btn" (click)="toggleDropdown()" title="Seleccionar tema">
+    ⚙️
+  </button>
+  <div class="theme-dropdown" *ngIf="dropdownOpen()">
+    <div class="theme-option"
+         *ngFor="let theme of themes; let i = index"
+         [class.active]="i === currentThemeIndex()"
+         (click)="selectTheme(i)">
+      <div class="theme-colors">
+        <span class="color-swatch" [style.background-color]="theme.colors[0]"></span>
+        <span class="color-swatch" [style.background-color]="theme.colors[1]"></span>
+      </div>
+      <span class="theme-name">{{ theme.name }}</span>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,476 @@
+<!-- Main Content - Responsive Grid -->
+<div class="dashboard container-fluid px-0 h-100" [class.dark]="darkMode()" [attr.data-theme]="currentThemeIndex() + 1">
+
+
+    <div class="row g-2">
+    <!-- Bloque superior: Balance + Cuentas -->
+  <div class="col-12 order-1">
+  <div class="row g-1 mb-2 top-metrics">
+        <div class="col-4">
+          <div class="metric-card bg-balance rounded shadow-sm text-center py-1 mb-1 d-flex flex-column justify-content-center">
+            <div class="small opacity-75" style="color: #BFD7EA !important;">Balance</div>
+            <div class="fw-bold" style="color: #BFD7EA !important; font-size: 1rem;">{{ formatCurrency(totalBalance()) }}</div>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="metric-card bg-prestado rounded shadow-sm text-center py-1 mb-1 d-flex flex-column justify-content-center">
+            <div class="small opacity-75" style="color: #0B3954 !important;">Prestado</div>
+            <div class="fw-bold" style="color: #0B3954 !important; font-size: 1rem;">{{ formatCurrency(totalLent()) }}</div>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="metric-card bg-adeudado rounded shadow-sm text-center py-1 mb-1 d-flex flex-column justify-content-center">
+            <div class="small opacity-75" style="color: #ffffff !important;">Adeudado</div>
+            <div class="fw-bold" style="color: #ffffff !important; font-size: 1rem;">{{ formatCurrency(totalBorrowed()) }}</div>
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <h6 class="section-title accounts-title small fw-semibold" [style.color]="darkMode() ? '#ffffff' : ''">Mis Cuentas</h6>
+    <div class="row g-2 cards-row pb-4 pt-2 px-1 align-items-stretch">
+    @for (account of accounts(); track account.id; let i = $index) {
+      <div class="col-auto">
+        <div class="account-card-mini card rounded-3 shadow-sm position-relative d-flex flex-column justify-content-between py-3 px-0 py-sm-3 py-lg-4 gap-1"
+             [style.background]="getCardGradient(account, i)"
+             [style.color]="getCardTextColor(account, i)"
+             [class.selected]="selectedAccountIds().has(account.id)"
+             (click)="toggleAccountSelection(account.id)">
+          <div class="position-absolute account-selected-badge-container">
+            @if (selectedAccountIds().has(account.id)) {
+              <div class="bg-white rounded-circle d-flex align-items-center justify-content-center" style="width: 1.2em; height: 1.2em;">
+                <small class="text-success fw-bold">✓</small>
+              </div>
+            }
+          </div>
+          <!-- Edit button for savings accounts -->
+          @if (account.type === 'savings') {
+            <div class="position-absolute account-edit-badge-container">
+              <button
+                type="button"
+                class="btn btn-sm account-edit-btn"
+                (click)="editAccount(account); $event.stopPropagation()"
+                title="Editar cuenta">
+                <small>✏️</small>
+              </button>
+            </div>
+          }
+          <!-- Reorganized layout: credit cards keep original structure; savings use a 3-row layout inside a padded container -->
+          @if (account.type === 'credit') {
+            <div class="d-flex flex-column justify-content-between h-100 flex-grow-1">
+              <div class="row align-items-center">
+                <div class="col-8 ps-0">
+                  <div [style.color]="getCardTextColor(account, i)" class="fw-semibold small">{{ account.name }}</div>
+                </div>
+                <div class="col-4 pe-0 text-end">
+                  <div [style.color]="getCardTextColor(account, i)"><span class="account-icon icon-credito" aria-hidden="true"></span></div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12 ps-0">
+                  <div [style.color]="getCardTextColor(account, i)" class="opacity-75 mb-0"><span class="d-block fs-6 fw-bold">•••• •••• •••• ••••</span></div>
+                </div>
+              </div>
+              <div class="row g-0 align-items-center">
+                <div class="col-auto ps-0 me-3">
+                  <div class="text-start">
+                    <small class="account-amount-title d-block">Disponible</small>
+                    <div class="account-amount-value fw-bold">{{ formatCurrency((account.creditLimit || 0) + (account.balance || 0)) }}</div>
+                  </div>
+                </div>
+                <div class="col-auto ms-auto pe-0 ps-0 text-end">
+                  <div class="text-end">
+                    <small class="account-amount-title d-block">Línea Total</small>
+                    <div class="account-amount-value fw-bold">{{ formatCurrency(account.creditLimit || 0) }}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          } @else {
+            <div class="d-flex flex-column justify-content-between h-100 flex-grow-1">
+              <div class="row align-items-center">
+                <div class="col-8 ps-0">
+                  <div [style.color]="getCardTextColor(account, i)" class="fw-semibold small">{{ account.name }}</div>
+                </div>
+                <div class="col-4 pe-0 text-end">
+                  <div [style.color]="getCardTextColor(account, i)"><span class="account-icon icon-hucha" aria-hidden="true"></span></div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12 ps-0">
+                  <div class="small opacity-75" [style.color]="getCardTextColor(account, i)">Cuenta de Ahorros</div>
+                </div>
+              </div>
+              <div class="row g-0 align-items-center">
+                <div class="col-auto ps-0 me-3">
+                  <div class="text-start">
+                    <small class="account-amount-title d-block">Saldo</small>
+                    <div class="account-amount-value fw-bold">{{ formatCurrency(account.balance) }}</div>
+                  </div>
+                </div>
+                <div class="col-auto ms-auto pe-0 ps-0 text-end">
+                  <div class="text-end">
+                    <small class="account-amount-title d-block">Meta de ahorro</small>
+                    <div class="account-amount-value fw-bold">
+                      @if (account.goals?.isActive && account.goals?.balanceTarget) { {{ formatCurrency(account.goals?.balanceTarget || 0) }} } @else { <span class="opacity-50">-</span> }
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    }
+    <div class="col-auto">
+      <div class="account-card-mini card rounded-3 shadow-sm py-3 px-0 py-sm-3 py-lg-4 d-flex align-items-center justify-content-center bg-new-account"
+           [style.color]="darkMode() ? '#ffffff' : (accounts().length ? getCardTextColor(accounts()[0], 0) : '')"
+           [class.bg-light]="accounts().length === 0"
+           [class.text-muted]="accounts().length === 0"
+           style="cursor: pointer;" (click)="openNewAccountForm()">
+        <div class="text-center add-account-text">
+          <div class="mb-0 fs-3 fw-bold plus-icon">+</div>
+          <div class="fs-6 fw-bold lh-1">Nueva<br>Cuenta</div>
+        </div>
+      </div>
+    </div>
+        </div>
+      </div>
+    </div>
+
+  <!-- Movimientos (SM: mitad, LG: 1/3) -->
+  <div class="col-12 col-sm-6 col-lg-5 col-xl-4 order-2">
+  <div class="card border-0 shadow-sm px-1 py-1 h-100 movements-card">
+        <div class="card-body">
+          <div class="d-flex align-items-center justify-content-between mb-2">
+            <div class="d-flex align-items-center">
+              <h6 class="section-title small fw-semibold text-prussian-blue mb-0">Movimientos</h6>
+              <!-- Inline pager: non-functional markup (wire events in TS if needed) -->
+              <div class="movements-pager ms-2 d-inline-flex align-items-center" role="navigation" aria-label="Paginación de movimientos">
+                <button type="button" class="btn btn-sm pager-btn" aria-label="Anterior" (click)="prevPage()" [disabled]="currentPage() === 1">‹</button>
+                <span class="pager-info mx-1 small text-muted">{{ currentPage() }} / {{ totalPages() }}</span>
+                <button type="button" class="btn btn-sm pager-btn" aria-label="Siguiente" (click)="nextPage()" [disabled]="currentPage() === totalPages()">›</button>
+              </div>
+            </div>
+            <div class="quick-menu-wrapper position-relative">
+              <button type="button"
+                      class="btn btn-sm menu-btn-circle"
+                      style="width: 28px; height: 28px; font-size: 0.8rem;"
+                      (click)="toggleQuickMenu('movements', $event)"
+                      [attr.aria-expanded]="quickMenuMovementsOpen()"
+                      title="Crear movimiento">
+                +
+              </button>
+              @if (quickMenuMovementsOpen()) {
+                <div class="menu-dropdown animate-fade-scale" style="right:0; min-width:180px;" role="menu">
+                  <button type="button" class="dropdown-item" (click)="createIncome(); closeQuickMenus()">💰 Crear Ingreso</button>
+                  <button type="button" class="dropdown-item" (click)="createExpense(); closeQuickMenus()">💸 Crear Gasto</button>
+                  <button type="button" class="dropdown-item" (click)="createTransferencia(); closeQuickMenus()">🔁 Transferencia</button>
+                  <div class="dropdown-divider"></div>
+                  <button type="button" class="dropdown-item" (click)="createRecurringTransaction(); closeQuickMenus()">🔄 Movimiento Recurrente</button>
+                  <button type="button" class="dropdown-item" (click)="createSharedExpense(); closeQuickMenus()">🤝 Gasto compartido</button>
+                </div>
+              }
+            </div>
+          </div>
+          <div class="row g-1 mb-2">
+            <div class="col-6 col-sm-12 col-md-6 col-lg-6">
+              <div class="bg-income-theme rounded shadow-sm text-center py-1">
+                <div class="small text-income-theme">Ingresos mes</div>
+                <div class="fw-bold text-income-theme" style="font-size: 1rem;">{{ formatCurrency(monthlyIncome()) }}</div>
+              </div>
+            </div>
+            <div class="col-6 col-sm-12 col-md-6 col-lg-6">
+              <div class="bg-expenses-theme rounded shadow-sm text-center py-1">
+                <div class="small text-expenses-theme">Gastos mes</div>
+                <div class="fw-bold text-expenses-theme" style="font-size: 1rem;">{{ formatCurrency(monthlyExpenses()) }}</div>
+              </div>
+            </div>
+          </div>
+          <div class="list-group list-group-flush">
+            @if (pagedTransactions().length === 0) {
+              <div class="text-center py-4 text-muted">
+                <svg width="48" height="48" class="mb-3 opacity-50" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2a1 1 0 0 0-2 0v2H8V2a1 1 0 0 0-2 0v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 16H5V9h14v11z"/>
+                </svg>
+                <p class="mb-0">No hay movimientos recientes</p>
+              </div>
+            } @else {
+              @for (transaction of pagedTransactions(); track transaction.id) {
+                <div class="list-group-item list-group-item-action px-0 py-1 border-0 border-bottom">
+                  <div class="d-flex w-100 align-items-center justify-content-between">
+                      <div class="mx-1 d-flex align-items-center">
+                      <span class="me-2" [style.background]="getTransactionCardGradient(transaction)" style="width:12px; height:12px; border-radius:50%; display:inline-block;"></span>
+                      <div>
+                        <span class="fw-normal" style="font-size: 0.8rem;">{{ transaction.description }}</span><br>
+                        <small class="text-muted tx-meta" style="font-size: 0.7rem;">
+                          {{ formatDate(transaction.date) }}
+                          <span class="tx-category text-muted" style="font-size:0.65rem;margin-left:0.35rem;">
+                            @if (transaction.categoryName === 'Transferencia') {
+                              🔁 {{ transaction.categoryName }}
+                            } @else {
+                              {{ transaction.categoryName || transaction.categoryId }}
+                            }
+                            @if (getFriendName(transaction)) {
+                              <img src="/cuenta.png" alt="Shared" style="width: 14px; height: 14px; margin-left: 0.5rem; margin-right: 0.1rem;">
+                              <span class="badge bg-primary" style="font-size: 0.6rem;">{{ getFriendName(transaction) }}</span>
+                            }
+                          </span>
+                        </small>
+                      </div>
+                    </div>
+                    <div class="text-end me-2 d-flex align-items-center gap-2">
+                      @if (transaction.type === 'shared-expense') {
+                        <button class="btn btn-sm btn-primary" style="font-size: 0.7rem;" (click)="paySharedTransaction(transaction.sharedTx)">Pagar</button>
+                      } @else if (transaction.type === 'pending-approval') {
+                        <div class="d-flex align-items-center gap-1">
+                          <span class="fw-bold text-success" style="font-size: 0.8rem;">+{{ formatCurrency(transaction.amount) }}</span>
+                          <button class="btn btn-sm btn-success" style="font-size: 0.7rem;" (click)="approveSharedTransaction(transaction.sharedTx)">Aprobar</button>
+                        </div>
+                      } @else if (transaction.type === 'income') {
+                        <span class="fw-bold text-success" style="font-size: 0.8rem;">+{{ formatCurrency(transaction.amount) }}</span>
+                      } @else {
+                        <span class="fw-bold" style="font-size: 0.9rem; color: #FF6663 !important; font-weight: 800 !important;">-{{ formatCurrency(transaction.amount) }}</span>
+                      }
+                      <!-- Delete button -->
+                      @if (transaction.type !== 'shared-expense' && transaction.type !== 'pending-approval') {
+                        <button class="btn btn-sm delete-transaction-btn p-0 d-flex align-items-center justify-content-center" style="width: 24px; height: 24px; border-radius: 4px;" (click)="deleteTransaction(transaction)" title="Eliminar movimiento">
+                          <span class="delete-icon">×</span>
+                        </button>
+                      }
+                    </div>
+                  </div>
+                </div>
+              }
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <!-- Préstamos (SM: mitad, LG: 1/3) con copia de categorías en SM/MD -->
+  <div class="col-12 col-sm-6 col-lg-4 col-xl-4 order-3">
+    <div class="vstack gap-2">
+    <!-- Loans Section Combinada -->
+    <div class="card border-0 shadow-sm px-1 py-1 h-lg-100 mb-0 loans-card">
+        <div class="card-header border-0 bg-transparent">
+          <div class="d-flex align-items-center justify-content-between">
+            <h6 class="section-title small fw-semibold text-prussian-blue mb-0">Préstamos</h6>
+            <div class="quick-menu-wrapper position-relative">
+              <button type="button"
+                      class="btn btn-sm menu-btn-circle"
+                      style="width: 28px; height: 28px; font-size: 0.8rem;"
+                      (click)="toggleQuickMenu('loans', $event)"
+                      [attr.aria-expanded]="quickMenuLoansOpen()"
+                      title="Crear préstamo">
+                +
+              </button>
+              @if (quickMenuLoansOpen()) {
+                <div class="menu-dropdown animate-fade-scale" style="right:0; min-width:180px;" role="menu">
+                  <button type="button" class="dropdown-item" (click)="createLentLoan(); closeQuickMenus()">💸 Prestar Dinero</button>
+                  <button type="button" class="dropdown-item" (click)="createBorrowedLoan(); closeQuickMenus()">💰 Pedir Préstamo</button>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <!-- Resumen Prestado y Pedido -->
+          <div class="row text-center g-2 mb-3">
+            <div class="col-6">
+                <div class="border-end">
+                <h6 class="fw-bold mb-0" [style.color]="darkMode() ? '#CCE0F0' : '#0B3954'" style="font-size: 1rem;">{{ formatCurrency(totalLent()) }}</h6>
+                <small class="text-muted">Prestado</small>
+              </div>
+            </div>
+            <div class="col-6">
+              <div>
+                <h6 class="fw-bold mb-0" style="color: #FF6663 !important; font-size: 1rem;">{{ formatCurrency(totalBorrowed()) }}</h6>
+                <small class="text-muted">Pedido</small>
+              </div>
+            </div>
+          </div>
+
+          <!-- Cuotas próximas (sin título largo) -->
+          <div class="border-top pt-2">
+            @if (upcomingLoans().length === 0) {
+              <p class="text-muted small mb-0 text-center">No hay cuotas próximas</p>
+            } @else {
+              @for (item of upcomingLoans(); track item.id) {
+                <div class="d-flex justify-content-between align-items-center py-1 border-bottom">
+                  <div class="d-flex align-items-center gap-2">
+                      <span class="small fw-semibold">{{ item.personName || 'Préstamo' }}</span>
+                      @if (item.isInstallment) {
+                        <small class="text-muted" style="font-size: 0.75rem;">{{ item.installmentNumber }}/{{ item.totalInstallments }}</small>
+                      }
+                    </div>
+                  <div class="d-flex align-items-center">
+                    @if (item.isOverdue) {
+                      @if (getDaysUntilDue(item.dueDate) === 0) {
+                        <span class="badge me-2" style="font-size: 0.6rem; background-color: #fff2cc; color: #8a6d3b;">Hoy</span>
+                      } @else {
+                        <span class="badge me-2" style="font-size: 0.6rem; background-color: #f8d7da; color: #721c24;">{{ Math.abs(getDaysUntilDue(item.dueDate)) }}d</span>
+                      }
+                    } @else {
+                      <span class="badge me-2" style="font-size: 0.6rem; background-color: #fff2cc; color: #8a6d3b;">{{ getDaysUntilDue(item.dueDate) }}d</span>
+                    }
+                    <span class="fw-bold small" [ngClass]="{'text-prestado': item.type==='lent', 'text-bittersweet': item.type==='borrowed'}">{{ formatCurrency(item.amount) }}</span>
+                  </div>
+                </div>
+              }
+            }
+          </div>
+        </div>
+      </div>
+
+  <!-- Copia para SM/MD: Gastos por Categoría debajo de Préstamos (oculta en lg+) -->
+  <div class="card border-0 shadow-sm d-block d-lg-none mb-0 categories-card-sm">
+        <div class="card-header border-0 bg-transparent">
+          <h6 class="section-title small fw-semibold text-prussian-blue">Gastos por Categoría</h6>
+        </div>
+        <div class="card-body">
+          @if (categoryExpenses().length === 0) {
+            <div class="text-center py-3 text-muted">
+              <small>No hay gastos este mes</small>
+            </div>
+          } @else {
+            @for (category of categoryExpenses(); track category.categoryId) {
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <div class="flex-grow-1">
+                  <div class="d-flex align-items-center">
+                    <div class="rounded-circle me-2" 
+                         [style.background-color]="getCategoryColor(category.categoryId)"
+                         style="width: 12px; height: 12px;">
+                    </div>
+                    <small class="fw-medium category-name">{{ category.categoryName }}</small>
+                  </div>
+                  <div class="progress mt-1" style="height: 4px;">
+                    <div class="progress-bar" 
+                         [style.width.%]="getCategoryPercentage(category.amount)"
+                         [style.background-color]="getCategoryColor(category.categoryId)">
+                    </div>
+                  </div>
+                </div>
+                  <small class="fw-bold ms-2 category-amount" style="font-weight: 800 !important;">{{ formatCurrency(category.amount) }}</small>
+              </div>
+            }
+          }
+        </div>
+      </div>
+  </div>
+    </div>
+
+  <!-- removed duplicate small/medium categories block (now inside loans column) -->
+
+  <!-- Categories Section (visible only on lg and up, ocupa 1/3) -->
+  <div class="col-12 col-lg-3 col-xl-4 order-4 d-none d-lg-block">
+  <div class="card border-0 shadow-sm px-1 py-1 h-100 categories-card">
+        <div class="card-header border-0 bg-transparent">
+          <h6 class="section-title small fw-semibold text-prussian-blue">Gastos por Categoría</h6>
+        </div>
+        <div class="card-body">
+          @if (categoryExpenses().length === 0) {
+            <div class="text-center py-3 text-muted">
+              <small>No hay gastos este mes</small>
+            </div>
+          } @else {
+            @for (category of categoryExpenses(); track category.categoryId) {
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <div class="flex-grow-1">
+                  <div class="d-flex align-items-center">
+                    <div class="rounded-circle me-2" 
+                         [style.background-color]="getCategoryColor(category.categoryId)"
+                         style="width: 12px; height: 12px;">
+                    </div>
+                    <small class="fw-medium category-name">{{ category.categoryName }}</small>
+                  </div>
+                  <div class="progress mt-1" style="height: 4px;">
+                    <div class="progress-bar" 
+                         [style.width.%]="getCategoryPercentage(category.amount)"
+                         [style.background-color]="getCategoryColor(category.categoryId)">
+                    </div>
+                  </div>
+                </div>
+                  <small class="fw-bold ms-2 category-amount" style="font-weight: 800 !important;">{{ formatCurrency(category.amount) }}</small>
+              </div>
+            }
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal Nueva Cuenta en Dashboard -->
+<app-account-form-modal
+  [isOpen]="showAccountModal()"
+  (onClose)="closeAccountModal()"
+  (onAccountCreated)="onDashboardAccountCreated($event)">
+</app-account-form-modal>
+
+<!-- Modal Editar Cuenta -->
+<app-edit-account-modal
+  [account]="selectedAccountForEdit()"
+  [isOpen]="showEditAccountModal()"
+  (onClose)="closeEditAccountModal()"
+  (onAccountUpdated)="onAccountEdited($event)">
+</app-edit-account-modal>
+
+<!-- Modal Proyección de Balance -->
+<app-balance-projection-modal
+  [isOpen]="isBalanceProjectionModalOpen()"
+  (onClose)="closeBalanceProjectionModal()">
+</app-balance-projection-modal>
+
+<!-- Modal Nueva Transacción -->
+<app-transaction-form-modal
+  [isOpen]="showTransactionModal()"
+  [preselectedType]="preselectedTransactionType()"
+  [preselectedEnableSharing]="preselectedEnableSharing()"
+  (onClose)="closeTransactionModal()"
+  (onTransactionAdded)="onTransactionAdded()">
+</app-transaction-form-modal>
+
+<!-- Modal Nuevo Préstamo -->
+<app-loan-form-modal
+  [isOpen]="showLoanModal()"
+  [preselectedType]="preselectedLoanType()"
+  (onClose)="closeLoanModal()"
+  (onLoanAdded)="onLoanAdded()">
+</app-loan-form-modal>
+
+<!-- Modal Nueva Transacción Recurrente -->
+@if (showRecurringTransactionModal()) {
+  <app-recurring-transaction-form
+    (modalClosed)="closeRecurringTransactionModal()"
+    (recurringTransactionSaved)="onRecurringTransactionAdded()">
+  </app-recurring-transaction-form>
+}
+
+<!-- Modal Pagar Gasto Compartido -->
+@if (showPaySharedModal()) {
+  <div class="modal-backdrop fade show"></div>
+  <div class="modal fade show" tabindex="-1" role="dialog" style="display:block;">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header py-3">
+          <h5 class="modal-title mb-0 fw-bold">Pagar Gasto Compartido</h5>
+          <button type="button" class="btn-close" aria-label="Close" (click)="closePaySharedModal()"></button>
+        </div>
+        <div class="modal-body">
+          <p>Selecciona la cuenta desde la que deseas realizar el pago de S/ {{ selectedSharedTxForPay()?.amount_owed }}.</p>
+          <div class="account-selection">
+            @for (account of accounts(); track account.id) {
+              <div class="account-option" (click)="selectAccountForPay(account.id)">
+                <input type="radio" [id]="'account-' + account.id" [checked]="selectedAccountForPay() === account.id" (change)="selectAccountForPay(account.id)">
+                <label [for]="'account-' + account.id">{{ account.name }} - S/ {{ account.balance | number:'1.2-2' }}</label>
+              </div>
+            }
+          </div>
+        </div>
+        <div class="modal-footer py-2">
+          <button type="button" class="btn btn-outline-secondary btn-sm" (click)="closePaySharedModal()">Cancelar</button>
+          <button type="button" class="btn btn-success btn-sm" (click)="confirmPaySharedTransaction()" [disabled]="!selectedAccountForPay()">Pagar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+}

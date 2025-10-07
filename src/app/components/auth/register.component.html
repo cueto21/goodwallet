@@ -1,0 +1,41 @@
+<div class="auth-page single">
+  <div class="auth-card" role="main">
+    <header class="auth-header">
+      <div class="logo-wrap">
+  <img src="/logo.png" alt="" class="logo" />
+      </div>
+      <h1 class="title">Crear Cuenta</h1>
+      <p class="subtitle">Empieza a organizar tus finanzas en segundos</p>
+    </header>
+
+    <form class="auth-form" (submit)="submit($event)" novalidate>
+      <div class="field">
+        <label for="name" class="label">Nombre completo</label>
+        <input id="name" name="display_name" type="text" class="input" [(ngModel)]="display_name" required placeholder="Tu nombre completo" />
+      </div>
+
+      <div class="field">
+        <label for="email" class="label">Correo electrónico</label>
+        <input id="email" name="email" type="email" class="input" [(ngModel)]="email" required placeholder="tucorreo@ejemplo.com" />
+      </div>
+
+      <div class="field">
+        <label for="password" class="label">Contraseña</label>
+        <input id="password" name="password" type="password" class="input" [(ngModel)]="password" required placeholder="Crea una contraseña segura" />
+      </div>
+
+      <div class="field">
+        <label for="confirm-password" class="label">Confirmar contraseña</label>
+        <input id="confirm-password" name="confirm_password" type="password" class="input" required placeholder="Confirma tu contraseña" />
+      </div>
+
+      <div *ngIf="error()" class="error">{{ error() }}</div>
+
+      <button class="btn primary" type="submit" [disabled]="loading()">Crear cuenta</button>
+
+      <div class="secondary-row" style="margin-top:12px;">
+        <a routerLink="/login" class="link">Ya tengo cuenta</a>
+      </div>
+    </form>
+  </div>
+</div>

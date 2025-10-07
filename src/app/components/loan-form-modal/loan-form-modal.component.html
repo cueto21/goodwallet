@@ -1,0 +1,205 @@
+@if (isOpen()) {
+  <div class="modal-backdrop" 
+       (click)="onBackdropClick($event)"
+       (wheel)="onBackdropScroll($event)"
+       (touchmove)="onBackdropScroll($event)">
+    <div class="modal-content" 
+         (click)="$event.stopPropagation()"
+         (wheel)="onModalContentScroll($event)"
+         (touchmove)="onModalContentScroll($event)">
+      <div class="modal-header">
+        <h3>Nuevo Préstamo</h3>
+        <button class="close-btn" (click)="closeModal()">&times;</button>
+      </div>
+      
+      <div class="modal-body">
+        <form (ngSubmit)="onSubmit()" class="loan-form">
+          
+          <!-- Layout principal de dos columnas -->
+          <div class="main-form-layout">
+            
+            <!-- Columna 1: Información Básica -->
+            <div class="form-column">
+              <div class="form-column-title">Información Básica</div>
+              
+              <!-- Tipo de préstamo -->
+              <div class="form-group">
+                <label>Tipo de préstamo:</label>
+                <div class="radio-group">
+                  <label class="radio-option" [class.selected]="formData().type === 'lent'">
+                    <input 
+                      type="radio" 
+                      name="type" 
+                      value="lent" 
+                      [checked]="formData().type === 'lent'"
+                      (change)="updateFormField('type', 'lent')">
+                    <span class="radio-label lent">Yo presté</span>
+                  </label>
+                  <label class="radio-option" [class.selected]="formData().type === 'borrowed'">
+                    <input 
+                      type="radio" 
+                      name="type" 
+                      value="borrowed" 
+                      [checked]="formData().type === 'borrowed'"
+                      (change)="updateFormField('type', 'borrowed')">
+                    <span class="radio-label borrowed">Me prestaron</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Monto -->
+              <div class="form-group">
+                <label>Monto (PEN):</label>
+                <input 
+                  type="number" 
+                  min="0.01" 
+                  step="0.01" 
+                  placeholder="0.00"
+                  [value]="formData().amount || ''"
+                  (input)="onAmountChange($event)"
+                  required>
+              </div>
+
+              <!-- Persona -->
+              <div class="form-group">
+                <label>Persona:</label>
+                <input 
+                  type="text" 
+                  placeholder="Nombre de la persona"
+                  [value]="formData().personName"
+                  (input)="onPersonNameChange($event)"
+                  required>
+              </div>
+
+              <!-- Estado -->
+              <div class="form-group">
+                <label>Estado:</label>
+                <select 
+                  [value]="formData().status"
+                  (change)="onStatusChange($event)"
+                  required>
+                  <option value="pending">Pendiente</option>
+                  <option value="paid">Pagado</option>
+                  <option value="overdue">Vencido</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Columna 2: Detalles y Configuración -->
+            <div class="form-column">
+              <div class="form-column-title">Detalles</div>
+              
+              <!-- Fecha del préstamo -->
+              <div class="form-group">
+                <label>Fecha del préstamo:</label>
+                <input 
+                  type="date" 
+                  [value]="formData().date"
+                  (input)="onDateChange($event)"
+                  required>
+              </div>
+
+              <!-- Configuración de cuotas -->
+              <div class="form-group">
+                <label class="checkbox-container">
+                  <input 
+                    type="checkbox" 
+                    [checked]="formData().hasInstallments"
+                    (change)="onInstallmentsChange($event)">
+                  <span class="checkbox-text">Pagar en cuotas</span>
+                </label>
+              </div>
+
+              <!-- Campos de cuotas (condicionalmente) -->
+              @if (formData().hasInstallments) {
+                <div class="installments-section">
+                  <div class="form-group">
+                    <label>Frecuencia de pago:</label>
+                    <select 
+                      [value]="formData().paymentFrequency"
+                      (change)="onPaymentFrequencyChange($event)"
+                      required>
+                      <option value="daily">Diario</option>
+                      <option value="weekly">Semanal</option>
+                      <option value="biweekly">Cada 15 días</option>
+                      <option value="monthly">Mensual</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label>Número de cuotas:</label>
+                    <input 
+                      type="number" 
+                      min="1" 
+                      max="365"
+                      placeholder="12"
+                      [value]="formData().totalInstallments"
+                      (input)="onTotalInstallmentsChange($event)"
+                      required>
+                  </div>
+
+                  <div class="form-group">
+                    <label>Primera cuota:</label>
+                    <input 
+                      type="date" 
+                      [value]="formData().firstInstallmentDate"
+                      (input)="onFirstInstallmentDateChange($event)"
+                      required>
+                  </div>
+
+                  <div class="installment-preview">
+                    <div class="preview-info">
+                      <span class="preview-label">Vista previa:</span>
+                      <span class="preview-amount">
+                        {{ formData().totalInstallments }} cuotas {{ getFrequencyText() }} de {{ formatCurrency(installmentAmount()) }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              } @else {
+                <!-- Fecha de vencimiento (solo si no hay cuotas) -->
+                <div class="form-group">
+                  <label>Fecha de vencimiento:</label>
+                  <input 
+                    type="date" 
+                    [value]="formData().dueDate"
+                    (input)="onDueDateChange($event)"
+                    required>
+                </div>
+              }
+
+              <!-- Descripción -->
+              <div class="form-group">
+                <label>Descripción:</label>
+                <textarea 
+                  placeholder="Describe el motivo del préstamo..."
+                  [value]="formData().description"
+                  (input)="onDescriptionChange($event)"
+                  rows="3"
+                  maxlength="200"
+                  required></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Acciones del formulario -->
+          <div class="form-actions">
+            <button type="button" class="btn btn-cancel" (click)="closeModal()">
+              Cancelar
+            </button>
+            <button 
+              type="submit" 
+              class="btn btn-submit" 
+              [disabled]="!isFormValid() || isSubmitting()">
+              @if (isSubmitting()) {
+                Guardando...
+              } @else {
+                Crear Préstamo
+              }
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+}

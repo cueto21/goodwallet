@@ -1,0 +1,1079 @@
+/* ===============================================
+   RECURRING TRANSACTIONS COMPONENT - MODERN DESIGN
+   =============================================== */
+
+// ===== VARIABLES DE DISEÑO =====
+:root {
+  --primary-color: #3b82f6;
+  --primary-dark: #1d4ed8;
+  --success-color: #10b981;
+  --success-dark: #059669;
+  --warning-color: #f59e0b;
+  --warning-dark: #d97706;
+  --danger-color: #ef4444;
+  --danger-dark: #dc2626;
+
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+
+  --border-radius: 12px;
+  --border-radius-sm: 8px;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.12);
+  --transition: all 0.2s ease;
+}
+
+// Dark mode overrides
+.recurring-transactions-container.dark {
+  --gray-50: #2a2a2a;
+  --gray-100: #3d3d3d;
+  --gray-200: #505050;
+  --gray-300: #656565;
+  --gray-400: #878787;
+  --gray-500: #a9a9a9;
+  --gray-600: #cccccc;
+  --gray-700: #e0e0e0;
+  --gray-800: #f5f5f5;
+  --gray-900: #ffffff;
+
+  // Override specific text colors for dark mode
+  .header-title {
+    color: #ffffff !important;
+  }
+
+  .stat-label {
+    color: #BFD7EA !important;
+  }
+
+  .stat-amount {
+    color: #BFD7EA !important;
+  }
+
+  .stat-count {
+    color: #BFD7EA !important;
+  }
+
+  .empty-title {
+    color: #ffffff !important;
+  }
+
+  .empty-description {
+    color: #cccccc !important;
+  }
+
+  .filter-label {
+    color: #cccccc !important;
+  }
+
+  .filter-select {
+    color: #ffffff !important;
+    background: var(--gray-100) !important;
+  }
+
+  .filter-item {
+    background: var(--gray-100) !important;
+    border-color: var(--gray-200) !important;
+
+    &:hover {
+      background: var(--gray-200) !important;
+      border-color: var(--gray-300) !important;
+    }
+  }
+
+  // Statistics cards dark mode overrides
+  .stat-card.stat-income .stat-label,
+  .stat-card.stat-income .stat-amount,
+  .stat-card.stat-income .stat-count {
+    color: #0B3954 !important; // Dark blue for all income stats text
+  }
+
+  .stat-card.stat-expense .stat-amount {
+    color: #ffffff !important; // White for expense stats
+  }
+
+  .stat-card.stat-expense .stat-label {
+    color: #ffffff !important;
+  }
+
+  .stat-card.stat-expense .stat-count {
+    color: #ffffff !important;
+  }
+
+  .recurring-description {
+    color: #ffffff !important;
+  }
+
+  .recurring-details {
+    color: #cccccc !important;
+  }
+
+  .date-label {
+    color: #cccccc !important;
+  }
+
+  .date-value {
+    color: #ffffff !important;
+  }
+}
+
+// ===== CONTENEDOR PRINCIPAL =====
+.recurring-transactions-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+  padding-bottom: 5rem;
+  background: var(--gray-50);
+  min-height: 100vh;
+  transition: background-color 0.3s ease;
+
+  @media (max-width: 768px) {
+    padding: 12px 8px;
+  }
+}
+
+// ===== HEADER =====
+.recurring-header {
+  margin-bottom: 16px;
+
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+
+    @media (max-width: 480px) {
+      gap: 12px;
+    }
+  }
+
+  .header-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--gray-800);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+
+    @media (max-width: 768px) {
+      font-size: 1.5rem;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 1.3rem;
+    }
+  }
+}
+
+// ===== BOTÓN CREAR =====
+.btn-create-recurring {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #0B3954; /* Prussian Blue */
+  color: #BFD7EA; /* Columbia Blue for icon/text */
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  box-shadow: 0 2px 10px rgba(11, 57, 84, 0.24);
+  flex-shrink: 0;
+
+  &:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 6px 18px rgba(11, 57, 84, 0.28);
+    background: #063047; /* darker Prussian Blue on hover */
+  }
+
+  &:active {
+    transform: translateY(0) scale(0.98);
+  }
+
+  .icon-plus {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1;
+    color: #BFD7EA; /* Columbia Blue icon */
+  }
+
+  @media (max-width: 480px) {
+    width: 40px;
+    height: 40px;
+
+    .icon-plus {
+      font-size: 18px;
+    }
+  }
+}
+
+// ===== BOTONES ESTILO DASHBOARD =====
+.btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  &.btn-primary {
+    background: rgba(59, 130, 246, 0.9);
+    color: white;
+
+    &:hover:not(:disabled) {
+      background: rgba(59, 130, 246, 1);
+      transform: translateY(-1px);
+    }
+  }
+
+  &.btn-secondary {
+    background: var(--gray-200);
+    color: var(--gray-700);
+
+    &:hover:not(:disabled) {
+      background: var(--gray-300);
+      transform: translateY(-1px);
+    }
+  }
+
+  &.btn-danger {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white;
+
+    &:hover:not(:disabled) {
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+      transform: translateY(-1px);
+    }
+  }
+
+  &.btn-icon-action {
+    flex: 0 0 36px;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    margin: 0;
+
+    @media (max-width: 480px) {
+      flex: 0 0 40px;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+    }
+
+    .icon-edit,
+    .icon-delete,
+    .icon-toggle {
+      font-size: 1rem;
+      line-height: 1;
+
+      @media (max-width: 480px) {
+        font-size: 1.1rem;
+      }
+    }
+
+    .icon-edit {
+      font-weight: 600;
+    }
+
+    .icon-delete {
+      font-weight: 700;
+    }
+  }
+}
+
+// ===== ESTADÍSTICAS =====
+.stats-section {
+  margin-bottom: 16px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+}
+
+.stat-card {
+  background: white;
+  border-radius: var(--border-radius) !important;
+  overflow: hidden;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
+  padding: 12px;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  @media (max-width: 480px) {
+    padding: 8px 4px;
+  }
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  &.stat-active {
+    background: linear-gradient(135deg, #0B3954 0%, #083144 100%);
+    border: 1px solid rgba(11, 57, 84, 0.12) !important;
+    border-radius: inherit !important;
+
+    .stat-amount {
+      color: #BFD7EA;
+    }
+
+    .stat-label {
+      color: #BFD7EA;
+    }
+
+    .stat-count {
+      color: #BFD7EA;
+    }
+  }
+
+  &.stat-income {
+    background: linear-gradient(135deg, #BFD7EA 0%, #BFD7EA 100%);
+    border: 1px solid rgba(59, 130, 246, 0.12) !important;
+    border-radius: inherit !important;
+
+    .stat-amount {
+      color: #0B3954;
+    }
+
+    .stat-label {
+      color: #0B3954;
+    }
+
+    .stat-count {
+      color: #0B3954;
+    }
+  }
+
+  &.stat-expense {
+    background: linear-gradient(135deg, #FF6663 0%, #FF4F4A 100%);
+    border: 1px solid rgba(255, 102, 99, 0.12) !important;
+    border-radius: inherit !important;
+
+    .stat-amount {
+      color: #ffffff;
+    }
+
+    .stat-label {
+      color: #ffffff;
+    }
+
+    .stat-count {
+      color: #ffffff;
+    }
+  }
+
+  .stat-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .stat-label {
+    margin: 0 0 4px 0;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--gray-500);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+
+    @media (max-width: 480px) {
+      font-size: 0.7rem;
+    }
+  }
+
+  .stat-amount {
+    margin: 0 0 2px 0;
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--gray-800);
+
+    @media (max-width: 480px) {
+      font-size: 1.1rem;
+    }
+  }
+
+  .stat-count {
+    font-size: 0.7rem;
+    font-weight: 500;
+
+    @media (max-width: 480px) {
+      font-size: 0.65rem;
+    }
+  }
+}
+
+// ===== FILTROS =====
+.filters-section {
+  margin-bottom: 16px;
+}
+
+.filters-grid {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+
+  @media (max-width: 640px) {
+    gap: 8px;
+  }
+
+  @media (max-width: 480px) {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 6px;
+  }
+}
+
+.filter-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 8px 14px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-color: #cbd5e0;
+    background: #ffffff;
+  }
+
+  @media (max-width: 640px) {
+    justify-content: space-between;
+  }
+
+  @media (max-width: 480px) {
+    flex: 1;
+    padding: 6px 10px;
+    min-width: 0;
+  }
+}
+
+.filter-label {
+  font-size: 0.875rem;
+  color: #64748b;
+  font-weight: 500;
+  white-space: nowrap;
+  margin: 0;
+
+  @media (max-width: 480px) {
+    font-size: 0.8rem;
+  }
+}
+
+.filter-select {
+  border: none;
+  background: transparent;
+  outline: none;
+  flex: 1;
+  font-size: 0.875rem;
+  color: #374151;
+  min-width: 120px;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
+
+  @media (max-width: 640px) {
+    text-align: right;
+  }
+
+  @media (max-width: 480px) {
+    min-width: 80px;
+    font-size: 0.8rem;
+  }
+}
+
+// ===== ESTADO VACÍO =====
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  background: var(--gray-50);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--gray-200);
+
+  @media (max-width: 480px) {
+    padding: 24px 12px;
+  }
+
+  .empty-title {
+    margin: 0 0 8px 0;
+    font-size: 1.3rem;
+    color: var(--gray-800);
+    font-weight: 700;
+
+    @media (max-width: 480px) {
+      font-size: 1.1rem;
+    }
+  }
+
+  .empty-description {
+    margin: 0 0 16px 0;
+    color: var(--gray-600);
+    font-size: 0.9rem;
+
+    @media (max-width: 480px) {
+      font-size: 0.85rem;
+      margin-bottom: 12px;
+    }
+  }
+}
+
+// ===== GRID DE TRANSACCIONES RECURRENTES =====
+.recurring-section {
+  margin-bottom: 16px;
+}
+
+.recurring-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 16px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 12px;
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}
+
+// ===== TARJETA DE TRANSACCIÓN RECURRENTE =====
+.recurring-card {
+  background: var(--gray-50);
+  border-radius: 10px;
+  padding: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--gray-200);
+  border-left: 4px solid var(--gray-300);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  @media (max-width: 480px) {
+    padding: 10px;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    border-color: #e2e8f0;
+  }
+
+  // Estados por tipo
+  &.recurring-income {
+    border-left: 4px solid #67e8f9;
+  }
+
+  &.recurring-expense {
+    border-left: 4px solid #fca5a5;
+  }
+
+  // Estado inactivo
+  &.recurring-inactive {
+    opacity: 0.7;
+    border-left: 4px solid var(--gray-400);
+  }
+}
+
+
+// ===== HEADER DE TARJETA =====
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+  padding: 0;
+  background: none;
+  border: none;
+  gap: 8px;
+
+  @media (max-width: 480px) {
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+
+  .status-container {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+}
+
+.recurring-type-badge {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  color: #1e293b;
+  font-size: 0.85rem;
+  flex: 1;
+  min-width: 0;
+
+  .badge-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    @media (max-width: 480px) {
+      font-size: 0.8rem;
+    }
+  }
+}
+
+.recurring-status-badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.2px;
+  flex-shrink: 0;
+  white-space: nowrap;
+
+  @media (max-width: 480px) {
+    font-size: 0.6rem;
+    padding: 3px 7px;
+  }
+
+  &.status-active {
+    background: #BFD7EA;
+    color: #0B3954;
+  }
+
+  &.status-inactive {
+    background: #fca5a5;
+    color: #dc2626;
+  }
+}
+
+// ===== CUERPO DE TARJETA =====
+.card-body {
+  padding: 0;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+// ===== SISTEMA DE FILAS =====
+.info-row {
+  margin-bottom: 8px;
+
+  &.main-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  &.schedule-row {
+    margin-bottom: 6px;
+  }
+}
+
+// ===== INFORMACIÓN PRINCIPAL =====
+.recurring-main-info {
+  flex: 1;
+  min-width: 0;
+
+  .recurring-description {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--gray-800);
+    margin-bottom: 4px;
+    line-height: 1.3;
+
+    @media (max-width: 480px) {
+      font-size: 0.9rem;
+    }
+  }
+
+  .recurring-details {
+    display: flex;
+    gap: 8px;
+    font-size: 0.8rem;
+    color: var(--gray-500);
+
+    .category,
+    .account {
+      font-weight: 500;
+    }
+
+    @media (max-width: 480px) {
+      gap: 6px;
+      font-size: 0.75rem;
+    }
+  }
+}
+
+.recurring-amount {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--gray-800);
+  flex-shrink: 0;
+
+  &.income {
+    color: #06b6d4;
+  }
+
+  &.expense {
+    color: #ef4444;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1rem;
+  }
+}
+
+// ===== INFORMACIÓN DE PROGRAMACIÓN =====
+.schedule-info {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+
+  @media (max-width: 480px) {
+    gap: 8px;
+  }
+
+  .date-item {
+    display: flex;
+    flex-direction: column;
+
+    .date-label {
+      color: var(--gray-500);
+      font-weight: 600;
+      font-size: 0.7rem;
+      margin-bottom: 2px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .date-value {
+      color: var(--gray-800);
+      font-weight: 600;
+      font-size: 0.8rem;
+
+      @media (max-width: 480px) {
+        font-size: 0.75rem;
+      }
+    }
+  }
+}
+
+// ===== ACCIONES DE TARJETA =====
+.card-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding-top: 10px;
+  border-top: 1px solid #f1f5f9;
+  margin-top: 8px;
+
+  @media (max-width: 480px) {
+    gap: 6px;
+    padding-top: 8px;
+    margin-top: 6px;
+  }
+}
+
+
+// ===== RESPONSIVE DESIGN =====
+@media (max-width: 768px) {
+  .recurring-transactions-container {
+    padding: 12px 8px;
+  }
+
+  .recurring-header {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+  }
+
+  .header-title {
+    font-size: 1.5rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .stat-card {
+    padding: 8px 4px;
+  }
+
+  .stat-amount {
+    font-size: 1.1rem;
+  }
+
+  .filters-grid {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .filter-item {
+    padding: 6px 10px;
+  }
+
+  .recurring-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 12px;
+  }
+
+  .recurring-card {
+    padding: 10px;
+  }
+
+  .card-header {
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+
+  .recurring-type-badge {
+    font-size: 0.8rem;
+  }
+
+  .recurring-status-badge {
+    font-size: 0.6rem;
+    padding: 3px 7px;
+  }
+
+  .recurring-main-info {
+    .recurring-description {
+      font-size: 0.9rem;
+      margin-bottom: 2px;
+    }
+
+    .recurring-details {
+      gap: 6px;
+      font-size: 0.75rem;
+    }
+  }
+
+  .recurring-amount {
+    font-size: 1rem;
+  }
+
+  .schedule-info {
+    gap: 8px;
+    font-size: 0.8rem;
+
+    .date-item {
+      .date-label {
+        font-size: 0.65rem;
+      }
+
+      .date-value {
+        font-size: 0.75rem;
+      }
+    }
+  }
+
+  .card-actions {
+    gap: 6px;
+    padding-top: 8px;
+    margin-top: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .recurring-transactions-container {
+    padding: 8px 4px;
+  }
+
+  .recurring-header {
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .header-title {
+    font-size: 1.3rem;
+  }
+
+  .btn-create-recurring {
+    width: 40px;
+    height: 40px;
+
+    .icon-plus {
+      font-size: 18px;
+    }
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+
+  .stat-card {
+    padding: 6px 2px;
+  }
+
+  .stat-label {
+    font-size: 0.7rem;
+  }
+
+  .stat-amount {
+    font-size: 1rem;
+  }
+
+  .stat-count {
+    font-size: 0.65rem;
+  }
+
+  .filters-grid {
+    gap: 6px;
+  }
+
+  .filter-item {
+    padding: 4px 8px;
+  }
+
+  .filter-label {
+    font-size: 0.8rem;
+  }
+
+  .filter-select {
+    font-size: 0.8rem;
+    min-width: 80px;
+  }
+
+  .empty-state {
+    padding: 24px 12px;
+  }
+
+  .empty-title {
+    font-size: 1.1rem;
+  }
+
+  .empty-description {
+    font-size: 0.85rem;
+  }
+
+  .recurring-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .recurring-card {
+    padding: 8px;
+    border-radius: 8px;
+  }
+
+  .card-header {
+    gap: 4px;
+    margin-bottom: 4px;
+  }
+
+  .recurring-type-badge {
+    font-size: 0.75rem;
+  }
+
+  .recurring-status-badge {
+    font-size: 0.55rem;
+    padding: 2px 6px;
+  }
+
+  .info-row {
+    margin-bottom: 6px;
+  }
+
+  .recurring-main-info {
+    .recurring-description {
+      font-size: 0.85rem;
+    }
+
+    .recurring-details {
+      gap: 4px;
+      font-size: 0.7rem;
+    }
+  }
+
+  .recurring-amount {
+    font-size: 0.95rem;
+  }
+
+  .schedule-info {
+    gap: 6px;
+
+    .date-item {
+      .date-label {
+        font-size: 0.6rem;
+        margin-bottom: 1px;
+      }
+
+      .date-value {
+        font-size: 0.7rem;
+      }
+    }
+  }
+
+  .card-actions {
+    gap: 4px;
+    padding-top: 6px;
+    margin-top: 4px;
+  }
+
+  .btn {
+    &.btn-icon-action {
+      width: 32px;
+      height: 32px;
+
+      .icon-edit,
+      .icon-delete,
+      .icon-toggle {
+        font-size: 0.9rem;
+      }
+    }
+  }
+}

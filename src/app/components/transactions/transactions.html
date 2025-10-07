@@ -1,0 +1,208 @@
+<!-- ==============================================
+     TRANSACTIONS COMPONENT TEMPLATE
+     ============================================== -->
+
+<div class="transactions-container">
+  <div class="transactions-header">
+    <div class="header-content">
+      <div class="header-icon">📊</div>
+      <div class="header-text">
+        <h2>Historial de Transacciones</h2>
+        <p>Administra y visualiza todas tus transacciones financieras</p>
+      </div>
+    </div>
+    
+    <div class="header-actions">
+      <button 
+        class="btn-primary"
+        (click)="openNewTransactionForm()"
+        aria-label="Agregar nueva transacción">
+        <span class="btn-icon">➕</span>
+        Nueva Transacción
+      </button>
+    </div>
+  </div>
+
+  <!-- Lista de Transacciones -->
+  <div class="transactions-list">
+    @if (filteredTransactions().length === 0) {
+      <div class="empty-state">
+        <div class="empty-icon">📝</div>
+        <h3>No hay transacciones</h3>
+        <p>Comienza agregando tu primera transacción para ver tu historial financiero.</p>
+        <button 
+          class="btn-secondary"
+          (click)="openNewTransactionForm()">
+          Agregar Primera Transacción
+        </button>
+      </div>
+    } @else {
+      @for (transaction of filteredTransactions(); track transaction.id) {
+        <div class="transaction-item" 
+             [class.income]="transaction.type === 'income'"
+             [class.expense]="transaction.type === 'expense'"
+             [style.background]="getTransactionCardGradient(transaction)">
+          
+          <div class="transaction-icon">
+            @if (transaction.type === 'income') {
+              <span class="icon">💰</span>
+            } @else {
+              <span class="icon">💳</span>
+            }
+          </div>
+          
+          <div class="transaction-details">
+            <div class="transaction-main">
+              <div class="transaction-description">
+                {{transaction.description}}
+              </div>
+              <div class="transaction-amount" 
+                   [class.positive]="transaction.type === 'income'"
+                   [class.negative]="transaction.type === 'expense'">
+                {{transaction.type === 'expense' ? '-' : '+'}}S/ {{transaction.amount | number:'1.2-2'}}
+              </div>
+            </div>
+            
+            <div class="transaction-meta">
+              <div class="transaction-info">
+                <span class="info-item">
+                  <span class="info-icon">📅</span>
+                  {{transaction.date | date:'short'}}
+                </span>
+                <span class="info-item">
+                  <span class="info-icon">🏦</span>
+                  {{transaction.account?.name || 'Cuenta no encontrada'}}
+                </span>
+              </div>
+              
+              <div class="transaction-actions">
+                <button 
+                  class="btn-icon"
+                  (click)="editTransaction(transaction.id)"
+                  aria-label="Editar transacción"
+                  title="Editar">
+                  ✏️
+                </button>
+                <button 
+                  class="btn-icon delete"
+                  (click)="deleteTransaction(transaction.id)"
+                  aria-label="Eliminar transacción"
+                  title="Eliminar">
+                  🗑️
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    }
+  </div>
+</div>
+
+<!-- Nueva Transacción Modal -->
+@if (showNewTransactionForm) {
+  <div class="modal-backdrop">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Nueva Transacción</h3>
+        <button class="close-btn" (click)="cancelNewTransaction()">✕</button>
+      </div>
+      
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="description">Descripción</label>
+          <input 
+            id="description"
+            type="text" 
+            [(ngModel)]="newTransaction.description"
+            placeholder="Ingresa una descripción">
+        </div>
+        
+        <div class="form-group">
+          <label for="amount">Monto</label>
+          <input 
+            id="amount"
+            type="number" 
+            [(ngModel)]="newTransaction.amount"
+            placeholder="0.00">
+        </div>
+        
+        <div class="form-group">
+          <label for="type">Tipo</label>
+          <select id="type" [(ngModel)]="newTransaction.type">
+            <option value="expense">Gasto</option>
+            <option value="income">Ingreso</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="account">Cuenta</label>
+          <select id="account" [(ngModel)]="newTransaction.accountId">
+            @for (account of accounts(); track account.id) {
+              <option [value]="account.id">{{account.name}}</option>
+            }
+          </select>
+        </div>
+      </div>
+      
+      <div class="modal-footer">
+        <button class="btn-secondary" (click)="cancelNewTransaction()">Cancelar</button>
+        <button class="btn-primary" (click)="saveNewTransaction()">Guardar</button>
+      </div>
+    </div>
+  </div>
+}
+
+<!-- Editar Transacción Modal -->
+@if (showEditTransactionForm) {
+  <div class="modal-backdrop">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Editar Transacción</h3>
+        <button class="close-btn" (click)="cancelEditTransaction()">✕</button>
+      </div>
+      
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="editDescription">Descripción</label>
+          <input 
+            id="editDescription"
+            type="text" 
+            [(ngModel)]="editTransaction_form.description"
+            placeholder="Ingresa una descripción">
+        </div>
+        
+        <div class="form-group">
+          <label for="editAmount">Monto</label>
+          <input 
+            id="editAmount"
+            type="number" 
+            [(ngModel)]="editTransaction_form.amount"
+            placeholder="0.00">
+        </div>
+        
+        <div class="form-group">
+          <label for="editType">Tipo</label>
+          <select id="editType" [(ngModel)]="editTransaction_form.type">
+            <option value="expense">Gasto</option>
+            <option value="income">Ingreso</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="editAccount">Cuenta</label>
+          <select id="editAccount" [(ngModel)]="editTransaction_form.accountId">
+            @for (account of accounts(); track account.id) {
+              <option [value]="account.id">{{account.name}}</option>
+            }
+          </select>
+        </div>
+      </div>
+      
+      <div class="modal-footer">
+        <button class="btn-secondary" (click)="cancelEditTransaction()">Cancelar</button>
+        <button class="btn-primary" (click)="saveEditTransaction()">Actualizar</button>
+      </div>
+    </div>
+  </div>
+}

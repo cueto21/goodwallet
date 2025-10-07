@@ -1,0 +1,268 @@
+<div class="friends-page" [class.dark]="isDarkMode()">
+  <div class="container-fluid py-4">
+    <!-- Header Section -->
+    <div class="row mb-4">
+      <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <div>
+            <h1 class="page-title mb-1">Amigos</h1>
+            <p class="text-muted mb-0">Gestiona tus conexiones y transacciones compartidas</p>
+          </div>
+          <button class="btn btn-primary btn-lg px-4" (click)="openAddFriendForm()">
+            <i class="fas fa-user-plus me-2"></i>Agregar Amigo
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats Row -->
+    <div class="row mb-4">
+      <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3">
+        <div class="stats-card friends-count">
+          <div class="stats-icon">
+            <i class="fas fa-users"></i>
+          </div>
+          <div class="stats-content">
+            <h3 class="stats-number">{{ acceptedFriends().length }}</h3>
+            <p class="stats-label">Amigos</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3">
+        <div class="stats-card pending-count">
+          <div class="stats-icon">
+            <i class="fas fa-clock"></i>
+          </div>
+          <div class="stats-content">
+            <h3 class="stats-number">{{ pendingRequests().length }}</h3>
+            <p class="stats-label">Solicitudes</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3">
+        <div class="stats-card owed-count">
+          <div class="stats-icon">
+            <i class="fas fa-arrow-up"></i>
+          </div>
+          <div class="stats-content">
+            <h3 class="stats-number">S/ {{ formatCurrency(totalOwed()) }}</h3>
+            <p class="stats-label">Me deben</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-3">
+        <div class="stats-card owing-count">
+          <div class="stats-icon">
+            <i class="fas fa-arrow-down"></i>
+          </div>
+          <div class="stats-content">
+            <h3 class="stats-number">S/ {{ formatCurrency(totalOwing()) }}</h3>
+            <p class="stats-label">Debo</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content Grid -->
+    <div class="row">
+      <!-- Friends Section -->
+      <div class="col-xl-4 col-lg-6 col-md-12 mb-4">
+        <div class="section-card">
+          <div class="section-header">
+            <h2 class="section-title">
+              <i class="fas fa-user-friends me-2"></i>Mis Amigos
+            </h2>
+          </div>
+          <div class="section-body">
+            <div *ngIf="acceptedFriends().length === 0" class="empty-state">
+              <div class="empty-icon">
+                <i class="fas fa-users"></i>
+              </div>
+              <h4>No tienes amigos aún</h4>
+              <p>¡Agrega algunos para compartir gastos!</p>
+            </div>
+            <div class="friends-grid">
+              <div *ngFor="let friend of acceptedFriends()" class="friend-card">
+                <div class="friend-avatar">
+                  <i class="fas fa-user"></i>
+                </div>
+                <div class="friend-info">
+                  <h5 class="friend-name">{{ friend.display_name || friend.email }}</h5>
+                  <p class="friend-email" *ngIf="friend.display_name">{{ friend.email }}</p>
+                  <span class="friend-status accepted">
+                    <i class="fas fa-check-circle me-1"></i>Amigo
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pending Requests Section -->
+      <div class="col-xl-4 col-lg-6 col-md-12 mb-4" *ngIf="pendingRequests().length > 0">
+        <div class="section-card">
+          <div class="section-header">
+            <h2 class="section-title">
+              <i class="fas fa-user-clock me-2"></i>Solicitudes
+            </h2>
+          </div>
+          <div class="section-body">
+            <div class="pending-grid">
+              <div *ngFor="let friend of pendingRequests()" class="pending-card">
+                <div class="pending-avatar">
+                  <i class="fas fa-user"></i>
+                </div>
+                <div class="pending-info">
+                  <h6 class="pending-name">{{ friend.display_name || friend.email }}</h6>
+                  <p class="pending-email" *ngIf="friend.display_name">{{ friend.email }}</p>
+                  <span class="pending-status" [class]="friend.direction">
+                    <i class="fas fa-arrow-left me-1" *ngIf="friend.direction === 'received'"></i>
+                    <i class="fas fa-arrow-right me-1" *ngIf="friend.direction === 'sent'"></i>
+                    {{ friend.direction === 'received' ? 'Recibida' : 'Enviada' }}
+                  </span>
+                </div>
+                <div class="pending-actions" *ngIf="friend.direction === 'received'">
+                  <button class="btn btn-success btn-sm" (click)="acceptFriend(friend.id)">
+                    <i class="fas fa-check me-1"></i>Aceptar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Shared Transactions Section -->
+      <div class="col-xl-8 col-lg-12 col-md-12 mb-4">
+        <div class="section-card">
+          <div class="section-header">
+            <h2 class="section-title">
+              <i class="fas fa-handshake me-2"></i>Transacciones Compartidas
+            </h2>
+          </div>
+          <div class="section-body">
+            <div class="row">
+              <!-- Money Owed to Me -->
+              <div class="col-lg-6 mb-4">
+                <div class="transaction-section">
+                  <h4 class="transaction-title text-success">
+                    <i class="fas fa-arrow-up me-2"></i>Dinero que me deben
+                  </h4>
+                  <div *ngIf="sharedTransactions().owing.length === 0" class="empty-transaction">
+                    <i class="fas fa-check-circle"></i>
+                    <p>Nadie te debe dinero actualmente</p>
+                  </div>
+                  <div class="transaction-list">
+                    <div *ngFor="let tx of sharedTransactions().owing" class="transaction-card" [class.paid]="tx.status === 'paid'">
+                      <div class="transaction-icon">
+                        <i class="fas fa-dollar-sign"></i>
+                      </div>
+                      <div class="transaction-content">
+                        <h6 class="transaction-description">{{ tx.description }}</h6>
+                        <p class="transaction-friend">{{ tx.friend_name }}</p>
+                        <div class="transaction-footer">
+                          <span class="transaction-amount text-success">+S/ {{ formatCurrency(tx.amount_owed) }}</span>
+                          <span class="transaction-status" [class]="tx.status">
+                            {{ tx.status === 'paid' ? 'Pagado' : 'Pendiente' }}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Money I Owe -->
+              <div class="col-lg-6 mb-4">
+                <div class="transaction-section">
+                  <h4 class="transaction-title text-danger">
+                    <i class="fas fa-arrow-down me-2"></i>Dinero que debo
+                  </h4>
+                  <div *ngIf="sharedTransactions().owed.length === 0" class="empty-transaction">
+                    <i class="fas fa-check-circle"></i>
+                    <p>No debes dinero a nadie</p>
+                  </div>
+                  <div class="transaction-list">
+                    <div *ngFor="let tx of sharedTransactions().owed" class="transaction-card" [class.paid]="tx.status === 'paid'">
+                      <div class="transaction-icon">
+                        <i class="fas fa-dollar-sign"></i>
+                      </div>
+                      <div class="transaction-content">
+                        <h6 class="transaction-description">{{ tx.description }}</h6>
+                        <p class="transaction-friend">{{ tx.creator_name }}</p>
+                        <div class="transaction-footer">
+                          <span class="transaction-amount text-danger">-S/ {{ formatCurrency(tx.amount_owed) }}</span>
+                          <span class="transaction-status" [class]="tx.status">
+                            {{ tx.status === 'paid' ? 'Pagado' : 'Pendiente' }}
+                          </span>
+                        </div>
+                      </div>
+                      <div class="transaction-actions" *ngIf="tx.status === 'pending'">
+                        <button class="btn btn-primary btn-sm" (click)="openPayModal(tx)">
+                          <i class="fas fa-credit-card me-1"></i>Pagar
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Friend Modal -->
+  <app-add-friend-modal
+    [isOpen]="showAddFriendForm()"
+    (onClose)="cancelAddFriend()"
+    (onFriendAdded)="onFriendAdded()">
+  </app-add-friend-modal>
+
+  <!-- Pay Modal -->
+  <div *ngIf="selectedSharedTx" class="modal-overlay" (click)="cancelPay()">
+    <div class="modal fade show d-block" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">
+              <i class="fas fa-credit-card me-2"></i>Pagar Transacción Compartida
+            </h5>
+            <button type="button" class="btn-close" (click)="cancelPay()"></button>
+          </div>
+          <div class="modal-body">
+            <div class="transaction-summary mb-4">
+              <div class="summary-item">
+                <strong>Descripción:</strong> {{ selectedSharedTx.description }}
+              </div>
+              <div class="summary-item">
+                <strong>Monto a pagar:</strong> <span class="text-danger">S/ {{ formatCurrency(selectedSharedTx.amount_owed) }}</span>
+              </div>
+              <div class="summary-item">
+                <strong>Total de la transacción:</strong> S/ {{ formatCurrency(selectedSharedTx.total_amount) }}
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="accountSelect" class="form-label">Seleccionar cuenta para el pago:</label>
+              <select id="accountSelect" class="form-select" [(ngModel)]="selectedAccountId">
+                <option *ngFor="let account of accounts()" [value]="account.id">
+                  {{ account.name }} - S/ {{ formatCurrency(account.balance) }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="cancelPay()">
+              <i class="fas fa-times me-1"></i>Cancelar
+            </button>
+            <button type="button" class="btn btn-primary" (click)="paySharedTransaction()">
+              <i class="fas fa-check me-1"></i>Confirmar Pago
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

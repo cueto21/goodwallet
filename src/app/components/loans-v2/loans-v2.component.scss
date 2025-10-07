@@ -1,0 +1,2784 @@
+// ===============================================
+// LOANS V2 COMPONENT - DISEÑO MODERNO Y RESPONSIVE
+// ===============================================
+
+// ===== VARIABLES DE DISEÑO =====
+:root {
+  --primary-color: #3b82f6;
+  --primary-dark: #1d4ed8;
+  --success-color: #10b981;
+  --success-dark: #059669;
+  --warning-color: #f59e0b;
+  --warning-dark: #d97706;
+  --danger-color: #ef4444;
+  --danger-dark: #dc2626;
+
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+
+  --border-radius: 12px;
+  --border-radius-sm: 8px;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.12);
+  --transition: all 0.2s ease;
+}
+
+// Dark mode overrides
+.loans-v2-container.dark {
+  --gray-50: #2a2a2a;
+  --gray-100: #3d3d3d;
+  --gray-200: #505050;
+  --gray-300: #656565;
+  --gray-400: #878787;
+  --gray-500: #a9a9a9;
+  --gray-600: #cccccc;
+  --gray-700: #e0e0e0;
+  --gray-800: #f5f5f5;
+  --gray-900: #ffffff;
+
+  // Override specific text colors for dark mode
+  .header-title {
+    color: #ffffff !important;
+  }
+
+  .loan-type-badge .badge-text {
+    color: #ffffff !important;
+  }
+
+  .loan-amount {
+    color: #ffffff !important;
+  }
+
+  .loan-person {
+    color: #cccccc !important;
+  }
+
+  .loan-description {
+    color: #cccccc !important;
+  }
+
+  .summary-label {
+    color: #a9a9a9 !important;
+  }
+
+  .summary-value {
+    color: #ffffff !important;
+  }
+
+  .date-label {
+    color: #cccccc !important;
+  }
+
+  .date-value {
+    color: #ffffff !important;
+  }
+
+  .progress-text {
+    color: #cccccc !important;
+  }
+
+  .progress-percentage {
+    color: #cccccc !important;
+  }
+
+  .empty-title {
+    color: #ffffff !important;
+  }
+
+  .empty-description {
+    color: #cccccc !important;
+  }
+
+  .filter-label {
+    color: #cccccc !important;
+  }
+
+  .filter-select {
+    color: #ffffff !important;
+    background: var(--gray-100) !important;
+  }
+
+  .input-label {
+    color: #cccccc !important;
+  }
+
+  .input-field {
+    color: #ffffff !important;
+    background: var(--gray-100) !important;
+  }
+
+  .checkbox-label {
+    color: #cccccc !important;
+  }
+
+  .detail-label {
+    color: #cccccc !important;
+  }
+
+  .detail-value {
+    color: #ffffff !important;
+  }
+
+  .confirm-message {
+    color: #cccccc !important;
+  }
+
+  .option-description {
+    color: #a9a9a9 !important;
+  }
+
+  // Installments grid background
+  .installments-grid {
+    background: var(--gray-100) !important;
+    border-color: var(--gray-200) !important;
+
+    &::-webkit-scrollbar-track {
+      background: var(--gray-200) !important;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: var(--gray-400) !important;
+
+      &:hover {
+        background: var(--gray-500) !important;
+      }
+    }
+  }
+
+  // Completed loans background in dark mode
+  .loan-card.loan-paid {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%) !important;
+    border-color: var(--gray-300) !important;
+  }
+
+  // Filter items background
+  .filter-item {
+    background: var(--gray-100) !important;
+    border-color: var(--gray-200) !important;
+
+    &:hover {
+      background: var(--gray-200) !important;
+      border-color: var(--gray-300) !important;
+    }
+  }
+}
+
+// ===== CONTENEDOR PRINCIPAL =====
+.loans-v2-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+  padding-bottom: 7rem;
+  background: var(--gray-50);
+  min-height: 100vh;
+  transition: background-color 0.3s ease;
+
+  @media (max-width: 768px) {
+    padding: 12px 8px;
+  }
+}
+
+// ===== HEADER =====
+.loans-header {
+  margin-bottom: 16px;
+  
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    
+    @media (max-width: 480px) {
+      gap: 12px;
+      // Mantener en fila para que el botón esté al lado del título
+    }
+  }
+  
+  .header-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--gray-800);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1; // Permite que el título use el espacio disponible
+    
+    @media (max-width: 768px) {
+      font-size: 1.5rem;
+    }
+    
+    @media (max-width: 480px) {
+      font-size: 1.3rem;
+    }
+  }
+}
+
+// ===== BOTÓN CREAR PRÉSTAMO =====
+.btn-create-loan {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #0B3954; /* Prussian Blue */
+  color: #BFD7EA; /* Columbia Blue for icon/text */
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  box-shadow: 0 2px 10px rgba(11, 57, 84, 0.24);
+  flex-shrink: 0;
+  
+  &:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 6px 18px rgba(11, 57, 84, 0.28);
+    background: #063047; /* darker Prussian Blue on hover */
+  }
+  
+  &:active {
+    transform: translateY(0) scale(0.98);
+  }
+  
+  .icon-plus {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1;
+    color: #BFD7EA; /* Columbia Blue icon */
+  }
+  
+  @media (max-width: 480px) {
+    width: 40px;
+    height: 40px;
+    
+    .icon-plus {
+      font-size: 18px;
+    }
+  }
+}
+
+// ===== BOTONES ESTILO DASHBOARD (V1) =====
+.btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  
+  // Variantes
+  &.btn-primary {
+    background: rgba(59, 130, 246, 0.9);
+    color: white;
+    
+    &:hover:not(:disabled) {
+      background: rgba(59, 130, 246, 1);
+      transform: translateY(-1px);
+    }
+  }
+  
+  &.btn-success {
+    /* Neutral default for payment buttons — color should be set by loan-type specific rules */
+    background: transparent;
+    color: inherit;
+    width: 100%;
+    margin-bottom: 12px;
+    box-shadow: none !important;
+
+    &:hover:not(:disabled) {
+      /* keep subtle motion but no forced color */
+      transform: translateY(-1px);
+      box-shadow: none !important;
+    }
+
+    // When used in card actions width is controlled by the card layout
+    .card-actions & {
+      width: auto; // Override width: 100%
+      margin-bottom: 0; // Override margin-bottom
+      vertical-align: middle;
+    }
+  }
+  
+  &.btn-danger {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white;
+    
+    &:hover:not(:disabled) {
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+      transform: translateY(-1px);
+    }
+  }
+  
+  &.btn-payment {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    width: 100%;
+    margin-bottom: 12px;
+    
+    &:hover:not(:disabled) {
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+    
+    // Override styles when used in card actions
+    .card-actions & {
+      width: auto;
+      margin-bottom: 0;
+      vertical-align: middle;
+    }
+  }
+  
+  // Tamaños
+  &.btn-sm {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    gap: 4px;
+  }
+  
+  &.btn-icon {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    justify-content: center;
+  }
+  
+  .btn-icon {
+    font-size: 1rem;
+  }
+  
+  .btn-text {
+    @media (max-width: 480px) {
+      display: none;
+    }
+  }
+}
+
+// ===== ESTADÍSTICAS =====
+.stats-section {
+  margin-bottom: 16px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+}
+
+.stat-card {
+  background: white;
+  border-radius: var(--border-radius) !important; /* force larger radius */
+  overflow: hidden; /* ensure background respects rounded corners */
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04); /* slightly stronger to show separation */
+  padding: 12px;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  
+  @media (max-width: 480px) {
+    padding: 8px 4px;
+  }
+  
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-lg);
+  }
+  
+  // Eliminamos el .stat-icon ya que no tenemos emojis
+  
+  &.stat-lent {
+    /* Background color 1 (primary) for lent totals */
+    background: var(--theme-btn-bg) !important; /* color 1 */
+    border-left: none;
+    border: 1px solid rgba(11, 57, 84, 0.12) !important;
+    border-radius: inherit !important;
+
+    .stat-amount,
+    .stat-label {
+      color: var(--theme-btn-text) !important; /* color 2 text (better contrast for Tema 2) */
+    }
+
+    /* Ensure stat-count gets the color 2 styling - override global styles.scss */
+    &.stat-card .stat-content .stat-count.stat-count--visible {
+      color: var(--theme-btn-text) !important; /* color 2 text */
+    }
+  }
+
+  &.stat-borrowed {
+    /* Background color 2 (secondary) for borrowed totals */
+    background: var(--theme-cards-bg) !important; /* color 2 */
+    border-left: none;
+    border: 1px solid rgba(59, 130, 246, 0.12) !important;
+    border-radius: inherit !important;
+
+    .stat-amount,
+    .stat-label {
+      color: var(--theme-btn-bg) !important; /* color 1 text */
+    }
+
+    /* Override global styles.scss rules with maximum specificity using component context */
+    :host & .stat-content .stat-count.stat-count--visible,
+    .loans-v2-container & .stat-content .stat-count.stat-count--visible {
+      color: var(--theme-btn-bg) !important; /* color 1 text */
+    }
+  }
+  
+  .stat-content {
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .stat-label {
+    margin: 0 0 4px 0;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--gray-500);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    
+    @media (max-width: 480px) {
+      font-size: 0.7rem;
+    }
+  }
+  
+  .stat-amount {
+    margin: 0 0 2px 0;
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--gray-800);
+    
+    @media (max-width: 480px) {
+      font-size: 1.1rem;
+    }
+  }
+  
+  .stat-count {
+    font-size: 0.7rem;
+    font-weight: 500;
+
+    @media (max-width: 480px) {
+      font-size: 0.65rem;
+    }
+  }
+
+}
+
+// ===== STAT-COUNT COLOR OVERRIDES =====
+.stat-card.stat-lent .stat-content .stat-count.stat-count--visible {
+  color: var(--theme-btn-text) !important;
+}
+
+.stat-card.stat-borrowed .stat-content .stat-count.stat-count--visible {
+  color: var(--theme-btn-bg) !important;
+}
+
+// ===== FILTROS (ESTILO V1) =====
+.filters-section {
+  margin-bottom: 16px;
+}
+
+.filters-grid {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  
+  @media (max-width: 640px) {
+    gap: 8px;
+  }
+  
+  @media (max-width: 480px) {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 6px;
+  }
+}
+
+.filter-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 8px 14px;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    border-color: #cbd5e0;
+    background: #ffffff;
+  }
+  
+  @media (max-width: 640px) {
+    justify-content: space-between;
+  }
+  
+  @media (max-width: 480px) {
+    flex: 1;
+    padding: 6px 10px;
+    min-width: 0; // Permite que se compriman
+  }
+}
+
+.filter-label {
+  font-size: 0.875rem;
+  color: #64748b;
+  font-weight: 500;
+  white-space: nowrap;
+  margin: 0;
+  
+  @media (max-width: 480px) {
+    font-size: 0.8rem;
+  }
+}
+
+.filter-select {
+  border: none;
+  background: transparent;
+  outline: none;
+  flex: 1;
+  font-size: 0.875rem;
+  color: #374151;
+  min-width: 120px;
+  cursor: pointer;
+  
+  &:focus {
+    outline: none;
+  }
+  
+  @media (max-width: 640px) {
+    text-align: right;
+  }
+  
+  @media (max-width: 480px) {
+    min-width: 80px;
+    font-size: 0.8rem;
+  }
+}
+
+// ===== ESTADO VACÍO =====
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  background: var(--gray-50);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--gray-200);
+
+  @media (max-width: 480px) {
+    padding: 24px 12px;
+  }
+  
+  .empty-title {
+    margin: 0 0 8px 0;
+    font-size: 1.3rem;
+    color: var(--gray-800);
+    font-weight: 700;
+    
+    @media (max-width: 480px) {
+      font-size: 1.1rem;
+    }
+  }
+  
+  .empty-description {
+    margin: 0 0 16px 0;
+    color: var(--gray-600);
+    font-size: 0.9rem;
+    
+    @media (max-width: 480px) {
+      font-size: 0.85rem;
+      margin-bottom: 12px;
+    }
+  }
+}
+
+// ===== GRID DE PRÉSTAMOS =====
+.loans-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 16px;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 12px;
+  }
+  
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}
+
+// ===== TARJETA DE PRÉSTAMO (ESTILO V1) =====
+.loan-card {
+  background: var(--gray-50);
+  border-radius: 10px;
+  padding: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--gray-200);
+  border-left: 4px solid var(--gray-300);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  @media (max-width: 480px) {
+    padding: 10px;
+  }
+  
+  &:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    border-color: #e2e8f0;
+  }
+  
+  // Estados por tipo (colores por defecto)
+  &.loan-lent {
+  border-left: 4px solid var(--theme-btn-bg);
+  }
+
+  &.loan-borrowed {
+  border-left: 4px solid var(--theme-cards-bg);
+  }
+
+  // Card actions divider line in dark mode - make it more subtle
+  .card-actions {
+    border-top-color: var(--gray-300) !important;
+  }
+}
+
+// ===== LOADING STATE =====
+.loading-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 20px;
+  min-height: 300px;
+}
+
+.loader-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.loader-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid var(--gray-200);
+  border-top: 4px solid var(--theme-cards-bg); // Use theme secondary color
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.loading-text {
+  color: var(--gray-600);
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+// Dark mode overrides for loading state
+.loans-v2-container.dark {
+  .loading-text {
+    color: var(--gray-400) !important;
+  }
+
+  .loader-spinner {
+    border-color: var(--gray-300);
+    border-top-color: var(--theme-cards-bg);
+  }
+  &.loan-borrowed {
+  border-left: 4px solid #BFD7EA;
+  }
+
+  // Estado de completado
+  &.loan-paid {
+    border-left: 4px solid #10b981;
+    background: linear-gradient(135deg, #fff 0%, #f0fdf4 100%);
+    opacity: 0.85;
+  }
+
+  // Estado vencido (MÁXIMA PRIORIDAD)
+  // Sobrescribe los colores de tipo si el préstamo está vencido
+  &.loan-overdue {
+    border-left: 4px solid #ef4444 !important;
+  }
+}
+
+// ===== HEADER DE TARJETA (ESTILO V1 - OPTIMIZADO) =====
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+  padding: 0;
+  background: none;
+  border: none;
+  gap: 8px;
+  
+  @media (max-width: 480px) {
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+  
+  // Contenedor derecho para badge + indicador
+  .status-container {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+}
+
+.loan-type-badge {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  color: #1e293b;
+  font-size: 0.85rem;
+  flex: 1;
+  min-width: 0; // Allow text truncation
+  
+  .badge-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    
+    @media (max-width: 480px) {
+      font-size: 0.8rem;
+    }
+  }
+}
+
+.loan-status-badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.2px;
+  flex-shrink: 0; // Don't shrink the status badge
+  white-space: nowrap; // Evitar que se rompa el texto
+  
+  @media (max-width: 480px) {
+    font-size: 0.6rem;
+    padding: 3px 7px;
+  }
+  
+  &.status-paid {
+    background: rgba(107, 114, 128, 0.1);
+    color: #4b5563;
+  }
+  
+  &.status-pending {
+  /* Theme colors for active status */
+  background: var(--theme-cards-bg);
+  color: var(--theme-btn-bg);
+  animation: none !important; // Eliminar cualquier animación del estado activo
+  }
+  
+  &.status-overdue {
+  /* Bittersweet background + white text for overdue status */
+  background: #FF6663;
+  color: #ffffff;
+  /* animation: pulse-red 2s infinite; */ /* Eliminado para evitar parpadeo */
+  }
+}
+
+// ===== INDICADOR DE VENCIDO =====
+
+.overdue-indicator-text {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #ef4444;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  margin-left: 4px;
+  white-space: nowrap;
+  
+  @media (max-width: 480px) {
+    font-size: 0.6rem;
+    margin-left: 3px;
+  }
+}
+
+/* When used inside an overdue status badge ensure the indicator text is white */
+.loan-status-badge.status-overdue .overdue-indicator-text {
+  color: #ffffff;
+}
+
+// ===== CUERPO DE TARJETA (ESTILO V1 - OPTIMIZADO) =====
+.card-body {
+  padding: 0;
+  /* allow body to grow so actions stay at bottom */
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+// ===== SISTEMA DE FILAS COMPACTAS =====
+.info-row {
+  margin-bottom: 8px;
+
+  &.main-layout-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+
+    @media (max-width: 480px) {
+      flex-direction: column;
+      gap: 12px;
+    }
+  }
+
+  &.main-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  
+  &.description-row {
+    margin-bottom: 6px;
+  }
+  
+  &.progress-row,
+  &.summary-row,
+  &.payment-controls-row,
+  &.dates-row {
+    margin-bottom: 6px;
+  }
+  
+  &.installments-row {
+    margin-bottom: 4px;
+  }
+}
+
+// ===== INFORMACIÓN PRINCIPAL COMPACTA =====
+.loan-main-info {
+  flex: 1;
+  min-width: 0;
+
+  .loan-amount {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 2px;
+    line-height: 1.2;
+
+    @media (max-width: 480px) {
+      font-size: 1.15rem;
+    }
+  }
+
+  .loan-person {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #475569;
+    margin-bottom: 0;
+
+    @media (max-width: 480px) {
+      font-size: 0.8rem;
+    }
+  }
+}
+
+// ===== NUEVO LAYOUT DE DOS COLUMNAS =====
+.main-left-column {
+  flex: 1;
+  min-width: 0;
+
+  .loan-amount {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 4px;
+    line-height: 1.2;
+
+    @media (max-width: 480px) {
+      font-size: 1.15rem;
+    }
+  }
+
+  .loan-description-compact {
+    font-size: 0.8rem;
+    color: #64748b;
+    line-height: 1.3;
+    margin-top: 2px;
+
+    @media (max-width: 480px) {
+      font-size: 0.75rem;
+    }
+  }
+}
+
+// Dark mode overrides for new layout elements
+.loans-v2-container.dark {
+  .loan-description-compact {
+    color: #cccccc !important;
+  }
+
+  // Days badges in dark mode - use theme color 2 background with white text
+  .days-badge {
+    background: var(--theme-cards-bg) !important;
+    color: #ffffff !important;
+
+    &.safe {
+      background: var(--theme-cards-bg) !important;
+      color: #ffffff !important;
+    }
+
+    &.warning {
+      background: var(--theme-cards-bg) !important;
+      color: #ffffff !important;
+    }
+
+    &.overdue {
+      background: var(--theme-cards-bg) !important;
+      color: #ffffff !important;
+    }
+  }
+
+  // Complete button in dark mode - background color 2, text color 1
+  .btn-success.btn-primary-action {
+    background: var(--theme-btn-text) !important; // color 2 (secondary)
+    color: var(--theme-btn-bg) !important; // color 1 (primary)
+    border-color: var(--theme-btn-text) !important;
+  }
+
+  // Edit button in dark mode - background color 1, text color 2 (opposite of complete button)
+  .btn-edit-loan {
+    background: var(--theme-btn-bg) !important; // color 1 (primary)
+    color: var(--theme-btn-text) !important; // color 2 (secondary)
+    border-color: var(--theme-btn-bg) !important;
+
+    .icon-edit {
+      color: var(--theme-btn-text) !important; // color 2 for icon
+    }
+  }
+
+  // Delete button in dark mode - same colors as edit button (background color 1, text color 2)
+  .btn-danger.btn-icon-action,
+  .btn-danger.btn-icon {
+    background: var(--theme-btn-bg) !important; // color 1 (primary)
+    color: var(--theme-btn-text) !important; // color 2 (secondary)
+    border-color: var(--theme-btn-bg) !important;
+
+    .icon-delete {
+      color: var(--theme-btn-text) !important; // color 2 for icon
+    }
+  }
+
+  // Status badges - ACTIVO badge with theme colors
+  .loan-status-badge {
+    &.status-pending {
+      background: var(--theme-cards-bg) !important; // color 2 (secondary) for Tema 2
+      color: #ffffff !important; // white text
+    }
+  }
+}
+
+.main-right-column {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  min-width: 120px;
+
+  @media (max-width: 480px) {
+    align-items: flex-start;
+    min-width: 0;
+  }
+
+  .loan-dates-compact {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-size: 0.75rem;
+
+    .date-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+      min-width: 0;
+
+      .date-label {
+        color: #64748b;
+        font-weight: 600;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+
+      .date-value {
+        color: #374151;
+        font-weight: 500;
+        text-align: right;
+
+        &.overdue {
+          color: var(--danger-color);
+          font-weight: 700;
+        }
+      }
+    }
+
+    @media (max-width: 480px) {
+      font-size: 0.7rem;
+
+      .date-item {
+        justify-content: flex-start;
+        gap: 4px;
+
+        .date-value {
+          text-align: left;
+        }
+      }
+    }
+  }
+}
+
+.loan-quick-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.installments-badge {
+  /* Theme colors for installments badge */
+  background: var(--theme-cards-bg);
+  color: var(--theme-btn-bg);
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-align: center;
+  
+  @media (max-width: 480px) {
+    font-size: 0.65rem;
+    padding: 2px 6px;
+  }
+}
+
+.days-badge {
+  padding: 2px 6px;
+  border-radius: 10px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-align: center;
+  min-width: 35px;
+  
+  &.safe {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--success-dark);
+  }
+  
+  &.warning {
+    background: rgba(100, 116, 139, 0.1);
+    color: #475569;
+  }
+  
+  &.overdue {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--danger-dark);
+  }
+}
+
+.days-badge-small {
+  padding: 2px 5px;
+  border-radius: 6px;
+  font-size: 0.55rem;
+  font-weight: 600;
+  text-align: center;
+  min-width: 20px;
+  white-space: nowrap;
+  
+  &.safe {
+    background: rgba(16, 185, 129, 0.15);
+    color: var(--success-dark);
+  }
+  
+  &.warning {
+    background: rgba(245, 158, 11, 0.15);
+    color: #d97706;
+  }
+  
+  &.overdue {
+    background: rgba(239, 68, 68, 0.15);
+    color: var(--danger-dark);
+  }
+}
+
+.loan-description {
+  font-size: 0.75rem;
+  color: #64748b;
+  line-height: 1.3;
+  
+  @media (max-width: 480px) {
+    font-size: 0.7rem;
+  }
+}
+
+// ===== PROGRESO COMPACTO =====
+.progress-section {
+  width: 100%;
+}
+
+.progress-header-compact {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+  
+  .progress-text {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--gray-600);
+  }
+  
+  .progress-percentage {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--gray-600);
+  }
+}
+
+.progress-bar {
+  height: 6px;
+  background: var(--gray-200);
+  border-radius: 3px;
+  overflow: hidden;
+  
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--success-color), var(--success-dark));
+    border-radius: 3px;
+    transition: width 0.3s ease;
+  }
+}
+
+// ===== RESUMEN COMPACTO =====
+.summary-compact {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  
+  .summary-item {
+    text-align: center;
+    background: var(--gray-50);
+    padding: 4px 2px;
+    border-radius: 6px;
+    border: 1px solid var(--gray-200);
+    
+    @media (max-width: 480px) {
+      padding: 3px 1px;
+    }
+    
+    .summary-label {
+      display: block;
+      font-size: 0.6rem;
+      color: var(--gray-500);
+      margin-bottom: 2px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      font-weight: 600;
+      
+      @media (max-width: 480px) {
+        font-size: 0.55rem;
+        margin-bottom: 1px;
+      }
+    }
+    
+    .summary-value {
+      display: block;
+      font-weight: 700;
+      color: var(--gray-800);
+      font-size: 0.75rem;
+      
+      @media (max-width: 480px) {
+        font-size: 0.7rem;
+      }
+      
+      &.urgent {
+        color: var(--danger-color);
+      }
+    }
+  }
+}
+
+// ===== CONTROLES DE PAGO COMPACTOS =====
+.payment-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  .btn-payment {
+    flex: 0 0 auto;
+    padding: 4px 8px;
+    font-size: 0.7rem;
+    
+    @media (max-width: 480px) {
+      padding: 3px 6px;
+      font-size: 0.65rem;
+    }
+  }
+}
+
+.payment-mode-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  
+  .toggle-label {
+    font-size: 0.7rem;
+    color: var(--gray-600);
+    white-space: nowrap;
+    
+    @media (max-width: 480px) {
+      font-size: 0.65rem;
+    }
+  }
+}
+
+// ===== FECHAS COMPACTAS =====
+.loan-dates-compact {
+  background: var(--gray-50);
+  border-radius: var(--border-radius-sm);
+  padding: 6px 8px;
+  
+  &.dates-overdue {
+    /* background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%); */ /* Eliminado degradado */
+    border: 1px solid #fca5a5;
+  }
+}
+
+.date-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  
+  .date-item {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    
+    .date-label {
+      color: var(--gray-500);
+      font-weight: 600;
+      font-size: 0.65rem;
+      margin-bottom: 2px;
+      text-transform: uppercase;
+    }
+    
+    .date-value {
+      color: var(--gray-800);
+      font-weight: 600;
+      font-size: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 4px;
+      
+      &.overdue {
+        color: var(--danger-color);
+      }
+    }
+  }
+}
+
+// ===== SECCIÓN DE CUOTAS (ESTILO V1) =====
+.installments-section {
+  background: #f8fafc;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  
+  &.overdue {
+    background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+    border: 1px solid #fca5a5;
+  }
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  
+  .progress-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #1e293b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    
+    .progress-icon {
+      font-size: 1rem;
+    }
+  }
+  
+  .progress-badge {
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: #059669;
+    background: rgba(16, 185, 129, 0.1);
+    padding: 6px 12px;
+    border-radius: 20px;
+    border: 2px solid rgba(16, 185, 129, 0.2);
+    min-width: 60px;
+    text-align: center;
+    
+    &.overdue {
+      color: #dc2626;
+      background: rgba(220, 38, 38, 0.1);
+      border-color: rgba(220, 38, 38, 0.2);
+      /* animation: pulse-progress 2s infinite; */ /* Eliminado para evitar parpadeo */
+    }
+  }
+}
+
+.progress-bar-container {
+  margin-bottom: 16px;
+  
+  .progress-bar {
+    height: 10px;
+    background: var(--gray-200);
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 8px;
+    
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--success-color), var(--success-dark));
+      border-radius: 5px;
+      transition: width 0.3s ease;
+    }
+  }
+  
+  .progress-percentage {
+    text-align: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--gray-600);
+  }
+}
+
+.summary-info {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 12px;
+  
+  @media (max-width: 480px) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+    margin-bottom: 8px;
+  }
+  
+  .summary-item {
+    text-align: center;
+    background: var(--gray-50);
+    color: var(--gray-800);
+    padding: 8px 4px;
+    border-radius: var(--border-radius-sm);
+    border: 1px solid var(--gray-200);
+    
+    @media (max-width: 480px) {
+      padding: 6px 2px;
+    }
+    
+    .summary-label {
+      display: block;
+      font-size: 0.65rem;
+      color: var(--gray-500);
+      margin-bottom: 3px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      font-weight: 600;
+      
+      @media (max-width: 480px) {
+        font-size: 0.6rem;
+        margin-bottom: 2px;
+      }
+    }
+    
+    .summary-value {
+      display: block;
+      font-weight: 700;
+      color: var(--gray-800);
+      font-size: 0.85rem;
+      
+      @media (max-width: 480px) {
+        font-size: 0.8rem;
+      }
+      
+      &.urgent {
+        color: var(--danger-color);
+        /* animation: pulse 2s infinite; */ /* Eliminado para evitar parpadeo */
+      }
+      
+      &.amount {
+        font-size: 1.1rem;
+      }
+    }
+  }
+}
+
+// ===== PAGOS DE CUOTAS =====
+.installments-payment {
+  .payment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    
+    @media (max-width: 480px) {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 12px;
+    }
+    
+    .payment-title {
+      font-weight: 600;
+      color: var(--gray-700);
+    }
+    
+    .payment-mode-toggle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+  }
+}
+
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 32px;
+  height: 18px;
+  
+  @media (max-width: 480px) {
+    width: 28px;
+    height: 16px;
+  }
+  
+  input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    
+    &:checked + .toggle-slider {
+      background-color: var(--success-color);
+    }
+    
+    &:checked + .toggle-slider:before {
+      transform: translateX(14px);
+      
+      @media (max-width: 480px) {
+        transform: translateX(12px);
+      }
+    }
+  }
+}
+
+.toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--gray-300);
+  transition: 0.2s;
+  border-radius: 18px;
+  
+  &:before {
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 14px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    transition: 0.2s;
+    border-radius: 50%;
+    
+    @media (max-width: 480px) {
+      height: 12px;
+      width: 12px;
+    }
+  }
+}
+
+.toggle-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--gray-600);
+}
+
+// ===== GRID DE BOTONES DE CUOTAS (ESTILO V1 - COMPACTO) =====
+.installments-grid {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(3, 28px);
+  grid-auto-columns: 28px;
+  gap: 4px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 4px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background: #fafafa;
+  
+  @media (max-width: 480px) {
+    grid-template-rows: repeat(2, 26px);
+    grid-auto-columns: 26px;
+    gap: 3px;
+    padding: 3px;
+  }
+  
+  // Scrollbar personalizado
+  &::-webkit-scrollbar {
+    height: 6px;
+    
+    @media (max-width: 480px) {
+      height: 4px;
+    }
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 3px;
+    margin: 0 4px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: #cbd5e0;
+    border-radius: 3px;
+    
+    &:hover {
+      background: #9ca3af;
+    }
+  }
+}
+
+.installment-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 700;
+  font-size: 0.65rem;
+  flex-shrink: 0;
+  margin: 0;
+  position: relative;
+  overflow: hidden;
+  
+  @media (max-width: 480px) {
+    width: 26px;
+    height: 26px;
+    font-size: 0.6rem;
+  }
+  
+  &:hover:not(:disabled) {
+    transform: scale(1.05);
+    z-index: 2;
+  }
+  
+  &:active:not(:disabled) {
+    transform: scale(0.95);
+  }
+
+  .installment-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .installment-number,
+  .installment-icon {
+    display: block;
+    line-height: 1;
+  }
+
+  // Installment number color overrides for partial payments
+  .installment-btn.btn-partial .installment-number {
+    color: var(--theme-btn-bg); /* Theme button background color */
+    font-weight: 700;
+    z-index: 2; /* ensure number sits above progress tint */
+  }
+  
+  // Estados
+  &.btn-paid {
+    border-color: #10b981;
+    background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+    color: #047857;
+  }
+  
+  &.btn-pending {
+    border-color: #64748b;
+    background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+    color: #475569;
+    
+    &:hover:not(:disabled) {
+      border-color: #475569;
+      background: linear-gradient(135deg, #cbd5e1 0%, #94a3b8 100%);
+      color: white;
+    }
+  }
+
+  &.btn-partial {
+    border-color: #64748b;
+    background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+    color: #475569;
+    position: relative;
+    overflow: hidden;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: var(--progress-width, 0%);
+  /* Theme color tint for partial payment progress */
+  background: var(--theme-cards-bg);
+      transition: width 0.3s ease;
+      z-index: 0;
+      border-radius: 5px 0 0 5px;
+    }
+    
+    .installment-content {
+      position: relative;
+      z-index: 1;
+    }
+    
+    &:hover:not(:disabled) {
+      border-color: #475569;
+      background: linear-gradient(135deg, #cbd5e1 0%, #94a3b8 100%);
+      color: white;
+
+      &::before {
+        /* Hover tint uses theme color with opacity */
+        background: var(--theme-cards-bg);
+        opacity: 0.8;
+      }
+    }
+  }
+  
+  &.btn-overdue {
+    border-color: #ef4444;
+    background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+    color: #dc2626;
+    /* animation: pulse-installment 2s infinite; */ /* Eliminado para evitar parpadeo */
+    
+    &:hover:not(:disabled) {
+      border-color: #dc2626;
+      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+      color: white;
+    }
+  }
+  
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+// ===== FECHAS DE PRÉSTAMO SIMPLE =====
+.loan-dates {
+  background: var(--gray-50);
+  border-radius: var(--border-radius-sm);
+  padding: 10px;
+  
+  @media (max-width: 480px) {
+    padding: 8px;
+  }
+  
+  &.dates-overdue {
+    /* background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%); */ /* Eliminado degradado */
+    border: 1px solid #fca5a5;
+  }
+  
+  .date-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+    font-size: 0.8rem;
+    
+    @media (max-width: 480px) {
+      font-size: 0.75rem;
+      margin-bottom: 4px;
+    }
+    
+    &:last-child {
+      margin-bottom: 8px;
+      
+      @media (max-width: 480px) {
+        margin-bottom: 6px;
+      }
+    }
+    
+    .date-label {
+      color: var(--gray-600);
+      font-weight: 600;
+    }
+    
+    .date-value {
+      color: var(--gray-800);
+      font-weight: 500;
+      
+      &.overdue {
+        color: var(--danger-color);
+        font-weight: 700;
+      }
+    }
+  }
+  
+  .days-remaining {
+    padding: 6px 10px;
+    border-radius: var(--border-radius-sm);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-align: center;
+    
+    @media (max-width: 480px) {
+      font-size: 0.7rem;
+      padding: 4px 8px;
+    }
+    
+    &.safe {
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--success-dark);
+    }
+    
+    &.warning {
+      background: rgba(245, 158, 11, 0.1);
+      color: var(--warning-dark);
+    }
+    
+    &.overdue {
+      background: rgba(239, 68, 68, 0.1);
+      color: var(--danger-dark);
+      /* animation: pulse 2s infinite; */ /* Eliminado para evitar parpadeo */
+    }
+  }
+}
+
+// ===== ACCIONES DE TARJETA (ESTILO V1 - OPTIMIZADO) =====
+.card-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding-top: 10px;
+  border-top: 1px solid #f1f5f9;
+  margin-top: 8px;
+  /* push actions to bottom of card when card is a column flex container */
+  margin-top: auto;
+  
+  @media (max-width: 480px) {
+    gap: 6px;
+    padding-top: 8px;
+    margin-top: 6px;
+  }
+  
+  // Botón principal (ocupa la mayor parte del ancho)
+  .btn-primary-action {
+    flex: 1;
+    min-height: 36px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0; // Reset any margin
+    
+    @media (max-width: 480px) {
+      min-height: 40px;
+      font-size: 0.9rem;
+      padding: 10px 14px;
+    }
+    
+    // Override specific button styles in card actions
+    &.btn-payment {
+      width: auto; // Override width: 100%
+      margin-bottom: 0; // Override margin-bottom
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: white;
+      
+      &:hover:not(:disabled) {
+        background: linear-gradient(135deg, #059669 0%, #047857 100%);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+      }
+    }
+
+    // Pagar Monto específico: Prussian Blue background + Columbia Blue text
+    &.btn-payment.prussian-payment {
+      background: #0B3954; /* Prussian Blue */
+      color: #ffffff; /* White text */
+      border: 1px solid rgba(11, 57, 84, 0.08);
+      box-shadow: 0 2px 8px rgba(11, 57, 84, 0.06);
+    }
+
+    &.btn-payment.prussian-payment .btn-text {
+      color: #ffffff;
+    }
+
+    &.btn-payment.prussian-payment:hover:not(:disabled) {
+      background: #063047; /* slightly darker Prussian Blue */
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(11, 57, 84, 0.12);
+    }
+
+    &.btn-payment.prussian-payment:active:not(:disabled) {
+      transform: translateY(0) scale(0.98);
+    }
+  }
+
+  /* Overdue loan: make the payment button Bittersweet with white text */
+  .loan-card.loan-overdue .card-actions .btn-payment {
+    background: #FF6663; /* Bittersweet */
+    color: #ffffff;
+    border: 1px solid rgba(255, 102, 99, 0.12);
+  }
+
+  .loan-card.loan-overdue .card-actions .btn-payment:hover:not(:disabled) {
+    background: #ff4f4a; /* slightly darker */
+    transform: translateY(-1px);
+  }
+
+  .loan-card.loan-overdue .card-actions .btn-payment:active:not(:disabled) {
+    transform: translateY(0) scale(0.98);
+  }
+
+  /* Stronger override: ensure any payment button inside an overdue loan is Bittersweet */
+  .loan-card.loan-overdue .card-actions > .btn.btn-payment,
+  .loan-card.loan-overdue .card-actions > .btn.btn-payment.btn-primary-action,
+  .loan-card.loan-overdue .card-actions > .btn.btn-payment.prussian-payment {
+    background: #FF6663 !important; /* Bittersweet */
+    color: #ffffff !important;
+    border-color: rgba(255, 102, 99, 0.12) !important;
+  }
+
+  .loan-card.loan-overdue .card-actions > .btn.btn-payment:hover:not(:disabled),
+  .loan-card.loan-overdue .card-actions > .btn.btn-payment.prussian-payment:hover:not(:disabled) {
+    background: #ff4f4a !important;
+    color: #ffffff !important;
+  }
+
+  /* explicit class when loan is overdue */
+  .overdue-payment {
+    background: #FF6663 !important;
+    color: #ffffff !important;
+    border-color: rgba(255, 102, 99, 0.12) !important;
+  }
+
+  .overdue-payment:hover:not(:disabled) {
+    background: #ff4f4a !important;
+    color: #ffffff !important;
+  }
+
+  /* Buttons by loan type
+     - borrowed (adeudado): payment/complete buttons -> Columbia Blue bg, Prussian Blue text
+     - lent (prestado): payment/complete buttons -> Prussian Blue bg, Columbia Blue text
+     Note: overdue rules (Bittersweet) take precedence when loan is overdue.
+  */
+
+  /* Borrowed loans */
+  .loan-card.loan-borrowed .card-actions > .btn.btn-payment,
+  .loan-card.loan-borrowed .card-actions > .btn.btn-primary-action,
+  .loan-card.loan-borrowed .card-actions > .btn.btn-success.btn-primary-action,
+  .loan-card.loan-borrowed .card-actions > .btn.btn-success {
+  background: var(--theme-cards-bg) !important;
+  color: var(--theme-btn-bg) !important;
+  border: 1px solid rgba(11, 57, 84, 0.06) !important;
+  }
+
+  .loan-card.loan-borrowed .card-actions > .btn.btn-payment:hover:not(:disabled),
+  .loan-card.loan-borrowed .card-actions > .btn.btn-primary-action:hover:not(:disabled) {
+  background: var(--theme-cards-bg) !important;
+  color: var(--theme-btn-bg) !important;
+  transform: translateY(-1px) !important;
+  opacity: 0.9;
+  }
+
+  /* Lent loans */
+  .loan-card.loan-lent .card-actions > .btn.btn-payment,
+  .loan-card.loan-lent .card-actions > .btn.btn-primary-action,
+  .loan-card.loan-lent .card-actions > .btn.btn-success.btn-primary-action,
+  .loan-card.loan-lent .card-actions > .btn.btn-success {
+    background: var(--theme-btn-bg);
+    color: var(--theme-btn-text);
+    border: 1px solid rgba(11, 57, 84, 0.08);
+  }
+
+  .loan-card.loan-lent .card-actions > .btn.btn-payment:hover:not(:disabled),
+  .loan-card.loan-lent .card-actions > .btn.btn-primary-action:hover:not(:disabled) {
+    background: var(--theme-btn-bg);
+    color: var(--theme-btn-text);
+    transform: translateY(-1px);
+    opacity: 0.9;
+  }
+
+  /* Explicit helper classes applied to template for stronger control */
+  .loan-borrowed-btn {
+    background: var(--theme-cards-bg) !important;
+    color: var(--theme-btn-bg) !important;
+    border: 1px solid rgba(11,57,84,0.06) !important;
+  }
+
+  .loan-borrowed-btn:hover:not(:disabled) {
+    background: var(--theme-cards-bg) !important;
+    color: var(--theme-btn-bg) !important;
+    opacity: 0.9;
+  }
+
+  .loan-lent-btn {
+    background: var(--theme-btn-bg) !important;
+    color: var(--theme-btn-text) !important;
+    border: 1px solid rgba(11,57,84,0.08) !important;
+  }
+
+  .loan-lent-btn:hover:not(:disabled) {
+    background: var(--theme-btn-bg) !important;
+    color: var(--theme-btn-text) !important;
+    opacity: 0.9;
+  }
+
+/* Final override: ensure overdue cards always show Bittersweet for payment/complete buttons
+   This has the highest specificity and is placed at the end so it wins over loan-type rules. */
+.loan-card.loan-overdue .card-actions > .btn.overdue-payment,
+.loan-card.loan-overdue .card-actions > .btn.overdue-payment.loan-borrowed-btn,
+.loan-card.loan-overdue .card-actions > .btn.overdue-payment.loan-lent-btn,
+.loan-card.loan-overdue .card-actions > .btn.overdue-payment.btn-success,
+.loan-card.loan-overdue .card-actions > .btn.overdue-payment.btn-payment,
+.loan-card.loan-overdue .card-actions > .btn.overdue-payment.btn-primary-action {
+  background: #FF6663 !important;
+  color: #ffffff !important;
+  border-color: rgba(255,102,99,0.12) !important;
+}
+
+.loan-card.loan-overdue .card-actions > .btn.overdue-payment:hover:not(:disabled) {
+  background: #ff4f4a !important;
+  color: #ffffff !important;
+}
+  
+  // Botones con iconos (tamaño fijo)
+  .btn-icon-action {
+    flex: 0 0 36px;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    margin: 0; // Reset any margin
+    
+    @media (max-width: 480px) {
+      flex: 0 0 40px;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+    }
+    
+    .icon-edit,
+    .icon-delete {
+      font-size: 1rem;
+      line-height: 1;
+      
+      @media (max-width: 480px) {
+        font-size: 1.1rem;
+      }
+    }
+    
+    .icon-edit {
+      font-weight: 600;
+    }
+    
+    .icon-delete {
+      font-weight: 700;
+    }
+  }
+  
+  // Cuando no hay botón principal, alinear los botones de iconos a la derecha
+  &:not(:has(.btn-primary-action)) {
+    justify-content: flex-end;
+    
+    .btn-icon-action {
+      // Mantener el tamaño fijo, no expandir
+      flex: 0 0 36px;
+      
+      @media (max-width: 480px) {
+        flex: 0 0 40px;
+      }
+    }
+  }
+  
+  // Alternativa compatible con todos los navegadores
+  &.no-primary-action {
+    justify-content: flex-end;
+    
+    .btn-icon-action {
+      flex: 0 0 36px;
+      
+      @media (max-width: 480px) {
+        flex: 0 0 40px;
+      }
+    }
+  }
+  
+  // Estilos antiguos de compatibilidad
+  .btn {
+    // Reset all button margins and ensure consistent alignment
+    margin: 0;
+    vertical-align: middle;
+    
+    &:not(.btn-primary-action):not(.btn-icon-action) {
+      flex: 1 1 auto;
+      min-width: 80px;
+      font-size: 0.75rem;
+      padding: 6px 8px;
+      
+      @media (max-width: 480px) {
+        font-size: 0.7rem;
+        padding: 4px 6px;
+        min-width: 70px;
+      }
+    }
+    
+    &.btn-icon {
+      flex: 0 0 auto;
+      width: 36px;
+      height: 36px;
+      margin: 0;
+    }
+  }
+  
+  // Ensure all direct button children are aligned
+  > .btn {
+    align-self: center;
+  }
+}
+
+// Editar préstamo: botón con colores del tema
+.card-actions .btn.btn-edit-loan {
+  background: var(--theme-cards-bg);
+  color: var(--theme-btn-bg);
+  border: 1px solid rgba(11, 57, 84, 0.08);
+  box-shadow: 0 2px 8px rgba(11, 57, 84, 0.06);
+  transition: var(--transition);
+}
+
+.card-actions .btn.btn-edit-loan.btn-icon-action,
+.card-actions .btn.btn-edit-loan.btn-icon {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+}
+
+.card-actions .btn.btn-edit-loan .icon-edit {
+  color: var(--theme-btn-bg);
+  font-weight: 700;
+}
+
+.card-actions .btn.btn-edit-loan:hover:not(:disabled) {
+  background: var(--theme-cards-bg);
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(11, 57, 84, 0.08);
+}
+
+.card-actions .btn.btn-edit-loan:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
+}
+
+// ===== MODALES =====
+
+// Botón Eliminar (Bittersweet)
+.card-actions .btn.btn-danger.btn-icon-action,
+.card-actions .btn.btn-danger.btn-icon {
+  background: #FF6663; /* Bittersweet */
+  color: #ffffff;
+  border: 1px solid rgba(255, 102, 99, 0.12);
+  transition: var(--transition);
+}
+
+.card-actions .btn.btn-danger.btn-icon-action,
+.card-actions .btn.btn-danger.btn-icon {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+}
+
+.card-actions .btn.btn-danger .icon-delete {
+  color: #ffffff; /* icon color */
+  font-weight: 700;
+}
+
+.card-actions .btn.btn-danger:hover:not(:disabled) {
+  background: #ff4f4a; /* slightly darker on hover */
+  transform: translateY(-1px);
+}
+
+.card-actions .btn.btn-danger:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
+}
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+  backdrop-filter: blur(4px);
+}
+
+.modal-content {
+  background: var(--gray-50);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--border-radius);
+  max-width: 500px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: modalSlideIn 0.2s ease-out;
+
+  // Dark mode support
+  .loans-v2-container.dark & {
+    background: var(--gray-100);
+    border-color: var(--gray-300);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  }
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalBackdropBlur {
+  from {
+    backdrop-filter: blur(0px);
+  }
+  to {
+    backdrop-filter: blur(4px);
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--gray-200);
+
+  // Dark mode support
+  .loans-v2-container.dark & {
+    border-bottom-color: var(--gray-300);
+  }
+
+  h3 {
+    margin: 0;
+    color: var(--gray-800);
+    font-weight: 700;
+    font-size: 1.25rem;
+
+    // Dark mode support
+    .loans-v2-container.dark & {
+      color: var(--gray-700);
+    }
+  }
+
+  .modal-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--gray-400);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: var(--transition);
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      background: var(--gray-100);
+      color: var(--gray-600);
+
+      // Dark mode support
+      .loans-v2-container.dark & {
+        background: var(--gray-200);
+        color: var(--gray-400);
+      }
+    }
+  }
+}
+
+.modal-body {
+  padding: 24px;
+
+  // Dark mode support
+  .loans-v2-container.dark & {
+    background: var(--gray-100);
+  }
+}
+
+.modal-footer {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  padding: 16px 24px;
+  border-top: 1px solid var(--gray-200);
+
+  // Dark mode support
+  .loans-v2-container.dark & {
+    border-top-color: var(--gray-300);
+    background: var(--gray-100);
+  }
+
+  @media (max-width: 480px) {
+    flex-direction: column-reverse;
+  }
+
+  .btn {
+    min-width: 100px;
+    padding: 10px 20px;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: var(--transition);
+
+    &.btn-secondary {
+      background: var(--gray-100);
+      color: var(--gray-700);
+      border: 1px solid var(--gray-300);
+
+      &:hover:not(:disabled) {
+        background: var(--gray-200);
+        border-color: var(--gray-400);
+      }
+
+      // Dark mode support
+      .loans-v2-container.dark & {
+        background: var(--gray-200);
+        color: var(--gray-600);
+        border-color: var(--gray-400);
+
+        &:hover:not(:disabled) {
+          background: var(--gray-300);
+          border-color: var(--gray-500);
+        }
+      }
+    }
+
+    &.btn-primary {
+      background: var(--primary-color);
+      color: white;
+      border: 1px solid var(--primary-color);
+
+      &:hover:not(:disabled) {
+        background: var(--primary-dark);
+        border-color: var(--primary-dark);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+      }
+    }
+  }
+}
+
+// ===== DETALLES DE PAGO =====
+.payment-details {
+  margin-bottom: 24px;
+  background: var(--gray-50);
+  border-radius: var(--border-radius-sm);
+  padding: 20px;
+  border: 1px solid var(--gray-200);
+
+  // Dark mode support
+  .loans-v2-container.dark & {
+    background: var(--gray-100);
+    border-color: var(--gray-300);
+  }
+
+  .detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--gray-200);
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    // Dark mode support
+    .loans-v2-container.dark & {
+      border-bottom-color: var(--gray-300);
+    }
+
+    .detail-label {
+      font-weight: 600;
+      color: var(--gray-600);
+      font-size: 0.9rem;
+
+      // Dark mode support
+      .loans-v2-container.dark & {
+        color: var(--gray-400);
+      }
+    }
+
+    .detail-value {
+      font-weight: 500;
+      color: var(--gray-800);
+      font-size: 0.95rem;
+
+      // Dark mode support
+      .loans-v2-container.dark & {
+        color: var(--gray-700);
+      }
+
+      &.amount {
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: var(--success-color);
+      }
+    }
+
+    // Resaltar el monto restante en cuotas parciales
+    &.remaining-amount {
+      background: rgba(16, 185, 129, 0.05);
+      border-radius: 6px;
+      padding: 12px 16px;
+      margin: 8px -4px;
+      border: 1px solid rgba(16, 185, 129, 0.2);
+
+      // Dark mode support
+      .loans-v2-container.dark & {
+        background: rgba(16, 185, 129, 0.08);
+        border-color: rgba(16, 185, 129, 0.3);
+      }
+    }
+  }
+}
+
+.account-selection {
+  margin: 24px 0;
+
+  .input-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--gray-700);
+    font-size: 0.95rem;
+
+    // Dark mode support
+    .loans-v2-container.dark & {
+      color: var(--gray-600);
+    }
+  }
+
+  .form-select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid var(--gray-300);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: var(--gray-700);
+    background: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    // Dark mode support
+    .loans-v2-container.dark & {
+      background: var(--gray-100);
+      border-color: var(--gray-400);
+      color: var(--gray-600);
+
+      &:hover {
+        border-color: var(--gray-500);
+      }
+
+      &:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+      }
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        background-color: var(--gray-200);
+      }
+    }
+
+    &:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    &:hover {
+      border-color: var(--gray-400);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      background-color: #f5f5f5;
+    }
+
+    option {
+      padding: 8px;
+    }
+  }
+}
+
+.transaction-option {
+  padding: 1rem;
+  background: rgba(59, 130, 246, 0.05);
+  border-radius: 8px;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  margin: 24px 0;
+
+  // Dark mode support
+  .loans-v2-container.dark & {
+    background: rgba(59, 130, 246, 0.08);
+    border-color: rgba(59, 130, 246, 0.3);
+  }
+
+  .checkbox-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    cursor: pointer;
+
+    .checkbox-input {
+      margin: 0;
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      cursor: pointer;
+      accent-color: var(--primary-color);
+      border-radius: 4px;
+    }
+
+    .checkbox-label {
+      font-weight: 500;
+      color: var(--gray-700);
+      user-select: none;
+      cursor: pointer;
+      font-size: 0.95rem;
+
+      // Dark mode support
+      .loans-v2-container.dark & {
+        color: var(--gray-600);
+      }
+    }
+  }
+
+  .option-description {
+    margin: 0.5rem 0 0 1.5rem;
+    font-size: 0.875rem;
+    color: var(--gray-500);
+    line-height: 1.4;
+
+    // Dark mode support
+    .loans-v2-container.dark & {
+      color: var(--gray-400);
+    }
+  }
+}
+
+.confirm-message {
+  text-align: center;
+  color: var(--gray-600);
+  font-style: italic;
+  margin: 24px 0 0 0;
+  font-size: 0.95rem;
+  font-weight: 500;
+
+  // Dark mode support
+  .loans-v2-container.dark & {
+    color: var(--gray-400);
+  }
+}
+
+// ===== INPUTS =====
+.input-group {
+  margin-bottom: 24px;
+}
+
+.input-label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: var(--gray-700);
+  font-size: 0.95rem;
+
+  // Dark mode support
+  .loans-v2-container.dark & {
+    color: var(--gray-600);
+  }
+}
+
+.input-field {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid var(--gray-300);
+  border-radius: var(--border-radius-sm);
+  font-size: 1rem;
+  transition: var(--transition);
+  background: white;
+  color: var(--gray-700);
+
+  // Dark mode support
+  .loans-v2-container.dark & {
+    background: var(--gray-100);
+    border-color: var(--gray-400);
+    color: var(--gray-600);
+
+    &:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+    }
+
+    &::placeholder {
+      color: var(--gray-500);
+    }
+  }
+
+  &:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+
+  &::placeholder {
+    color: var(--gray-400);
+  }
+}
+
+// ===== ANIMACIONES (ESTILO V1) =====
+@keyframes pulse-red {
+  0%, 100% {
+    box-shadow: 0 2px 6px rgba(220, 38, 38, 0.3);
+  }
+  50% {
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.5);
+  }
+}
+
+@keyframes pulse-progress {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 2px 8px rgba(220, 38, 38, 0.2);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
+  }
+}
+
+@keyframes pulse-installment {
+  0%, 100% {
+    border-color: #ef4444;
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
+  }
+  50% {
+    border-color: #dc2626;
+    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.2);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+// ===== UTILIDADES RESPONSIVE =====
+@media (max-width: 480px) {
+  .loans-v2-container {
+    padding: 12px 8px;
+  }
+
+  .loan-card {
+    margin: 0 -4px;
+  }
+
+  .summary-info {
+    grid-template-columns: 1fr;
+  }
+
+  .installments-grid {
+    grid-template-rows: repeat(2, 36px);
+    padding: 8px;
+  }
+
+  .payment-header {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  // Modal responsive improvements
+  .modal-backdrop {
+    padding: 16px;
+  }
+
+  .modal-content {
+    max-width: 95vw;
+    max-height: 95vh;
+  }
+
+  .modal-header {
+    padding: 16px 20px;
+
+    h3 {
+      font-size: 1.1rem;
+    }
+  }
+
+  .modal-body {
+    padding: 20px;
+  }
+
+  .modal-footer {
+    padding: 16px 20px;
+
+    .btn {
+      min-width: 80px;
+      padding: 12px 16px;
+      font-size: 0.9rem;
+    }
+  }
+
+  .payment-details {
+    padding: 16px;
+
+    .detail-row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+
+      .detail-label {
+        font-size: 0.85rem;
+      }
+
+      .detail-value {
+        font-size: 0.9rem;
+      }
+    }
+  }
+
+  .account-selection,
+  .input-group {
+    margin: 20px 0;
+  }
+
+  .transaction-option {
+    padding: 16px;
+    margin: 20px 0;
+  }
+
+  .confirm-message {
+    font-size: 0.9rem;
+    margin: 20px 0 0 0;
+  }
+}

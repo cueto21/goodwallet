@@ -1,0 +1,33 @@
+<div class="toast-container" [class.show]="isVisible">
+  <div class="toast" 
+       [ngClass]="{
+         'success': currentNotification?.type === 'success',
+         'error': currentNotification?.type === 'error',
+         'warning': currentNotification?.type === 'warning',
+         'info': currentNotification?.type === 'info'
+       }">
+    <div class="toast-header">
+      <div class="toast-icon">
+        <i class="fas" 
+           [ngClass]="{
+             'fa-check-circle': currentNotification?.type === 'success',
+             'fa-exclamation-circle': currentNotification?.type === 'error',
+             'fa-exclamation-triangle': currentNotification?.type === 'warning',
+             'fa-info-circle': currentNotification?.type === 'info'
+           }"></i>
+      </div>
+      <div class="toast-title">
+        {{ getTitle() }}
+      </div>
+      <button class="toast-close" (click)="closeNotification()" type="button">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="toast-body">
+      {{ currentNotification?.message }}
+    </div>
+    <div class="toast-progress" *ngIf="currentNotification?.duration && currentNotification.duration > 0">
+      <div class="progress-bar" [style.animation-duration.ms]="currentNotification.duration"></div>
+    </div>
+  </div>
+</div>

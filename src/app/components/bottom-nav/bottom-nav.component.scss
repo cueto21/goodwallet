@@ -1,0 +1,136 @@
+:host {
+    /* El espaciador sigue siendo útil para el scroll */
+    .nav-spacer {
+        height: 90px; /* Un poco más alto para dar más margen */
+    }
+
+    /* When dashboard is in dark mode, make the nav spacer match the dark background */
+    :host-context(.dashboard.dark) .nav-spacer {
+        background-color: #2e2f32 !important;
+        /* ensure it's visible */
+        display: block !important;
+    }
+
+    /* Also make the bottom-nav container itself dark when inside a dark dashboard context */
+    :host-context(.dashboard.dark) .bottom-nav {
+        background-color: #2e2f32;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+    }
+
+    .bottom-nav {
+        /* --- CAMBIOS CLAVE PARA EL EFECTO FLOTANTE --- */
+        position: fixed;
+        bottom: 20px; /* 1. Lo separamos del borde inferior */
+        left: 50%; /* 2. Lo movemos al centro de la pantalla */
+        transform: translateX(-50%); /* 3. Lo centramos perfectamente con transform */
+        width: 90%; /* 4. Le damos un ancho menor al 100% */
+        max-width: 400px; /* 5. Un ancho máximo para pantallas grandes */
+
+        /* --- AJUSTES DE ESTILO --- */
+        background-color: var(--theme-nav-bg);
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25); /* Sombra más pronunciada para flotar */
+    border-radius: 10px; /* 6. Menos redondeado */
+        padding: 8px 0; /* Ajustamos el padding vertical */
+        z-index: 1000;
+    }
+
+    .bottom-nav ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    .bottom-nav ul li {
+        cursor: pointer;
+    }
+
+    .bottom-nav ul li a {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-decoration: none;
+        color: var(--theme-nav-text);
+        padding: 5px;
+        transition: color 0.18s ease;
+    }
+
+    .bottom-nav ul li a i {
+        font-size: 22px; /* Un poco más pequeños para el nuevo contenedor */
+        margin-bottom: 4px;
+    }
+
+    /* New: image icons above labels */
+    .bottom-nav ul li a .nav-img {
+        width: 22px;
+        height: 22px;
+        object-fit: contain;
+        margin-bottom: 4px;
+        display: block;
+    }
+
+    /* Use images as masks so icons inherit text color */
+    .bottom-nav ul li a .nav-img {
+        background-color: currentColor;
+        background-repeat: no-repeat;
+        background-position: center;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+    }
+
+    .nav-img.icon-home {
+        -webkit-mask-image: url('/hogar.png');
+        mask-image: url('/hogar.png');
+    }
+
+    .nav-img.icon-accounts {
+        -webkit-mask-image: url('/finanzas.png');
+        mask-image: url('/finanzas.png');
+    }
+
+    .nav-img.icon-loans {
+        -webkit-mask-image: url('/prestamo.png');
+        mask-image: url('/prestamo.png');
+    }
+
+    .nav-img.icon-recurring {
+        -webkit-mask-image: url('/repetir.png');
+        mask-image: url('/repetir.png');
+    }
+
+    .nav-img.icon-user {
+        -webkit-mask-image: url('/usuario.png');
+        mask-image: url('/usuario.png');
+    }
+
+    .bottom-nav ul li a span {
+        font-size: 11px;
+    }
+    
+    .bottom-nav ul li:hover a {
+        color: #ffffff;
+    }
+    
+    /* Active nav item color: white */
+    .bottom-nav ul li.active a,
+    .bottom-nav ul li a.active {
+        color: #ffffff !important;
+    }
+
+    /* Make masked icons scale on hover/active and transition nicely */
+    .bottom-nav ul li.active a .nav-img,
+    .bottom-nav ul li a.active .nav-img,
+    .bottom-nav ul li:hover a .nav-img {
+        transform: scale(1.1);
+    }
+
+    .bottom-nav ul li a .nav-img {
+        transition: transform 0.18s ease, background-color 0.18s ease;
+    }
+}

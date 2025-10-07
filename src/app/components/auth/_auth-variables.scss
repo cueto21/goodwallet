@@ -1,0 +1,9 @@
+// Shared variables for auth components
+$primary: #0b3954;
+$secondary: #bfd7ea;
+$accent: #ff6663;
+$card-bg: rgba(255,255,255,0.95);
+$muted: #6b7a86;
+
+// Export as module for @use
+@forward "sass:color";

@@ -1,0 +1,256 @@
+@if (isOpen()) {
+  <!-- Backdrop primero para que el blur no afecte al modal -->
+  <div class="modal-backdrop fade show"></div>
+  <div class="modal fade show" tabindex="-1" role="dialog" style="display:block;">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content">
+        <div class="modal-header py-3">
+          <h5 class="modal-title mb-0 fw-bold">Nuevo Movimiento</h5>
+          <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
+        </div>
+        <form (ngSubmit)="onSubmit()" class="needs-validation" novalidate>
+          <div class="modal-body pt-3 pb-2">
+            <!-- Step Indicator -->
+            <div class="step-indicator">
+              <div class="step-item" [class.active]="currentStep() >= 1" [class.completed]="currentStep() > 1">
+                <div class="step-number">1</div>
+                <div class="step-label">Tipo</div>
+              </div>
+              <div class="step-connector" [class.active]="currentStep() > 1"></div>
+              <div class="step-item" [class.active]="currentStep() >= 2" [class.completed]="currentStep() > 2">
+                <div class="step-number">2</div>
+                <div class="step-label">Descripción</div>
+              </div>
+              <div class="step-connector" [class.active]="currentStep() > 2"></div>
+              <div class="step-item" [class.active]="currentStep() >= 3" [class.completed]="currentStep() > 3">
+                <div class="step-number">3</div>
+                <div class="step-label">Cuenta</div>
+              </div>
+              <div class="step-connector" [class.active]="currentStep() > 3"></div>
+              <div class="step-item" [class.active]="currentStep() >= 4" [class.completed]="currentStep() > 4">
+                <div class="step-number">4</div>
+                <div class="step-label">Categoría</div>
+              </div>
+              <div class="step-connector" *ngIf="enableSharing() && formData().type === 'expense'" [class.active]="currentStep() > 4"></div>
+              <div class="step-item" *ngIf="enableSharing() && formData().type === 'expense'" [class.active]="currentStep() >= 5">
+                <div class="step-number">5</div>
+                <div class="step-label">Compartir</div>
+              </div>
+            </div>
+
+            <!-- Step 1: Type Selection -->
+            @if (currentStep() === 1) {
+              <div class="step-content">
+                <h6 class="text-uppercase small fw-semibold text-secondary border-bottom pb-1 mb-4">¿Qué tipo de movimiento deseas registrar?</h6>
+                <!-- First row: Ingreso and Gasto -->
+                <div class="row g-3 mb-3">
+                  <div class="col-6">
+                    <div class="type-card income-card" (click)="selectType('income')" [class.selected]="formData().type === 'income'">
+                      <div class="type-icon">💰</div>
+                      <div class="type-title">Ingreso</div>
+                      <div class="type-description">Dinero que entra a tu cuenta</div>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="type-card expense-card" (click)="selectType('expense')" [class.selected]="formData().type === 'expense'">
+                      <div class="type-icon">💸</div>
+                      <div class="type-title">Gasto</div>
+                      <div class="type-description">Dinero que sale de tu cuenta</div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Second row: Transferencia centered -->
+                <div class="row g-3">
+                  <div class="col-12 d-flex justify-content-center">
+                    <div class="type-card transfer-card transfer-single" (click)="selectType('Transferencia')" [class.selected]="formData().type === 'Transferencia'">
+                      <div class="type-icon">🔄</div>
+                      <div class="type-title">Transferencia</div>
+                      <div class="type-description">Mover dinero entre cuentas</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            }
+
+            <!-- Step 2: Description, Amount, Date -->
+            @if (currentStep() === 2) {
+              <div class="step-content">
+                <h6 class="text-uppercase small fw-semibold text-secondary border-bottom pb-1 mb-3">Información Básica</h6>
+                <div class="row g-3">
+                  <div class="col-12">
+                    <div class="mb-3">
+                      <label class="form-label small text-uppercase fw-semibold">Descripción</label>
+                      <input type="text" class="form-control" [(ngModel)]="formData().description" name="description" placeholder="Ej: Compra en supermercado" maxlength="100" required>
+                      <div class="form-text">Describe brevemente este movimiento</div>
+                    </div>
+                    <!-- Monto and Fecha in same row -->
+                    <div class="row g-3 mb-3">
+                      <div class="col-6">
+                        <label class="form-label small text-uppercase fw-semibold">Monto</label>
+                        <input type="number" class="form-control form-control-sm" [(ngModel)]="formData().amount" name="amount" placeholder="0.00" step="0.01" min="0.01" required>
+                        <div class="form-text">Cantidad en soles (PEN)</div>
+                      </div>
+                      <div class="col-6">
+                        <label class="form-label small text-uppercase fw-semibold">Fecha</label>
+                        <input type="date" class="form-control form-control-sm" [(ngModel)]="formData().date" name="date" required>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            }
+
+            <!-- Step 3: Account Selection Only -->
+            @if (currentStep() === 3) {
+              <div class="step-content">
+                <h6 class="text-uppercase small fw-semibold text-secondary border-bottom pb-1 mb-4">{{ formData().type === 'Transferencia' ? 'Seleccionar Cuentas' : 'Seleccionar Cuenta' }}</h6>
+                <div class="row g-3">
+                  <div class="col-12">
+                    @if (formData().type === 'Transferencia') {
+                      <!-- Transferencia: Two account selections -->
+                      <div class="row g-3">
+                        <div class="col-12 col-md-6">
+                          <label class="form-label small text-uppercase fw-semibold">Cuenta Origen</label>
+                          <div class="account-buttons">
+                            @for (account of accounts(); track account.id) {
+                              <button type="button" class="account-btn" [class.selected]="formData().accountId === account.id.toString()" (click)="updateFormField('accountId', account.id.toString())">
+                                <div class="account-name">{{ account.name }}</div>
+                                <div class="account-balance">S/ {{ getAccountNumericBalance(account) | number:'1.2-2' }}</div>
+                              </button>
+                            }
+                          </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                          <label class="form-label small text-uppercase fw-semibold">Cuenta Destino</label>
+                          <div class="account-buttons">
+                            @for (account of accounts(); track account.id) {
+                              @if (account.id.toString() !== formData().accountId) {
+                                <button type="button" class="account-btn" [class.selected]="formData().toAccountId === account.id.toString()" (click)="updateFormField('toAccountId', account.id.toString())">
+                                  <div class="account-name">{{ account.name }}</div>
+                                  <div class="account-balance">S/ {{ getAccountNumericBalance(account) | number:'1.2-2' }}</div>
+                                </button>
+                              }
+                            }
+                          </div>
+                        </div>
+                      </div>
+                    } @else {
+                      <!-- Income/Expense: Single account selection -->
+                      <div class="mb-3">
+                        <div class="account-buttons">
+                          @for (account of accounts(); track account.id) {
+                            <button type="button" class="account-btn" [class.selected]="formData().accountId === account.id.toString()" (click)="updateFormField('accountId', account.id.toString())">
+                              <div class="account-name">{{ account.name }}</div>
+                              <div class="account-balance">S/ {{ getAccountNumericBalance(account) | number:'1.2-2' }}</div>
+                            </button>
+                          }
+                        </div>
+                      </div>
+                    }
+                  </div>
+                </div>
+              </div>
+            }
+
+            <!-- Step 4: Category Selection Only -->
+            @if (currentStep() === 4) {
+              <div class="step-content">
+                <!-- Category Selection (only for income/expense) -->
+                @if (formData().type !== 'Transferencia') {
+                  <h6 class="text-uppercase small fw-semibold text-secondary border-bottom pb-1 mb-3">Seleccionar Categoría</h6>
+                  <div class="category-buttons">
+                    @for (category of filteredCategories(); track category.id) {
+                      <button type="button" class="category-btn" [class.selected]="formData().categoryId === category.id.toString()" (click)="updateFormField('categoryId', category.id.toString())">
+                        <div class="category-icon" [style.background]="category.color">{{ category.icon }}</div>
+                        <div class="category-name">{{ category.name }}</div>
+                      </button>
+                    }
+                  </div>
+                  <!-- Sharing option for expenses -->
+                  @if (formData().type === 'expense' && friends().length > 0) {
+                    <div class="sharing-option mt-3">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="enableSharing" [checked]="enableSharing()" (change)="enableSharing.set($event.target.checked)">
+                        <label class="form-check-label" for="enableSharing">
+                          Compartir gasto con amigos
+                        </label>
+                      </div>
+                    </div>
+                  }
+                } @else {
+                  <!-- For transfers, show a simple confirmation message -->
+                  <div class="text-center py-4">
+                    <h6 class="text-uppercase small fw-semibold text-secondary mb-3">Transferencia Lista</h6>
+                    <p class="text-muted mb-0">Haz clic en "Confirmar Movimiento" para completar la transferencia.</p>
+                  </div>
+                }
+              </div>
+            }
+
+            <!-- Step 5: Sharing Configuration -->
+            @if (currentStep() === 5 && enableSharing() && formData().type === 'expense') {
+              <div class="step-content">
+                <h6 class="text-uppercase small fw-semibold text-secondary border-bottom pb-1 mb-3">Configurar Compartir Gasto</h6>
+                <div class="sharing-config">
+                  <p class="mb-4">Selecciona cómo dividir el gasto de S/ {{ formData().amount }} con tus amigos.</p>
+                  <div class="friends-selection">
+                    @for (friend of friends(); track friend.id) {
+                      <div class="friend-share-item mb-3">
+                        <div class="friend-info d-flex align-items-center gap-3 mb-2">
+                          <div class="form-check mb-0">
+                            <input class="form-check-input" type="checkbox" [id]="'friend-' + friend.id" (change)="toggleFriendShare(friend.id, $event.target.checked)">
+                            <label class="form-check-label fw-semibold" [for]="'friend-' + friend.id">{{ friend.display_name || friend.email }}</label>
+                          </div>
+                        </div>
+                        <div class="share-options ms-4" *ngIf="isFriendSelected(friend.id)">
+                          <div class="row g-3">
+                            <div class="col-md-6">
+                              <label class="form-label small text-uppercase fw-semibold">Tipo de división</label>
+                              <select class="form-select" (change)="setSplitType(friend.id, $any($event.target).value)">
+                                <option value="fixed">Monto fijo</option>
+                                <option value="percentage">Porcentaje</option>
+                              </select>
+                            </div>
+                            <div class="col-md-6">
+                              <label class="form-label small text-uppercase fw-semibold">Valor</label>
+                              <input type="number" class="form-control" [placeholder]="getSplitPlaceholder(friend.id)" (input)="setSplitValue(friend.id, $any($event.target).value)" step="0.01" min="0">
+                              <div class="form-text">{{ getSplitPlaceholder(friend.id) === 'S/' ? 'Monto en soles' : 'Porcentaje del total' }}</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    }
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+
+          <!-- Footer with navigation - 3 buttons in a row -->
+          <div class="modal-footer py-2">
+            <div class="row w-100">
+              <div class="col-4 text-start">
+                @if (currentStep() > 1) {
+                  <button type="button" class="btn btn-outline-secondary btn-sm" (click)="prevStep()">← Anterior</button>
+                }
+              </div>
+              <div class="col-4 text-center">
+                <button type="button" class="btn btn-outline-secondary btn-sm" (click)="closeModal()">Cancelar</button>
+              </div>
+              <div class="col-4 text-end">
+                @if (currentStep() === 2 || currentStep() === 3 || (currentStep() === 4 && enableSharing() && formData().type === 'expense')) {
+                  <button type="button" class="btn btn-primary btn-sm" (click)="nextStep()" [disabled]="!canProceedToNextStep()">Siguiente →</button>
+                }
+                @if (currentStep() === 4 && (!enableSharing() || formData().type !== 'expense') || currentStep() === 5) {
+                  <button type="submit" class="btn btn-success btn-sm" [disabled]="!isFormValid() || isSubmitting()">
+                    {{ isSubmitting() ? 'Guardando...' : 'Guardar' }}
+                  </button>
+                }
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+}

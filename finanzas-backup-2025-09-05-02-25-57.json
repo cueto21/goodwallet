@@ -1,0 +1,3385 @@
+{
+  "exportInfo": {
+    "version": "1.0.0",
+    "exportDate": "2025-09-05T07:25:57.407Z",
+    "appName": "WebApp-Finanzas"
+  },
+  "accounts": [
+    {
+      "id": "1756480815352",
+      "name": "BCP Ahorro",
+      "type": "savings",
+      "balance": 31.319999999999663,
+      "selectedCardStyle": {
+        "cardType": "savings-account",
+        "bank": "bcp",
+        "name": "Débito Clásica Azul",
+        "gradient": "linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%)",
+        "description": "Tarjeta débito - Azul elegante"
+      },
+      "goals": {
+        "isActive": true,
+        "balanceTarget": 3000,
+        "spendingLimit": 0,
+        "targetDate": "2025-12-31T00:00:00.000Z",
+        "description": "Ahorros 2025"
+      },
+      "createdAt": "2025-08-29T15:20:15.352Z",
+      "updatedAt": "2025-09-04T00:37:42.008Z",
+      "cardStyle": {
+        "gradient": "linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%)",
+        "cardType": "savings-account",
+        "bank": "bcp"
+      }
+    },
+    {
+      "id": "1756482631489",
+      "name": "VISA LIGHT BCP",
+      "type": "credit",
+      "balance": -2289.41,
+      "creditLimit": 4100,
+      "cardStyle": {
+        "gradient": "linear-gradient(135deg, #0ea5e9 0%, #38bdf8 50%, #7dd3fc 100%)",
+        "cardType": "savings-account",
+        "bank": "custom"
+      },
+      "goals": {
+        "isActive": true,
+        "balanceTarget": 0,
+        "spendingLimit": 250
+      },
+      "createdAt": "2025-08-29T15:50:31.489Z",
+      "updatedAt": "2025-09-04T00:30:21.254Z"
+    },
+    {
+      "id": "1756482719844",
+      "name": "CMR SIGNATURE",
+      "type": "credit",
+      "balance": -11089.12,
+      "creditLimit": 11100,
+      "cardStyle": {
+        "gradient": "linear-gradient(135deg, #111827 0%, #374151 100%)",
+        "cardType": "savings-account",
+        "bank": "bbva"
+      },
+      "goals": {
+        "isActive": true,
+        "balanceTarget": 0,
+        "spendingLimit": 500
+      },
+      "createdAt": "2025-08-29T15:51:59.844Z",
+      "updatedAt": "2025-08-29T15:51:59.844Z"
+    }
+  ],
+  "transactions": [
+    {
+      "amount": 10,
+      "description": "Camilo youtube premiun",
+      "date": "2025-08-29T05:00:00.000Z",
+      "categoryId": "Otros Ingresos",
+      "accountId": "1756480815352",
+      "type": "income",
+      "id": "1756486166130",
+      "createdAt": "2025-08-29T16:49:26.130Z",
+      "updatedAt": "2025-08-29T16:49:26.130Z"
+    },
+    {
+      "amount": 30,
+      "description": "Almuerzo",
+      "date": "2025-08-29T05:00:00.000Z",
+      "categoryId": "Alimentación",
+      "accountId": "1756480815352",
+      "type": "expense",
+      "id": "1756495996705",
+      "createdAt": "2025-08-29T19:33:16.705Z",
+      "updatedAt": "2025-08-29T19:33:16.705Z"
+    },
+    {
+      "amount": 30,
+      "description": "Pago cuota 1 - Iphone 15 pro 256gb (Rodrigo)",
+      "date": "2025-08-30T05:00:00.000Z",
+      "categoryId": "2",
+      "accountId": "1756480815352",
+      "type": "income",
+      "id": "1756546225700",
+      "createdAt": "2025-08-30T09:30:25.700Z",
+      "updatedAt": "2025-08-30T09:30:25.700Z"
+    },
+    {
+      "amount": 3,
+      "description": "Gaseosa",
+      "date": "2025-08-30T05:00:00.000Z",
+      "categoryId": "Alimentación",
+      "accountId": "1756480815352",
+      "type": "expense",
+      "id": "1756546317951",
+      "createdAt": "2025-08-30T09:31:57.951Z",
+      "updatedAt": "2025-08-30T09:31:57.951Z"
+    },
+    {
+      "amount": 30,
+      "description": "Pago cuota 2 - Iphone 15 pro 256gb (Rodrigo)",
+      "date": "2025-08-31T05:00:00.000Z",
+      "categoryId": "2",
+      "accountId": "1756480815352",
+      "type": "income",
+      "id": "1756652660119",
+      "createdAt": "2025-08-31T15:04:20.119Z",
+      "updatedAt": "2025-08-31T15:04:20.119Z"
+    },
+    {
+      "amount": 17,
+      "description": "Almuerzo",
+      "date": "2025-08-30T05:00:00.000Z",
+      "categoryId": "Alimentación",
+      "accountId": "1756480815352",
+      "type": "expense",
+      "id": "1756652700414",
+      "createdAt": "2025-08-31T15:05:00.414Z",
+      "updatedAt": "2025-08-31T15:05:00.414Z"
+    },
+    {
+      "amount": 5,
+      "description": "Pulsera regalo milagros",
+      "date": "2025-08-30T05:00:00.000Z",
+      "categoryId": "Compras",
+      "accountId": "1756480815352",
+      "type": "expense",
+      "id": "1756652908274",
+      "createdAt": "2025-08-31T15:08:28.274Z",
+      "updatedAt": "2025-08-31T15:08:28.274Z"
+    },
+    {
+      "amount": 30,
+      "description": "Anillos milagros",
+      "date": "2025-08-30T05:00:00.000Z",
+      "categoryId": "Compras",
+      "accountId": "1756480815352",
+      "type": "expense",
+      "id": "1756652939114",
+      "createdAt": "2025-08-31T15:08:59.114Z",
+      "updatedAt": "2025-08-31T15:08:59.114Z"
+    },
+    {
+      "amount": 200,
+      "description": "Prestamo mamá",
+      "date": "2025-08-30T05:00:00.000Z",
+      "categoryId": "Otros Ingresos",
+      "accountId": "1756480815352",
+      "type": "income",
+      "id": "1756653103442",
+      "createdAt": "2025-08-31T15:11:43.442Z",
+      "updatedAt": "2025-08-31T15:11:43.442Z"
+    },
+    {
+      "amount": 7.5,
+      "description": "Pasajes",
+      "date": "2025-08-30T05:00:00.000Z",
+      "categoryId": "Transporte",
+      "accountId": "1756480815352",
+      "type": "expense",
+      "id": "1756653155413",
+      "createdAt": "2025-08-31T15:12:35.413Z",
+      "updatedAt": "2025-08-31T15:12:35.413Z"
+    },
+    {
+      "amount": 65,
+      "description": "Cena alitas",
+      "date": "2025-08-30T05:00:00.000Z",
+      "categoryId": "Alimentación",
+      "accountId": "1756480815352",
+      "type": "expense",
+      "id": "1756653200066",
+      "createdAt": "2025-08-31T15:13:20.066Z",
+      "updatedAt": "2025-08-31T15:13:20.066Z"
+    },
+    {
+      "amount": 79.9,
+      "description": "Internet wow",
+      "date": "2025-08-30T05:00:00.000Z",
+      "categoryId": "Servicios",
+      "accountId": "1756480815352",
+      "type": "expense",
+      "id": "1756653233709",
+      "createdAt": "2025-08-31T15:13:53.709Z",
+      "updatedAt": "2025-08-31T15:13:53.709Z"
+    },
+    {
+      "amount": 10,
+      "description": "Milagros aportacion alitas",
+      "date": "2025-08-30T05:00:00.000Z",
+      "categoryId": "Regalo",
+      "accountId": "1756480815352",
+      "type": "income",
+      "id": "1756653270878",
+      "createdAt": "2025-08-31T15:14:30.878Z",
+      "updatedAt": "2025-08-31T15:14:30.878Z"
+    },
+    {
+      "amount": 13,
+      "description": "Almuerzo",
+      "date": "2025-08-31T05:00:00.000Z",
+      "categoryId": "Alimentación",
+      "accountId": "1756480815352",
+      "type": "expense",
+      "id": "1756676801812",
+      "createdAt": "2025-08-31T21:46:41.812Z",
+      "updatedAt": "2025-08-31T21:46:41.812Z"
+    },
+    {
+      "amount": 24.7,
+      "description": "Piqueos y snacks",
+      "date": "2025-08-31T05:00:00.000Z",
+      "categoryId": "Alimentación",
+      "accountId": "1756480815352",
+      "type": "expense",
+      "id": "1756676875381",
+      "createdAt": "2025-08-31T21:47:55.381Z",
+      "updatedAt": "2025-08-31T21:47:55.381Z"
+    },
+    {
+      "amount": 30,
+      "description": "Pago cuota 3 - Iphone 15 pro 256gb (Rodrigo)",
+      "date": "2025-09-01T05:00:00.000Z",
+      "categoryId": "2",
+      "accountId": "1756480815352",
+      "type": "income",
+      "id": "1756687806925",
+      "createdAt": "2025-09-01T00:50:06.925Z",
+      "updatedAt": "2025-09-01T00:50:06.925Z"
+    },
+    {
+      "amount": 3800,
+      "description": "Sueldo",
+      "date": "2025-09-01T05:00:00.000Z",
+      "categoryId": "Sueldo",
+      "accountId": "1756480815352",
+      "type": "income",
+      "id": "1756732802988",
+      "createdAt": "2025-09-01T13:20:02.988Z",
+      "updatedAt": "2025-09-01T13:20:02.988Z"
+    },
+    {
+      "amount": 90,
+      "description": "Pasaje trujillo - lima",
+      "date": "2025-09-01T05:00:00.000Z",
+      "categoryId": "Transporte",
+      "accountId": "1756480815352",
+      "type": "expense",
+      "id": "1756732984337",
+      "createdAt": "2025-09-01T13:23:04.337Z",
+      "updatedAt": "2025-09-01T13:23:04.337Z"
+    },
+    {
+      "amount": 5,
+      "description": "Gaseosa gustavo",
+      "date": "2025-09-01T05:00:00.000Z",
+      "categoryId": "Alimentación",
+      "accountId": "1756480815352",
+      "type": "expense",
+      "id": "1756733053685",
+      "createdAt": "2025-09-01T13:24:13.685Z",
+      "updatedAt": "2025-09-01T13:24:13.685Z"
+    },
+    {
+      "amount": 0.3,
+      "description": "Impuestos",
+      "date": "2025-09-01T05:00:00.000Z",
+      "categoryId": "Otros Gastos",
+      "accountId": "1756480815352",
+      "type": "expense",
+      "id": "1756733133617",
+      "createdAt": "2025-09-01T13:25:33.617Z",
+      "updatedAt": "2025-09-01T13:25:33.617Z"
+    },
+    {
+      "amount": 109.4,
+      "type": "income",
+      "categoryId": "",
+      "description": "Cobro de préstamo - Papá - Cuota 2",
+      "date": "2025-09-01T05:00:00.000Z",
+      "accountId": "1756480815352",
+      "id": "1756738801145",
+      "createdAt": "2025-09-01T15:00:01.145Z",
+      "updatedAt": "2025-09-01T15:00:01.145Z"
+    },
+    {
+      "amount": 9.2,
+      "description": "Uber",
+      "date": "2025-09-01T05:00:00.000Z",
+      "categoryId": "Transporte",
+      "accountId": "1756480815352",
+      "type": "expense",
+      "id": "1756738842335",
+      "createdAt": "2025-09-01T15:00:42.335Z",
+      "updatedAt": "2025-09-01T15:00:42.335Z"
+    },
+    {
+      "amount": 18.5,
+      "description": "Comidita",
+      "date": "2025-09-01T05:00:00.000Z",
+      "categoryId": "Alimentación",
+      "accountId": "1756480815352",
+      "type": "expense",
+      "id": "1756738865288",
+      "createdAt": "2025-09-01T15:01:05.288Z",
+      "updatedAt": "2025-09-01T15:01:05.288Z"
+    },
+    {
+      "amount": 4,
+      "description": "Embarque terrapuerto trujillo",
+      "date": "2025-09-01T05:00:00.000Z",
+      "categoryId": "Transporte",
+      "accountId": "1756480815352",
+      "type": "expense",
+      "id": "1756738903142",
+      "createdAt": "2025-09-01T15:01:43.142Z",
+      "updatedAt": "2025-09-01T15:01:43.142Z"
+    },
+    {
+      "amount": 0.15,
+      "description": "Impuesto",
+      "date": "2025-09-01T05:00:00.000Z",
+      "categoryId": "Otros Gastos",
+      "accountId": "1756480815352",
+      "type": "expense",
+      "id": "1756739012642",
+      "createdAt": "2025-09-01T15:03:32.642Z",
+      "updatedAt": "2025-09-01T15:03:32.642Z"
+    },
+    {
+      "amount": 8.3,
+      "description": "Vuelto sebas",
+      "date": "2025-09-01T05:00:00.000Z",
+      "categoryId": "Compras",
+      "accountId": "1756480815352",
+      "type": "expense",
+      "id": "1756770826290",
+      "createdAt": "2025-09-01T23:53:46.290Z",
+      "updatedAt": "2025-09-01T23:53:46.290Z"
+    },
+    {
+      "amount": 0.15,
+      "description": "Impuesto",
+      "date": "2025-09-01T05:00:00.000Z",
+      "categoryId": "Otros Gastos",
+      "accountId": "1756480815352",
+      "type": "expense",
+      "id": "1756770926907",
+      "createdAt": "2025-09-01T23:55:26.907Z",
+      "updatedAt": "2025-09-01T23:55:26.907Z"
+    },
+    {
+      "amount": 750,
+      "description": "S23 samsung",
+      "date": "2025-09-02T05:00:00.000Z",
+      "categoryId": "Compras",
+      "accountId": "1756480815352",
+      "type": "expense",
+      "id": "1756826333627",
+      "createdAt": "2025-09-02T15:18:53.627Z",
+      "updatedAt": "2025-09-02T15:18:53.627Z"
+    },
+    {
+      "amount": 54,
+      "description": "Shawarmas",
+      "date": "2025-09-02T05:00:00.000Z",
+      "categoryId": "Alimentación",
+      "accountId": "1756480815352",
+      "type": "expense",
+      "id": "1756826432138",
+      "createdAt": "2025-09-02T15:20:32.138Z",
+      "updatedAt": "2025-09-02T15:20:32.138Z"
+    },
+    {
+      "amount": 13,
+      "description": "Gaseosa",
+      "date": "2025-09-02T05:00:00.000Z",
+      "categoryId": "Alimentación",
+      "accountId": "1756480815352",
+      "type": "expense",
+      "id": "1756826483156",
+      "createdAt": "2025-09-02T15:21:23.156Z",
+      "updatedAt": "2025-09-02T15:21:23.156Z"
+    },
+    {
+      "amount": 32,
+      "description": "Taxi",
+      "date": "2025-09-02T05:00:00.000Z",
+      "categoryId": "Transporte",
+      "accountId": "1756480815352",
+      "type": "expense",
+      "id": "1756826534092",
+      "createdAt": "2025-09-02T15:22:14.092Z",
+      "updatedAt": "2025-09-02T15:22:14.092Z"
+    },
+    {
+      "amount": 1000,
+      "description": "Laptop lenovo ryzen 7",
+      "date": "2025-09-02T05:00:00.000Z",
+      "categoryId": "Compras",
+      "accountId": "1756480815352",
+      "type": "expense",
+      "id": "1756826574465",
+      "createdAt": "2025-09-02T15:22:54.465Z",
+      "updatedAt": "2025-09-02T15:22:54.465Z"
+    },
+    {
+      "amount": 20,
+      "description": "Taxi recoger laptop",
+      "date": "2025-09-04T05:00:00.000Z",
+      "categoryId": "Transporte",
+      "accountId": "1756480815352",
+      "type": "expense",
+      "id": "1756944996332",
+      "createdAt": "2025-09-04T00:16:36.332Z",
+      "updatedAt": "2025-09-04T00:16:36.332Z"
+    },
+    {
+      "id": "trf-1756945821253-out",
+      "amount": 1775.07,
+      "description": "Pago tarjeta",
+      "date": "2025-09-04T05:00:00.000Z",
+      "categoryId": "Transferencia",
+      "accountId": "1756480815352",
+      "type": "expense",
+      "TransferenciaGroupId": "trf-1756945821253",
+      "relatedAccountId": "1756482631489",
+      "createdAt": "2025-09-04T00:30:21.253Z",
+      "updatedAt": "2025-09-04T00:30:21.253Z"
+    },
+    {
+      "id": "trf-1756945821253-in",
+      "amount": 1775.07,
+      "description": "Pago tarjeta",
+      "date": "2025-09-04T05:00:00.000Z",
+      "categoryId": "Transferencia",
+      "accountId": "1756482631489",
+      "type": "income",
+      "TransferenciaGroupId": "trf-1756945821253",
+      "relatedAccountId": "1756480815352",
+      "createdAt": "2025-09-04T00:30:21.253Z",
+      "updatedAt": "2025-09-04T00:30:21.253Z"
+    },
+    {
+      "amount": 1.5,
+      "description": "Tomates",
+      "date": "2025-09-04T05:00:00.000Z",
+      "categoryId": "Alimentación",
+      "accountId": "1756480815352",
+      "type": "expense",
+      "id": "1756945886820",
+      "createdAt": "2025-09-04T00:31:26.820Z",
+      "updatedAt": "2025-09-04T00:31:26.820Z"
+    },
+    {
+      "amount": 150,
+      "description": "Deuda papá",
+      "date": "2025-09-04T05:00:00.000Z",
+      "categoryId": "Compras",
+      "accountId": "1756480815352",
+      "type": "expense",
+      "id": "1756945958284",
+      "createdAt": "2025-09-04T00:32:38.284Z",
+      "updatedAt": "2025-09-04T00:32:38.284Z"
+    },
+    {
+      "amount": 82.5,
+      "description": "Deuda con mamá",
+      "date": "2025-09-04T05:00:00.000Z",
+      "categoryId": "Compras",
+      "accountId": "1756480815352",
+      "type": "expense",
+      "id": "1756946080710",
+      "createdAt": "2025-09-04T00:34:40.710Z",
+      "updatedAt": "2025-09-04T00:34:40.710Z"
+    },
+    {
+      "amount": 30,
+      "type": "income",
+      "categoryId": "",
+      "description": "Cobro de préstamo - Rodrigo - Cuota 5",
+      "date": "2025-09-04T05:00:00.000Z",
+      "accountId": "1756480815352",
+      "id": "1756946103251",
+      "createdAt": "2025-09-04T00:35:03.251Z",
+      "updatedAt": "2025-09-04T00:35:03.251Z"
+    },
+    {
+      "amount": 0.05,
+      "description": "Impuesto itf",
+      "date": "2025-09-04T05:00:00.000Z",
+      "categoryId": "Otros Gastos",
+      "accountId": "1756480815352",
+      "type": "expense",
+      "id": "1756946262007",
+      "createdAt": "2025-09-04T00:37:42.007Z",
+      "updatedAt": "2025-09-04T00:37:42.007Z"
+    },
+    {
+      "amount": 30,
+      "type": "income",
+      "categoryId": "",
+      "description": "Cobro de préstamo - Rodrigo - Cuota 6",
+      "date": "2025-09-04T06:33:27.076Z",
+      "accountId": "1756480815352",
+      "id": "1756967607076",
+      "createdAt": "2025-09-04T06:33:27.076Z",
+      "updatedAt": "2025-09-04T06:33:27.076Z"
+    }
+  ],
+  "loans": [
+    {
+      "amount": 3450.6,
+      "description": "Iphone 14 pro 256gb",
+      "date": "2025-09-01T05:00:00.000Z",
+      "dueDate": "2025-09-01T05:00:00.000Z",
+      "type": "lent",
+      "personName": "Sebastian primo",
+      "status": "overdue",
+      "installments": {
+        "enabled": true,
+        "totalInstallments": 18,
+        "firstInstallmentDate": "2025-08-30T05:00:00.000Z",
+        "installmentAmount": 191.7,
+        "installmentsList": [
+          {
+            "id": "gk6hj08xlrmf1609vc-1",
+            "installmentNumber": 1,
+            "amount": 191.7,
+            "dueDate": "2025-08-30T05:00:00.000Z",
+            "status": "paid",
+            "paidDate": "2025-09-01T05:00:00.000Z"
+          },
+          {
+            "id": "gk6hj08xlrmf1609vc-2",
+            "installmentNumber": 2,
+            "amount": 191.7,
+            "dueDate": "2025-09-30T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "gk6hj08xlrmf1609vc-3",
+            "installmentNumber": 3,
+            "amount": 191.7,
+            "dueDate": "2025-10-30T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "gk6hj08xlrmf1609vc-4",
+            "installmentNumber": 4,
+            "amount": 191.7,
+            "dueDate": "2025-11-30T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "gk6hj08xlrmf1609vc-5",
+            "installmentNumber": 5,
+            "amount": 191.7,
+            "dueDate": "2025-12-30T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "gk6hj08xlrmf1609vc-6",
+            "installmentNumber": 6,
+            "amount": 191.7,
+            "dueDate": "2026-01-30T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "gk6hj08xlrmf1609vc-7",
+            "installmentNumber": 7,
+            "amount": 191.7,
+            "dueDate": "2026-03-02T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "gk6hj08xlrmf1609vc-8",
+            "installmentNumber": 8,
+            "amount": 191.7,
+            "dueDate": "2026-03-30T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "gk6hj08xlrmf1609vc-9",
+            "installmentNumber": 9,
+            "amount": 191.7,
+            "dueDate": "2026-04-30T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "gk6hj08xlrmf1609vc-10",
+            "installmentNumber": 10,
+            "amount": 191.7,
+            "dueDate": "2026-05-30T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "gk6hj08xlrmf1609vc-11",
+            "installmentNumber": 11,
+            "amount": 191.7,
+            "dueDate": "2026-06-30T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "gk6hj08xlrmf1609vc-12",
+            "installmentNumber": 12,
+            "amount": 191.7,
+            "dueDate": "2026-07-30T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "gk6hj08xlrmf1609vc-13",
+            "installmentNumber": 13,
+            "amount": 191.7,
+            "dueDate": "2026-08-30T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "gk6hj08xlrmf1609vc-14",
+            "installmentNumber": 14,
+            "amount": 191.7,
+            "dueDate": "2026-09-30T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "gk6hj08xlrmf1609vc-15",
+            "installmentNumber": 15,
+            "amount": 191.7,
+            "dueDate": "2026-10-30T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "gk6hj08xlrmf1609vc-16",
+            "installmentNumber": 16,
+            "amount": 191.7,
+            "dueDate": "2026-11-30T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "gk6hj08xlrmf1609vc-17",
+            "installmentNumber": 17,
+            "amount": 191.7,
+            "dueDate": "2026-12-30T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "gk6hj08xlrmf1609vc-18",
+            "installmentNumber": 18,
+            "amount": 191.7,
+            "dueDate": "2027-01-30T05:00:00.000Z",
+            "status": "pending"
+          }
+        ],
+        "paymentFrequency": "monthly"
+      },
+      "id": "gk6hj08xlrmf1609vc",
+      "createdAt": "2025-09-01T13:38:21.816Z",
+      "updatedAt": "2025-09-01T21:19:14.450Z"
+    },
+    {
+      "amount": 5700,
+      "description": "Iphone 16 pro max 256gb",
+      "date": "2025-08-29T05:00:00.000Z",
+      "dueDate": "2025-08-29T05:00:00.000Z",
+      "type": "lent",
+      "personName": "Rodrigo",
+      "status": "overdue",
+      "installments": {
+        "enabled": true,
+        "totalInstallments": 285,
+        "firstInstallmentDate": "2025-10-01T05:00:00.000Z",
+        "installmentAmount": 20,
+        "installmentsList": [
+          {
+            "id": "9ub1xoz4zksmex8jac0-1",
+            "installmentNumber": 1,
+            "amount": 20,
+            "dueDate": "2025-10-01T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-2",
+            "installmentNumber": 2,
+            "amount": 20,
+            "dueDate": "2025-10-02T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-3",
+            "installmentNumber": 3,
+            "amount": 20,
+            "dueDate": "2025-10-03T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-4",
+            "installmentNumber": 4,
+            "amount": 20,
+            "dueDate": "2025-10-04T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-5",
+            "installmentNumber": 5,
+            "amount": 20,
+            "dueDate": "2025-10-05T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-6",
+            "installmentNumber": 6,
+            "amount": 20,
+            "dueDate": "2025-10-06T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-7",
+            "installmentNumber": 7,
+            "amount": 20,
+            "dueDate": "2025-10-07T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-8",
+            "installmentNumber": 8,
+            "amount": 20,
+            "dueDate": "2025-10-08T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-9",
+            "installmentNumber": 9,
+            "amount": 20,
+            "dueDate": "2025-10-09T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-10",
+            "installmentNumber": 10,
+            "amount": 20,
+            "dueDate": "2025-10-10T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-11",
+            "installmentNumber": 11,
+            "amount": 20,
+            "dueDate": "2025-10-11T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-12",
+            "installmentNumber": 12,
+            "amount": 20,
+            "dueDate": "2025-10-12T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-13",
+            "installmentNumber": 13,
+            "amount": 20,
+            "dueDate": "2025-10-13T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-14",
+            "installmentNumber": 14,
+            "amount": 20,
+            "dueDate": "2025-10-14T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-15",
+            "installmentNumber": 15,
+            "amount": 20,
+            "dueDate": "2025-10-15T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-16",
+            "installmentNumber": 16,
+            "amount": 20,
+            "dueDate": "2025-10-16T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-17",
+            "installmentNumber": 17,
+            "amount": 20,
+            "dueDate": "2025-10-17T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-18",
+            "installmentNumber": 18,
+            "amount": 20,
+            "dueDate": "2025-10-18T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-19",
+            "installmentNumber": 19,
+            "amount": 20,
+            "dueDate": "2025-10-19T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-20",
+            "installmentNumber": 20,
+            "amount": 20,
+            "dueDate": "2025-10-20T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-21",
+            "installmentNumber": 21,
+            "amount": 20,
+            "dueDate": "2025-10-21T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-22",
+            "installmentNumber": 22,
+            "amount": 20,
+            "dueDate": "2025-10-22T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-23",
+            "installmentNumber": 23,
+            "amount": 20,
+            "dueDate": "2025-10-23T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-24",
+            "installmentNumber": 24,
+            "amount": 20,
+            "dueDate": "2025-10-24T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-25",
+            "installmentNumber": 25,
+            "amount": 20,
+            "dueDate": "2025-10-25T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-26",
+            "installmentNumber": 26,
+            "amount": 20,
+            "dueDate": "2025-10-26T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-27",
+            "installmentNumber": 27,
+            "amount": 20,
+            "dueDate": "2025-10-27T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-28",
+            "installmentNumber": 28,
+            "amount": 20,
+            "dueDate": "2025-10-28T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-29",
+            "installmentNumber": 29,
+            "amount": 20,
+            "dueDate": "2025-10-29T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-30",
+            "installmentNumber": 30,
+            "amount": 20,
+            "dueDate": "2025-10-30T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-31",
+            "installmentNumber": 31,
+            "amount": 20,
+            "dueDate": "2025-10-31T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-32",
+            "installmentNumber": 32,
+            "amount": 20,
+            "dueDate": "2025-11-01T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-33",
+            "installmentNumber": 33,
+            "amount": 20,
+            "dueDate": "2025-11-02T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-34",
+            "installmentNumber": 34,
+            "amount": 20,
+            "dueDate": "2025-11-03T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-35",
+            "installmentNumber": 35,
+            "amount": 20,
+            "dueDate": "2025-11-04T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-36",
+            "installmentNumber": 36,
+            "amount": 20,
+            "dueDate": "2025-11-05T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-37",
+            "installmentNumber": 37,
+            "amount": 20,
+            "dueDate": "2025-11-06T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-38",
+            "installmentNumber": 38,
+            "amount": 20,
+            "dueDate": "2025-11-07T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-39",
+            "installmentNumber": 39,
+            "amount": 20,
+            "dueDate": "2025-11-08T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-40",
+            "installmentNumber": 40,
+            "amount": 20,
+            "dueDate": "2025-11-09T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-41",
+            "installmentNumber": 41,
+            "amount": 20,
+            "dueDate": "2025-11-10T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-42",
+            "installmentNumber": 42,
+            "amount": 20,
+            "dueDate": "2025-11-11T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-43",
+            "installmentNumber": 43,
+            "amount": 20,
+            "dueDate": "2025-11-12T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-44",
+            "installmentNumber": 44,
+            "amount": 20,
+            "dueDate": "2025-11-13T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-45",
+            "installmentNumber": 45,
+            "amount": 20,
+            "dueDate": "2025-11-14T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-46",
+            "installmentNumber": 46,
+            "amount": 20,
+            "dueDate": "2025-11-15T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-47",
+            "installmentNumber": 47,
+            "amount": 20,
+            "dueDate": "2025-11-16T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-48",
+            "installmentNumber": 48,
+            "amount": 20,
+            "dueDate": "2025-11-17T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-49",
+            "installmentNumber": 49,
+            "amount": 20,
+            "dueDate": "2025-11-18T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-50",
+            "installmentNumber": 50,
+            "amount": 20,
+            "dueDate": "2025-11-19T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-51",
+            "installmentNumber": 51,
+            "amount": 20,
+            "dueDate": "2025-11-20T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-52",
+            "installmentNumber": 52,
+            "amount": 20,
+            "dueDate": "2025-11-21T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-53",
+            "installmentNumber": 53,
+            "amount": 20,
+            "dueDate": "2025-11-22T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-54",
+            "installmentNumber": 54,
+            "amount": 20,
+            "dueDate": "2025-11-23T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-55",
+            "installmentNumber": 55,
+            "amount": 20,
+            "dueDate": "2025-11-24T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-56",
+            "installmentNumber": 56,
+            "amount": 20,
+            "dueDate": "2025-11-25T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-57",
+            "installmentNumber": 57,
+            "amount": 20,
+            "dueDate": "2025-11-26T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-58",
+            "installmentNumber": 58,
+            "amount": 20,
+            "dueDate": "2025-11-27T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-59",
+            "installmentNumber": 59,
+            "amount": 20,
+            "dueDate": "2025-11-28T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-60",
+            "installmentNumber": 60,
+            "amount": 20,
+            "dueDate": "2025-11-29T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-61",
+            "installmentNumber": 61,
+            "amount": 20,
+            "dueDate": "2025-11-30T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-62",
+            "installmentNumber": 62,
+            "amount": 20,
+            "dueDate": "2025-12-01T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-63",
+            "installmentNumber": 63,
+            "amount": 20,
+            "dueDate": "2025-12-02T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-64",
+            "installmentNumber": 64,
+            "amount": 20,
+            "dueDate": "2025-12-03T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-65",
+            "installmentNumber": 65,
+            "amount": 20,
+            "dueDate": "2025-12-04T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-66",
+            "installmentNumber": 66,
+            "amount": 20,
+            "dueDate": "2025-12-05T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-67",
+            "installmentNumber": 67,
+            "amount": 20,
+            "dueDate": "2025-12-06T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-68",
+            "installmentNumber": 68,
+            "amount": 20,
+            "dueDate": "2025-12-07T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-69",
+            "installmentNumber": 69,
+            "amount": 20,
+            "dueDate": "2025-12-08T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-70",
+            "installmentNumber": 70,
+            "amount": 20,
+            "dueDate": "2025-12-09T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-71",
+            "installmentNumber": 71,
+            "amount": 20,
+            "dueDate": "2025-12-10T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-72",
+            "installmentNumber": 72,
+            "amount": 20,
+            "dueDate": "2025-12-11T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-73",
+            "installmentNumber": 73,
+            "amount": 20,
+            "dueDate": "2025-12-12T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-74",
+            "installmentNumber": 74,
+            "amount": 20,
+            "dueDate": "2025-12-13T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-75",
+            "installmentNumber": 75,
+            "amount": 20,
+            "dueDate": "2025-12-14T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-76",
+            "installmentNumber": 76,
+            "amount": 20,
+            "dueDate": "2025-12-15T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-77",
+            "installmentNumber": 77,
+            "amount": 20,
+            "dueDate": "2025-12-16T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-78",
+            "installmentNumber": 78,
+            "amount": 20,
+            "dueDate": "2025-12-17T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-79",
+            "installmentNumber": 79,
+            "amount": 20,
+            "dueDate": "2025-12-18T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-80",
+            "installmentNumber": 80,
+            "amount": 20,
+            "dueDate": "2025-12-19T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-81",
+            "installmentNumber": 81,
+            "amount": 20,
+            "dueDate": "2025-12-20T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-82",
+            "installmentNumber": 82,
+            "amount": 20,
+            "dueDate": "2025-12-21T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-83",
+            "installmentNumber": 83,
+            "amount": 20,
+            "dueDate": "2025-12-22T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-84",
+            "installmentNumber": 84,
+            "amount": 20,
+            "dueDate": "2025-12-23T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-85",
+            "installmentNumber": 85,
+            "amount": 20,
+            "dueDate": "2025-12-24T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-86",
+            "installmentNumber": 86,
+            "amount": 20,
+            "dueDate": "2025-12-25T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-87",
+            "installmentNumber": 87,
+            "amount": 20,
+            "dueDate": "2025-12-26T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-88",
+            "installmentNumber": 88,
+            "amount": 20,
+            "dueDate": "2025-12-27T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-89",
+            "installmentNumber": 89,
+            "amount": 20,
+            "dueDate": "2025-12-28T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-90",
+            "installmentNumber": 90,
+            "amount": 20,
+            "dueDate": "2025-12-29T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-91",
+            "installmentNumber": 91,
+            "amount": 20,
+            "dueDate": "2025-12-30T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-92",
+            "installmentNumber": 92,
+            "amount": 20,
+            "dueDate": "2025-12-31T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-93",
+            "installmentNumber": 93,
+            "amount": 20,
+            "dueDate": "2026-01-01T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-94",
+            "installmentNumber": 94,
+            "amount": 20,
+            "dueDate": "2026-01-02T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-95",
+            "installmentNumber": 95,
+            "amount": 20,
+            "dueDate": "2026-01-03T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-96",
+            "installmentNumber": 96,
+            "amount": 20,
+            "dueDate": "2026-01-04T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-97",
+            "installmentNumber": 97,
+            "amount": 20,
+            "dueDate": "2026-01-05T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-98",
+            "installmentNumber": 98,
+            "amount": 20,
+            "dueDate": "2026-01-06T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-99",
+            "installmentNumber": 99,
+            "amount": 20,
+            "dueDate": "2026-01-07T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-100",
+            "installmentNumber": 100,
+            "amount": 20,
+            "dueDate": "2026-01-08T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-101",
+            "installmentNumber": 101,
+            "amount": 20,
+            "dueDate": "2026-01-09T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-102",
+            "installmentNumber": 102,
+            "amount": 20,
+            "dueDate": "2026-01-10T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-103",
+            "installmentNumber": 103,
+            "amount": 20,
+            "dueDate": "2026-01-11T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-104",
+            "installmentNumber": 104,
+            "amount": 20,
+            "dueDate": "2026-01-12T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-105",
+            "installmentNumber": 105,
+            "amount": 20,
+            "dueDate": "2026-01-13T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-106",
+            "installmentNumber": 106,
+            "amount": 20,
+            "dueDate": "2026-01-14T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-107",
+            "installmentNumber": 107,
+            "amount": 20,
+            "dueDate": "2026-01-15T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-108",
+            "installmentNumber": 108,
+            "amount": 20,
+            "dueDate": "2026-01-16T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-109",
+            "installmentNumber": 109,
+            "amount": 20,
+            "dueDate": "2026-01-17T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-110",
+            "installmentNumber": 110,
+            "amount": 20,
+            "dueDate": "2026-01-18T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-111",
+            "installmentNumber": 111,
+            "amount": 20,
+            "dueDate": "2026-01-19T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-112",
+            "installmentNumber": 112,
+            "amount": 20,
+            "dueDate": "2026-01-20T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-113",
+            "installmentNumber": 113,
+            "amount": 20,
+            "dueDate": "2026-01-21T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-114",
+            "installmentNumber": 114,
+            "amount": 20,
+            "dueDate": "2026-01-22T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-115",
+            "installmentNumber": 115,
+            "amount": 20,
+            "dueDate": "2026-01-23T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-116",
+            "installmentNumber": 116,
+            "amount": 20,
+            "dueDate": "2026-01-24T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-117",
+            "installmentNumber": 117,
+            "amount": 20,
+            "dueDate": "2026-01-25T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-118",
+            "installmentNumber": 118,
+            "amount": 20,
+            "dueDate": "2026-01-26T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-119",
+            "installmentNumber": 119,
+            "amount": 20,
+            "dueDate": "2026-01-27T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-120",
+            "installmentNumber": 120,
+            "amount": 20,
+            "dueDate": "2026-01-28T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-121",
+            "installmentNumber": 121,
+            "amount": 20,
+            "dueDate": "2026-01-29T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-122",
+            "installmentNumber": 122,
+            "amount": 20,
+            "dueDate": "2026-01-30T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-123",
+            "installmentNumber": 123,
+            "amount": 20,
+            "dueDate": "2026-01-31T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-124",
+            "installmentNumber": 124,
+            "amount": 20,
+            "dueDate": "2026-02-01T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-125",
+            "installmentNumber": 125,
+            "amount": 20,
+            "dueDate": "2026-02-02T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-126",
+            "installmentNumber": 126,
+            "amount": 20,
+            "dueDate": "2026-02-03T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-127",
+            "installmentNumber": 127,
+            "amount": 20,
+            "dueDate": "2026-02-04T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-128",
+            "installmentNumber": 128,
+            "amount": 20,
+            "dueDate": "2026-02-05T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-129",
+            "installmentNumber": 129,
+            "amount": 20,
+            "dueDate": "2026-02-06T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-130",
+            "installmentNumber": 130,
+            "amount": 20,
+            "dueDate": "2026-02-07T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-131",
+            "installmentNumber": 131,
+            "amount": 20,
+            "dueDate": "2026-02-08T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-132",
+            "installmentNumber": 132,
+            "amount": 20,
+            "dueDate": "2026-02-09T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-133",
+            "installmentNumber": 133,
+            "amount": 20,
+            "dueDate": "2026-02-10T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-134",
+            "installmentNumber": 134,
+            "amount": 20,
+            "dueDate": "2026-02-11T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-135",
+            "installmentNumber": 135,
+            "amount": 20,
+            "dueDate": "2026-02-12T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-136",
+            "installmentNumber": 136,
+            "amount": 20,
+            "dueDate": "2026-02-13T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-137",
+            "installmentNumber": 137,
+            "amount": 20,
+            "dueDate": "2026-02-14T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-138",
+            "installmentNumber": 138,
+            "amount": 20,
+            "dueDate": "2026-02-15T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-139",
+            "installmentNumber": 139,
+            "amount": 20,
+            "dueDate": "2026-02-16T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-140",
+            "installmentNumber": 140,
+            "amount": 20,
+            "dueDate": "2026-02-17T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-141",
+            "installmentNumber": 141,
+            "amount": 20,
+            "dueDate": "2026-02-18T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-142",
+            "installmentNumber": 142,
+            "amount": 20,
+            "dueDate": "2026-02-19T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-143",
+            "installmentNumber": 143,
+            "amount": 20,
+            "dueDate": "2026-02-20T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-144",
+            "installmentNumber": 144,
+            "amount": 20,
+            "dueDate": "2026-02-21T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-145",
+            "installmentNumber": 145,
+            "amount": 20,
+            "dueDate": "2026-02-22T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-146",
+            "installmentNumber": 146,
+            "amount": 20,
+            "dueDate": "2026-02-23T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-147",
+            "installmentNumber": 147,
+            "amount": 20,
+            "dueDate": "2026-02-24T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-148",
+            "installmentNumber": 148,
+            "amount": 20,
+            "dueDate": "2026-02-25T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-149",
+            "installmentNumber": 149,
+            "amount": 20,
+            "dueDate": "2026-02-26T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-150",
+            "installmentNumber": 150,
+            "amount": 20,
+            "dueDate": "2026-02-27T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-151",
+            "installmentNumber": 151,
+            "amount": 20,
+            "dueDate": "2026-02-28T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-152",
+            "installmentNumber": 152,
+            "amount": 20,
+            "dueDate": "2026-03-01T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-153",
+            "installmentNumber": 153,
+            "amount": 20,
+            "dueDate": "2026-03-02T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-154",
+            "installmentNumber": 154,
+            "amount": 20,
+            "dueDate": "2026-03-03T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-155",
+            "installmentNumber": 155,
+            "amount": 20,
+            "dueDate": "2026-03-04T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-156",
+            "installmentNumber": 156,
+            "amount": 20,
+            "dueDate": "2026-03-05T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-157",
+            "installmentNumber": 157,
+            "amount": 20,
+            "dueDate": "2026-03-06T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-158",
+            "installmentNumber": 158,
+            "amount": 20,
+            "dueDate": "2026-03-07T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-159",
+            "installmentNumber": 159,
+            "amount": 20,
+            "dueDate": "2026-03-08T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-160",
+            "installmentNumber": 160,
+            "amount": 20,
+            "dueDate": "2026-03-09T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-161",
+            "installmentNumber": 161,
+            "amount": 20,
+            "dueDate": "2026-03-10T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-162",
+            "installmentNumber": 162,
+            "amount": 20,
+            "dueDate": "2026-03-11T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-163",
+            "installmentNumber": 163,
+            "amount": 20,
+            "dueDate": "2026-03-12T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-164",
+            "installmentNumber": 164,
+            "amount": 20,
+            "dueDate": "2026-03-13T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-165",
+            "installmentNumber": 165,
+            "amount": 20,
+            "dueDate": "2026-03-14T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-166",
+            "installmentNumber": 166,
+            "amount": 20,
+            "dueDate": "2026-03-15T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-167",
+            "installmentNumber": 167,
+            "amount": 20,
+            "dueDate": "2026-03-16T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-168",
+            "installmentNumber": 168,
+            "amount": 20,
+            "dueDate": "2026-03-17T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-169",
+            "installmentNumber": 169,
+            "amount": 20,
+            "dueDate": "2026-03-18T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-170",
+            "installmentNumber": 170,
+            "amount": 20,
+            "dueDate": "2026-03-19T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-171",
+            "installmentNumber": 171,
+            "amount": 20,
+            "dueDate": "2026-03-20T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-172",
+            "installmentNumber": 172,
+            "amount": 20,
+            "dueDate": "2026-03-21T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-173",
+            "installmentNumber": 173,
+            "amount": 20,
+            "dueDate": "2026-03-22T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-174",
+            "installmentNumber": 174,
+            "amount": 20,
+            "dueDate": "2026-03-23T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-175",
+            "installmentNumber": 175,
+            "amount": 20,
+            "dueDate": "2026-03-24T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-176",
+            "installmentNumber": 176,
+            "amount": 20,
+            "dueDate": "2026-03-25T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-177",
+            "installmentNumber": 177,
+            "amount": 20,
+            "dueDate": "2026-03-26T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-178",
+            "installmentNumber": 178,
+            "amount": 20,
+            "dueDate": "2026-03-27T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-179",
+            "installmentNumber": 179,
+            "amount": 20,
+            "dueDate": "2026-03-28T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-180",
+            "installmentNumber": 180,
+            "amount": 20,
+            "dueDate": "2026-03-29T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-181",
+            "installmentNumber": 181,
+            "amount": 20,
+            "dueDate": "2026-03-30T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-182",
+            "installmentNumber": 182,
+            "amount": 20,
+            "dueDate": "2026-03-31T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-183",
+            "installmentNumber": 183,
+            "amount": 20,
+            "dueDate": "2026-04-01T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-184",
+            "installmentNumber": 184,
+            "amount": 20,
+            "dueDate": "2026-04-02T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-185",
+            "installmentNumber": 185,
+            "amount": 20,
+            "dueDate": "2026-04-03T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-186",
+            "installmentNumber": 186,
+            "amount": 20,
+            "dueDate": "2026-04-04T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-187",
+            "installmentNumber": 187,
+            "amount": 20,
+            "dueDate": "2026-04-05T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-188",
+            "installmentNumber": 188,
+            "amount": 20,
+            "dueDate": "2026-04-06T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-189",
+            "installmentNumber": 189,
+            "amount": 20,
+            "dueDate": "2026-04-07T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-190",
+            "installmentNumber": 190,
+            "amount": 20,
+            "dueDate": "2026-04-08T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-191",
+            "installmentNumber": 191,
+            "amount": 20,
+            "dueDate": "2026-04-09T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-192",
+            "installmentNumber": 192,
+            "amount": 20,
+            "dueDate": "2026-04-10T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-193",
+            "installmentNumber": 193,
+            "amount": 20,
+            "dueDate": "2026-04-11T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-194",
+            "installmentNumber": 194,
+            "amount": 20,
+            "dueDate": "2026-04-12T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-195",
+            "installmentNumber": 195,
+            "amount": 20,
+            "dueDate": "2026-04-13T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-196",
+            "installmentNumber": 196,
+            "amount": 20,
+            "dueDate": "2026-04-14T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-197",
+            "installmentNumber": 197,
+            "amount": 20,
+            "dueDate": "2026-04-15T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-198",
+            "installmentNumber": 198,
+            "amount": 20,
+            "dueDate": "2026-04-16T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-199",
+            "installmentNumber": 199,
+            "amount": 20,
+            "dueDate": "2026-04-17T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-200",
+            "installmentNumber": 200,
+            "amount": 20,
+            "dueDate": "2026-04-18T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-201",
+            "installmentNumber": 201,
+            "amount": 20,
+            "dueDate": "2026-04-19T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-202",
+            "installmentNumber": 202,
+            "amount": 20,
+            "dueDate": "2026-04-20T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-203",
+            "installmentNumber": 203,
+            "amount": 20,
+            "dueDate": "2026-04-21T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-204",
+            "installmentNumber": 204,
+            "amount": 20,
+            "dueDate": "2026-04-22T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-205",
+            "installmentNumber": 205,
+            "amount": 20,
+            "dueDate": "2026-04-23T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-206",
+            "installmentNumber": 206,
+            "amount": 20,
+            "dueDate": "2026-04-24T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-207",
+            "installmentNumber": 207,
+            "amount": 20,
+            "dueDate": "2026-04-25T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-208",
+            "installmentNumber": 208,
+            "amount": 20,
+            "dueDate": "2026-04-26T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-209",
+            "installmentNumber": 209,
+            "amount": 20,
+            "dueDate": "2026-04-27T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-210",
+            "installmentNumber": 210,
+            "amount": 20,
+            "dueDate": "2026-04-28T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-211",
+            "installmentNumber": 211,
+            "amount": 20,
+            "dueDate": "2026-04-29T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-212",
+            "installmentNumber": 212,
+            "amount": 20,
+            "dueDate": "2026-04-30T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-213",
+            "installmentNumber": 213,
+            "amount": 20,
+            "dueDate": "2026-05-01T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-214",
+            "installmentNumber": 214,
+            "amount": 20,
+            "dueDate": "2026-05-02T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-215",
+            "installmentNumber": 215,
+            "amount": 20,
+            "dueDate": "2026-05-03T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-216",
+            "installmentNumber": 216,
+            "amount": 20,
+            "dueDate": "2026-05-04T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-217",
+            "installmentNumber": 217,
+            "amount": 20,
+            "dueDate": "2026-05-05T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-218",
+            "installmentNumber": 218,
+            "amount": 20,
+            "dueDate": "2026-05-06T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-219",
+            "installmentNumber": 219,
+            "amount": 20,
+            "dueDate": "2026-05-07T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-220",
+            "installmentNumber": 220,
+            "amount": 20,
+            "dueDate": "2026-05-08T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-221",
+            "installmentNumber": 221,
+            "amount": 20,
+            "dueDate": "2026-05-09T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-222",
+            "installmentNumber": 222,
+            "amount": 20,
+            "dueDate": "2026-05-10T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-223",
+            "installmentNumber": 223,
+            "amount": 20,
+            "dueDate": "2026-05-11T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-224",
+            "installmentNumber": 224,
+            "amount": 20,
+            "dueDate": "2026-05-12T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-225",
+            "installmentNumber": 225,
+            "amount": 20,
+            "dueDate": "2026-05-13T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-226",
+            "installmentNumber": 226,
+            "amount": 20,
+            "dueDate": "2026-05-14T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-227",
+            "installmentNumber": 227,
+            "amount": 20,
+            "dueDate": "2026-05-15T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-228",
+            "installmentNumber": 228,
+            "amount": 20,
+            "dueDate": "2026-05-16T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-229",
+            "installmentNumber": 229,
+            "amount": 20,
+            "dueDate": "2026-05-17T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-230",
+            "installmentNumber": 230,
+            "amount": 20,
+            "dueDate": "2026-05-18T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-231",
+            "installmentNumber": 231,
+            "amount": 20,
+            "dueDate": "2026-05-19T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-232",
+            "installmentNumber": 232,
+            "amount": 20,
+            "dueDate": "2026-05-20T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-233",
+            "installmentNumber": 233,
+            "amount": 20,
+            "dueDate": "2026-05-21T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-234",
+            "installmentNumber": 234,
+            "amount": 20,
+            "dueDate": "2026-05-22T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-235",
+            "installmentNumber": 235,
+            "amount": 20,
+            "dueDate": "2026-05-23T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-236",
+            "installmentNumber": 236,
+            "amount": 20,
+            "dueDate": "2026-05-24T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-237",
+            "installmentNumber": 237,
+            "amount": 20,
+            "dueDate": "2026-05-25T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-238",
+            "installmentNumber": 238,
+            "amount": 20,
+            "dueDate": "2026-05-26T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-239",
+            "installmentNumber": 239,
+            "amount": 20,
+            "dueDate": "2026-05-27T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-240",
+            "installmentNumber": 240,
+            "amount": 20,
+            "dueDate": "2026-05-28T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-241",
+            "installmentNumber": 241,
+            "amount": 20,
+            "dueDate": "2026-05-29T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-242",
+            "installmentNumber": 242,
+            "amount": 20,
+            "dueDate": "2026-05-30T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-243",
+            "installmentNumber": 243,
+            "amount": 20,
+            "dueDate": "2026-05-31T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-244",
+            "installmentNumber": 244,
+            "amount": 20,
+            "dueDate": "2026-06-01T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-245",
+            "installmentNumber": 245,
+            "amount": 20,
+            "dueDate": "2026-06-02T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-246",
+            "installmentNumber": 246,
+            "amount": 20,
+            "dueDate": "2026-06-03T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-247",
+            "installmentNumber": 247,
+            "amount": 20,
+            "dueDate": "2026-06-04T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-248",
+            "installmentNumber": 248,
+            "amount": 20,
+            "dueDate": "2026-06-05T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-249",
+            "installmentNumber": 249,
+            "amount": 20,
+            "dueDate": "2026-06-06T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-250",
+            "installmentNumber": 250,
+            "amount": 20,
+            "dueDate": "2026-06-07T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-251",
+            "installmentNumber": 251,
+            "amount": 20,
+            "dueDate": "2026-06-08T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-252",
+            "installmentNumber": 252,
+            "amount": 20,
+            "dueDate": "2026-06-09T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-253",
+            "installmentNumber": 253,
+            "amount": 20,
+            "dueDate": "2026-06-10T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-254",
+            "installmentNumber": 254,
+            "amount": 20,
+            "dueDate": "2026-06-11T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-255",
+            "installmentNumber": 255,
+            "amount": 20,
+            "dueDate": "2026-06-12T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-256",
+            "installmentNumber": 256,
+            "amount": 20,
+            "dueDate": "2026-06-13T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-257",
+            "installmentNumber": 257,
+            "amount": 20,
+            "dueDate": "2026-06-14T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-258",
+            "installmentNumber": 258,
+            "amount": 20,
+            "dueDate": "2026-06-15T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-259",
+            "installmentNumber": 259,
+            "amount": 20,
+            "dueDate": "2026-06-16T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-260",
+            "installmentNumber": 260,
+            "amount": 20,
+            "dueDate": "2026-06-17T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-261",
+            "installmentNumber": 261,
+            "amount": 20,
+            "dueDate": "2026-06-18T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-262",
+            "installmentNumber": 262,
+            "amount": 20,
+            "dueDate": "2026-06-19T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-263",
+            "installmentNumber": 263,
+            "amount": 20,
+            "dueDate": "2026-06-20T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-264",
+            "installmentNumber": 264,
+            "amount": 20,
+            "dueDate": "2026-06-21T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-265",
+            "installmentNumber": 265,
+            "amount": 20,
+            "dueDate": "2026-06-22T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-266",
+            "installmentNumber": 266,
+            "amount": 20,
+            "dueDate": "2026-06-23T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-267",
+            "installmentNumber": 267,
+            "amount": 20,
+            "dueDate": "2026-06-24T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-268",
+            "installmentNumber": 268,
+            "amount": 20,
+            "dueDate": "2026-06-25T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-269",
+            "installmentNumber": 269,
+            "amount": 20,
+            "dueDate": "2026-06-26T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-270",
+            "installmentNumber": 270,
+            "amount": 20,
+            "dueDate": "2026-06-27T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-271",
+            "installmentNumber": 271,
+            "amount": 20,
+            "dueDate": "2026-06-28T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-272",
+            "installmentNumber": 272,
+            "amount": 20,
+            "dueDate": "2026-06-29T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-273",
+            "installmentNumber": 273,
+            "amount": 20,
+            "dueDate": "2026-06-30T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-274",
+            "installmentNumber": 274,
+            "amount": 20,
+            "dueDate": "2026-07-01T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-275",
+            "installmentNumber": 275,
+            "amount": 20,
+            "dueDate": "2026-07-02T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-276",
+            "installmentNumber": 276,
+            "amount": 20,
+            "dueDate": "2026-07-03T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-277",
+            "installmentNumber": 277,
+            "amount": 20,
+            "dueDate": "2026-07-04T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-278",
+            "installmentNumber": 278,
+            "amount": 20,
+            "dueDate": "2026-07-05T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-279",
+            "installmentNumber": 279,
+            "amount": 20,
+            "dueDate": "2026-07-06T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-280",
+            "installmentNumber": 280,
+            "amount": 20,
+            "dueDate": "2026-07-07T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-281",
+            "installmentNumber": 281,
+            "amount": 20,
+            "dueDate": "2026-07-08T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-282",
+            "installmentNumber": 282,
+            "amount": 20,
+            "dueDate": "2026-07-09T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-283",
+            "installmentNumber": 283,
+            "amount": 20,
+            "dueDate": "2026-07-10T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-284",
+            "installmentNumber": 284,
+            "amount": 20,
+            "dueDate": "2026-07-11T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "9ub1xoz4zksmex8jac0-285",
+            "installmentNumber": 285,
+            "amount": 20,
+            "dueDate": "2026-07-12T05:00:00.000Z",
+            "status": "pending"
+          }
+        ],
+        "paymentFrequency": "daily"
+      },
+      "id": "9ub1xoz4zksmex8jac0",
+      "createdAt": "2025-08-29T19:38:03.408Z",
+      "updatedAt": "2025-08-29T19:38:13.210Z"
+    },
+    {
+      "amount": 810,
+      "description": "Iphone 15 pro 256gb",
+      "date": "2025-08-29T05:00:00.000Z",
+      "dueDate": "2025-08-29T05:00:00.000Z",
+      "type": "lent",
+      "personName": "Rodrigo",
+      "status": "overdue",
+      "installments": {
+        "enabled": true,
+        "totalInstallments": 27,
+        "firstInstallmentDate": "2025-08-29T05:00:00.000Z",
+        "installmentAmount": 30,
+        "installmentsList": [
+          {
+            "id": "3bdltmwzg2cmex4p8yk-1",
+            "installmentNumber": 1,
+            "amount": 30,
+            "dueDate": "2025-08-29T05:00:00.000Z",
+            "status": "paid",
+            "paidDate": "2025-08-30T05:00:00.000Z"
+          },
+          {
+            "id": "3bdltmwzg2cmex4p8yk-2",
+            "installmentNumber": 2,
+            "amount": 30,
+            "dueDate": "2025-08-30T05:00:00.000Z",
+            "status": "paid",
+            "paidDate": "2025-08-31T05:00:00.000Z"
+          },
+          {
+            "id": "3bdltmwzg2cmex4p8yk-3",
+            "installmentNumber": 3,
+            "amount": 30,
+            "dueDate": "2025-08-31T05:00:00.000Z",
+            "status": "paid",
+            "paidDate": "2025-09-01T05:00:00.000Z"
+          },
+          {
+            "id": "3bdltmwzg2cmex4p8yk-4",
+            "installmentNumber": 4,
+            "amount": 30,
+            "dueDate": "2025-09-01T05:00:00.000Z",
+            "status": "paid",
+            "paidDate": "2025-09-02T05:00:00.000Z"
+          },
+          {
+            "id": "3bdltmwzg2cmex4p8yk-5",
+            "installmentNumber": 5,
+            "amount": 30,
+            "dueDate": "2025-09-02T05:00:00.000Z",
+            "status": "paid",
+            "paidDate": "2025-09-04T05:00:00.000Z"
+          },
+          {
+            "id": "3bdltmwzg2cmex4p8yk-6",
+            "installmentNumber": 6,
+            "amount": 30,
+            "dueDate": "2025-09-03T05:00:00.000Z",
+            "status": "paid",
+            "paidDate": "2025-09-04T05:00:00.000Z"
+          },
+          {
+            "id": "3bdltmwzg2cmex4p8yk-7",
+            "installmentNumber": 7,
+            "amount": 30,
+            "dueDate": "2025-09-04T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "3bdltmwzg2cmex4p8yk-8",
+            "installmentNumber": 8,
+            "amount": 30,
+            "dueDate": "2025-09-05T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "3bdltmwzg2cmex4p8yk-9",
+            "installmentNumber": 9,
+            "amount": 30,
+            "dueDate": "2025-09-06T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "3bdltmwzg2cmex4p8yk-10",
+            "installmentNumber": 10,
+            "amount": 30,
+            "dueDate": "2025-09-07T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "3bdltmwzg2cmex4p8yk-11",
+            "installmentNumber": 11,
+            "amount": 30,
+            "dueDate": "2025-09-08T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "3bdltmwzg2cmex4p8yk-12",
+            "installmentNumber": 12,
+            "amount": 30,
+            "dueDate": "2025-09-09T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "3bdltmwzg2cmex4p8yk-13",
+            "installmentNumber": 13,
+            "amount": 30,
+            "dueDate": "2025-09-10T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "3bdltmwzg2cmex4p8yk-14",
+            "installmentNumber": 14,
+            "amount": 30,
+            "dueDate": "2025-09-11T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "3bdltmwzg2cmex4p8yk-15",
+            "installmentNumber": 15,
+            "amount": 30,
+            "dueDate": "2025-09-12T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "3bdltmwzg2cmex4p8yk-16",
+            "installmentNumber": 16,
+            "amount": 30,
+            "dueDate": "2025-09-13T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "3bdltmwzg2cmex4p8yk-17",
+            "installmentNumber": 17,
+            "amount": 30,
+            "dueDate": "2025-09-14T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "3bdltmwzg2cmex4p8yk-18",
+            "installmentNumber": 18,
+            "amount": 30,
+            "dueDate": "2025-09-15T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "3bdltmwzg2cmex4p8yk-19",
+            "installmentNumber": 19,
+            "amount": 30,
+            "dueDate": "2025-09-16T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "3bdltmwzg2cmex4p8yk-20",
+            "installmentNumber": 20,
+            "amount": 30,
+            "dueDate": "2025-09-17T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "3bdltmwzg2cmex4p8yk-21",
+            "installmentNumber": 21,
+            "amount": 30,
+            "dueDate": "2025-09-18T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "3bdltmwzg2cmex4p8yk-22",
+            "installmentNumber": 22,
+            "amount": 30,
+            "dueDate": "2025-09-19T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "3bdltmwzg2cmex4p8yk-23",
+            "installmentNumber": 23,
+            "amount": 30,
+            "dueDate": "2025-09-20T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "3bdltmwzg2cmex4p8yk-24",
+            "installmentNumber": 24,
+            "amount": 30,
+            "dueDate": "2025-09-21T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "3bdltmwzg2cmex4p8yk-25",
+            "installmentNumber": 25,
+            "amount": 30,
+            "dueDate": "2025-09-22T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "3bdltmwzg2cmex4p8yk-26",
+            "installmentNumber": 26,
+            "amount": 30,
+            "dueDate": "2025-09-23T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "3bdltmwzg2cmex4p8yk-27",
+            "installmentNumber": 27,
+            "amount": 30,
+            "dueDate": "2025-09-24T05:00:00.000Z",
+            "status": "pending"
+          }
+        ],
+        "paymentFrequency": "daily"
+      },
+      "id": "3bdltmwzg2cmex4p8yk",
+      "createdAt": "2025-08-29T17:50:43.100Z",
+      "updatedAt": "2025-09-04T06:33:27.079Z"
+    },
+    {
+      "amount": 1500,
+      "description": "Laptop oled",
+      "date": "2025-07-15T05:00:00.000Z",
+      "dueDate": "2025-08-29T05:00:00.000Z",
+      "type": "lent",
+      "personName": "Steven",
+      "status": "overdue",
+      "installments": {
+        "enabled": true,
+        "totalInstallments": 6,
+        "firstInstallmentDate": "2025-08-05T05:00:00.000Z",
+        "installmentAmount": 250,
+        "installmentsList": [
+          {
+            "id": "azucmldlxtmex47xzc-1",
+            "installmentNumber": 1,
+            "amount": 250,
+            "dueDate": "2025-08-05T05:00:00.000Z",
+            "status": "partial",
+            "partialAmountPaid": 226
+          },
+          {
+            "id": "azucmldlxtmex47xzc-2",
+            "installmentNumber": 2,
+            "amount": 250,
+            "dueDate": "2025-09-05T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "azucmldlxtmex47xzc-3",
+            "installmentNumber": 3,
+            "amount": 250,
+            "dueDate": "2025-10-05T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "azucmldlxtmex47xzc-4",
+            "installmentNumber": 4,
+            "amount": 250,
+            "dueDate": "2025-11-05T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "azucmldlxtmex47xzc-5",
+            "installmentNumber": 5,
+            "amount": 250,
+            "dueDate": "2025-12-05T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "azucmldlxtmex47xzc-6",
+            "installmentNumber": 6,
+            "amount": 250,
+            "dueDate": "2026-01-05T05:00:00.000Z",
+            "status": "pending"
+          }
+        ],
+        "paymentFrequency": "monthly"
+      },
+      "id": "azucmldlxtmex47xzc",
+      "createdAt": "2025-08-29T17:37:15.720Z",
+      "updatedAt": "2025-09-01T23:52:43.349Z"
+    },
+    {
+      "amount": 355.4,
+      "description": "Ollas y menaje cocina libertad",
+      "date": "2025-07-15T05:00:00.000Z",
+      "dueDate": "2025-12-31T05:00:00.000Z",
+      "type": "borrowed",
+      "personName": "Mamá",
+      "status": "pending",
+      "id": "b0j3w8uar0cmex46ooz",
+      "createdAt": "2025-08-29T17:36:17.027Z",
+      "updatedAt": "2025-08-29T17:36:17.027Z"
+    },
+    {
+      "amount": 875,
+      "description": "Cocina libertad",
+      "date": "2025-07-15T05:00:00.000Z",
+      "dueDate": "2025-08-29T05:00:00.000Z",
+      "type": "borrowed",
+      "personName": "Mamá",
+      "status": "overdue",
+      "installments": {
+        "enabled": true,
+        "totalInstallments": 12,
+        "firstInstallmentDate": "2025-07-30T05:00:00.000Z",
+        "installmentAmount": 72.91666666666667,
+        "installmentsList": [
+          {
+            "id": "2b6dk3i4refmex44gl9-1",
+            "installmentNumber": 1,
+            "amount": 72.92,
+            "dueDate": "2025-07-30T05:00:00.000Z",
+            "status": "paid",
+            "paidDate": "2025-09-04T05:00:00.000Z"
+          },
+          {
+            "id": "2b6dk3i4refmex44gl9-2",
+            "installmentNumber": 2,
+            "amount": 72.92,
+            "dueDate": "2025-08-30T05:00:00.000Z",
+            "status": "paid",
+            "paidDate": "2025-09-04T05:00:00.000Z"
+          },
+          {
+            "id": "2b6dk3i4refmex44gl9-3",
+            "installmentNumber": 3,
+            "amount": 72.92,
+            "dueDate": "2025-09-30T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "2b6dk3i4refmex44gl9-4",
+            "installmentNumber": 4,
+            "amount": 72.92,
+            "dueDate": "2025-10-30T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "2b6dk3i4refmex44gl9-5",
+            "installmentNumber": 5,
+            "amount": 72.92,
+            "dueDate": "2025-11-30T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "2b6dk3i4refmex44gl9-6",
+            "installmentNumber": 6,
+            "amount": 72.92,
+            "dueDate": "2025-12-30T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "2b6dk3i4refmex44gl9-7",
+            "installmentNumber": 7,
+            "amount": 72.92,
+            "dueDate": "2026-01-30T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "2b6dk3i4refmex44gl9-8",
+            "installmentNumber": 8,
+            "amount": 72.92,
+            "dueDate": "2026-03-02T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "2b6dk3i4refmex44gl9-9",
+            "installmentNumber": 9,
+            "amount": 72.92,
+            "dueDate": "2026-03-30T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "2b6dk3i4refmex44gl9-10",
+            "installmentNumber": 10,
+            "amount": 72.92,
+            "dueDate": "2026-04-30T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "2b6dk3i4refmex44gl9-11",
+            "installmentNumber": 11,
+            "amount": 72.92,
+            "dueDate": "2026-05-30T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "2b6dk3i4refmex44gl9-12",
+            "installmentNumber": 12,
+            "amount": 72.92,
+            "dueDate": "2026-06-30T05:00:00.000Z",
+            "status": "pending"
+          }
+        ],
+        "paymentFrequency": "monthly"
+      },
+      "id": "2b6dk3i4refmex44gl9",
+      "createdAt": "2025-08-29T17:34:33.213Z",
+      "updatedAt": "2025-09-04T00:34:02.393Z"
+    },
+    {
+      "amount": 387.56,
+      "description": "Material techo milagros",
+      "date": "2025-08-29T05:00:00.000Z",
+      "dueDate": "2025-09-30T05:00:00.000Z",
+      "type": "lent",
+      "personName": "Suegro Miguel",
+      "status": "pending",
+      "id": "8tj7nh28w2jmex41ajw",
+      "createdAt": "2025-08-29T17:32:05.420Z",
+      "updatedAt": "2025-08-29T17:32:05.420Z"
+    },
+    {
+      "amount": 656.4,
+      "description": "Losas casa",
+      "date": "2025-07-15T05:00:00.000Z",
+      "dueDate": "2025-08-29T05:00:00.000Z",
+      "type": "lent",
+      "personName": "Papá",
+      "status": "overdue",
+      "installments": {
+        "enabled": true,
+        "totalInstallments": 6,
+        "firstInstallmentDate": "2025-07-30T05:00:00.000Z",
+        "installmentAmount": 109.39999999999999,
+        "installmentsList": [
+          {
+            "id": "t8rp9cgpa5hmex3yajs-1",
+            "installmentNumber": 1,
+            "amount": 109.4,
+            "dueDate": "2025-07-30T05:00:00.000Z",
+            "status": "paid",
+            "paidDate": "2025-08-29T05:00:00.000Z"
+          },
+          {
+            "id": "t8rp9cgpa5hmex3yajs-2",
+            "installmentNumber": 2,
+            "amount": 109.4,
+            "dueDate": "2025-08-30T05:00:00.000Z",
+            "status": "paid",
+            "paidDate": "2025-09-01T05:00:00.000Z"
+          },
+          {
+            "id": "t8rp9cgpa5hmex3yajs-3",
+            "installmentNumber": 3,
+            "amount": 109.4,
+            "dueDate": "2025-09-30T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "t8rp9cgpa5hmex3yajs-4",
+            "installmentNumber": 4,
+            "amount": 109.4,
+            "dueDate": "2025-10-30T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "t8rp9cgpa5hmex3yajs-5",
+            "installmentNumber": 5,
+            "amount": 109.4,
+            "dueDate": "2025-11-30T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "t8rp9cgpa5hmex3yajs-6",
+            "installmentNumber": 6,
+            "amount": 109.4,
+            "dueDate": "2025-12-30T05:00:00.000Z",
+            "status": "pending"
+          }
+        ],
+        "paymentFrequency": "monthly"
+      },
+      "id": "t8rp9cgpa5hmex3yajs",
+      "createdAt": "2025-08-29T17:29:45.448Z",
+      "updatedAt": "2025-09-01T15:00:01.146Z"
+    },
+    {
+      "amount": 1260,
+      "description": "Parlante jbl\n",
+      "date": "2025-07-15T05:00:00.000Z",
+      "dueDate": "2025-08-29T05:00:00.000Z",
+      "type": "lent",
+      "personName": "Sebastian primo",
+      "status": "overdue",
+      "installments": {
+        "enabled": true,
+        "totalInstallments": 6,
+        "firstInstallmentDate": "2025-07-30T05:00:00.000Z",
+        "installmentAmount": 210,
+        "installmentsList": [
+          {
+            "id": "unpmbqne5kfmex2entk-1",
+            "installmentNumber": 1,
+            "amount": 210,
+            "dueDate": "2025-07-30T05:00:00.000Z",
+            "status": "paid",
+            "paidDate": "2025-08-29T05:00:00.000Z"
+          },
+          {
+            "id": "unpmbqne5kfmex2entk-2",
+            "installmentNumber": 2,
+            "amount": 210,
+            "dueDate": "2025-08-30T05:00:00.000Z",
+            "status": "paid",
+            "paidDate": "2025-08-29T05:00:00.000Z"
+          },
+          {
+            "id": "unpmbqne5kfmex2entk-3",
+            "installmentNumber": 3,
+            "amount": 210,
+            "dueDate": "2025-09-30T05:00:00.000Z",
+            "status": "partial",
+            "partialAmountPaid": 180
+          },
+          {
+            "id": "unpmbqne5kfmex2entk-4",
+            "installmentNumber": 4,
+            "amount": 210,
+            "dueDate": "2025-10-30T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "unpmbqne5kfmex2entk-5",
+            "installmentNumber": 5,
+            "amount": 210,
+            "dueDate": "2025-11-30T05:00:00.000Z",
+            "status": "pending"
+          },
+          {
+            "id": "unpmbqne5kfmex2entk-6",
+            "installmentNumber": 6,
+            "amount": 210,
+            "dueDate": "2025-12-30T05:00:00.000Z",
+            "status": "pending"
+          }
+        ],
+        "paymentFrequency": "monthly"
+      },
+      "id": "unpmbqne5kfmex2entk",
+      "createdAt": "2025-08-29T16:46:29.912Z",
+      "updatedAt": "2025-09-02T15:25:07.058Z"
+    }
+  ],
+  "recurringTransactions": [
+    {
+      "id": "ewfgnx1ia6rmf18th8s",
+      "amount": 1900,
+      "description": "Salario mensual",
+      "categoryId": "Sueldo",
+      "accountId": "1756480815352",
+      "type": "income",
+      "frequency": "monthly",
+      "startDate": "2025-09-30T05:00:00.000Z",
+      "isActive": true,
+      "nextDate": "2025-09-30T05:00:00.000Z",
+      "createdAt": "2025-09-01T14:57:03.628Z",
+      "updatedAt": "2025-09-03T23:59:53.792Z",
+      "lastGeneratedDate": "2025-09-30T05:00:00.000Z"
+    }
+  ],
+  "categories": [
+    {
+      "name": "Alimentación",
+      "icon": "🍽️",
+      "color": "#FF6B6B",
+      "type": "expense",
+      "id": "7fggbae2stumexafj7o",
+      "createdAt": "2025-08-29T20:31:07.524Z",
+      "updatedAt": "2025-08-29T20:31:07.524Z"
+    },
+    {
+      "name": "Transporte",
+      "icon": "🚗",
+      "color": "#4ECDC4",
+      "type": "expense",
+      "id": "a01ewd8rtm7mexafj7p",
+      "createdAt": "2025-08-29T20:31:07.525Z",
+      "updatedAt": "2025-08-29T20:31:07.525Z"
+    },
+    {
+      "name": "Entretenimiento",
+      "icon": "🎬",
+      "color": "#45B7D1",
+      "type": "expense",
+      "id": "bn1ijusx8vamexafj7p",
+      "createdAt": "2025-08-29T20:31:07.525Z",
+      "updatedAt": "2025-08-29T20:31:07.525Z"
+    },
+    {
+      "name": "Salud",
+      "icon": "⚕️",
+      "color": "#96CEB4",
+      "type": "expense",
+      "id": "7axfk5z1fl9mexafj7p",
+      "createdAt": "2025-08-29T20:31:07.525Z",
+      "updatedAt": "2025-08-29T20:31:07.525Z"
+    },
+    {
+      "name": "Educación",
+      "icon": "📚",
+      "color": "#FFEAA7",
+      "type": "expense",
+      "id": "kdm7jcoiglmexafj7p",
+      "createdAt": "2025-08-29T20:31:07.525Z",
+      "updatedAt": "2025-08-29T20:31:07.525Z"
+    },
+    {
+      "name": "Compras",
+      "icon": "🛍️",
+      "color": "#DDA0DD",
+      "type": "expense",
+      "id": "2xorfi11ac9mexafj7p",
+      "createdAt": "2025-08-29T20:31:07.525Z",
+      "updatedAt": "2025-08-29T20:31:07.525Z"
+    },
+    {
+      "name": "Servicios",
+      "icon": "⚡",
+      "color": "#98D8C8",
+      "type": "expense",
+      "id": "wcyzjrmwstmexafj7p",
+      "createdAt": "2025-08-29T20:31:07.525Z",
+      "updatedAt": "2025-08-29T20:31:07.525Z"
+    },
+    {
+      "name": "Sueldo",
+      "icon": "💼",
+      "color": "#55A3FF",
+      "type": "income",
+      "id": "Sueldo",
+      "createdAt": "2025-08-29T20:31:07.526Z",
+      "updatedAt": "2025-08-29T20:31:07.526Z"
+    },
+    {
+      "name": "Freelance",
+      "icon": "💻",
+      "color": "#FD79A8",
+      "type": "income",
+      "id": "f71c6um0jirmexafj7q",
+      "createdAt": "2025-08-29T20:31:07.526Z",
+      "updatedAt": "2025-08-29T20:31:07.526Z"
+    },
+    {
+      "name": "Inversiones",
+      "icon": "📈",
+      "color": "#FDCB6E",
+      "type": "income",
+      "id": "244vxgysr1gmexafj7q",
+      "createdAt": "2025-08-29T20:31:07.526Z",
+      "updatedAt": "2025-08-29T20:31:07.526Z"
+    },
+    {
+      "name": "Otros Ingresos",
+      "icon": "💰",
+      "color": "#6C5CE7",
+      "type": "income",
+      "id": "j666tsrnwrlmexafj7q",
+      "createdAt": "2025-08-29T20:31:07.526Z",
+      "updatedAt": "2025-08-29T20:31:07.526Z"
+    }
+  ],
+  "settings": {
+    "totalBalanceGoal": null,
+    "totalSpendingLimit": null,
+    "theme": "light",
+    "currency": "USD",
+    "language": "es",
+    "notifications": true,
+    "pendingRecurringTransactions": [
+      {
+        "id": "9eioecwir3fmf4n39vk",
+        "recurringTransactionId": "ewfgnx1ia6rmf18th8s",
+        "amount": 1900,
+        "description": "Salario mensual",
+        "categoryId": "Sueldo",
+        "accountId": "1756480815352",
+        "type": "income",
+        "scheduledDate": "2025-09-30T05:00:00.000Z",
+        "status": "pending",
+        "createdAt": "2025-09-03T23:59:53.792Z"
+      }
+    ]
+  },
+  "metadata": {
+    "totalAccounts": 3,
+    "totalTransactions": 41,
+    "totalLoans": 9,
+    "totalRecurringTransactions": 1
+  }
+}

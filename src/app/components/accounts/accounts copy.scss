@@ -1,0 +1,1024 @@
+.accounts-container {
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+
+  h1 {
+    color: #333;
+    margin-bottom: 30px;
+    font-size: 2rem;
+    font-weight: 300;
+  }
+
+  .actions {
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: flex-start;
+    gap: 15px;
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 1rem;
+      padding: 14px 20px;
+      border-radius: 10px;
+      font-weight: 600;
+      text-decoration: none;
+      white-space: nowrap;
+
+      &:hover {
+        transform: translateY(-2px);
+      }
+    }
+  }
+
+  // Estilos para formularios modales
+  .account-form-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    animation: fadeIn 0.3s ease;
+    padding: 20px;
+    box-sizing: border-box;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease;
+
+    .account-form {
+      background: white;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 500px;
+      max-height: 90vh;
+      overflow-y: auto;
+      animation: slideUp 0.3s ease;
+
+      h3 {
+        margin: 0 0 25px 0;
+        color: #333;
+        font-size: 1.5rem;
+        font-weight: 600;
+        text-align: center;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+
+        label {
+          display: block;
+          margin-bottom: 8px;
+          color: #555;
+          font-weight: 500;
+          font-size: 0.9rem;
+        }
+
+        input,
+        select {
+          width: 100%;
+          padding: 12px 16px;
+          border: 2px solid #e1e5e9;
+          border-radius: 8px;
+          font-size: 1rem;
+          transition: all 0.3s ease;
+          background: white;
+          box-sizing: border-box;
+
+          &:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+          }
+
+          &::placeholder {
+            color: #aaa;
+          }
+        }
+
+        select {
+          cursor: pointer;
+        }
+
+        // Estilos para la selección de estilos de tarjeta
+        .card-style-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+          gap: 10px;
+          margin-top: 10px;
+          max-height: 300px;
+          overflow-y: auto;
+
+          .card-style-option {
+            cursor: pointer;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+
+            &:hover {
+              transform: scale(1.02);
+            }
+
+            &.selected {
+              border-color: #007bff;
+              box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
+            }
+
+            .mini-card {
+              height: 80px;
+              padding: 8px;
+              display: flex;
+              flex-direction: column;
+              justify-content: flex-end;
+              color: white;
+              position: relative;
+
+              &::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, transparent 50%);
+                pointer-events: none;
+              }
+
+              .card-info {
+                z-index: 2;
+
+                .card-name {
+                  font-size: 0.7rem;
+                  font-weight: 500;
+                  opacity: 0.9;
+                  line-height: 1.2;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .form-actions {
+        display: flex;
+        gap: 12px;
+        margin-top: 30px;
+
+        button {
+          flex: 1;
+          padding: 12px 24px;
+          border: none;
+          border-radius: 8px;
+          font-size: 1rem;
+          font-weight: 500;
+          cursor: pointer;
+          transition: all 0.3s ease;
+
+          &.btn-secondary {
+            background: #6c757d;
+            color: white;
+
+            &:hover {
+              background: #5a6268;
+              transform: translateY(-1px);
+            }
+          }
+
+          &.btn-primary {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+
+            &:hover {
+              background: linear-gradient(135deg, #0056b3, #004085);
+              transform: translateY(-1px);
+              box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .accounts-list {
+    .accounts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 24px;
+
+      .account-card {
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: all 0.3s ease;
+
+        &:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+        }
+
+        .account-preview {
+          width: 100%;
+          height: 180px;
+          padding: 20px;
+          color: white;
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+
+          &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, transparent 50%);
+            pointer-events: none;
+          }
+
+          .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            z-index: 2;
+
+            .card-brand {
+              font-size: 0.9rem;
+              font-weight: 500;
+              opacity: 0.9;
+            }
+
+            .chip {
+              width: 30px;
+              height: 24px;
+              background: linear-gradient(45deg, #ffd700, #ffed4e);
+              border-radius: 4px;
+              position: relative;
+              
+              &::before {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 16px;
+                height: 12px;
+                border: 1px solid #d4af37;
+                border-radius: 2px;
+              }
+            }
+
+            .bank-logo {
+              font-size: 1.5rem;
+              opacity: 0.8;
+            }
+          }
+
+          .card-number {
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            letter-spacing: 2px;
+            opacity: 0.9;
+            z-index: 2;
+            margin: 10px 0;
+          }
+
+          .card-balance {
+            z-index: 2;
+
+            .balance-label {
+              font-size: 0.75rem;
+              opacity: 0.8;
+              margin-bottom: 2px;
+              text-transform: uppercase;
+              letter-spacing: 0.5px;
+            }
+
+            .balance-amount {
+              font-size: 1.2rem;
+              font-weight: bold;
+              margin-bottom: 2px;
+            }
+
+            .credit-limit {
+              font-size: 0.8rem;
+              opacity: 0.9;
+            }
+          }
+        }
+
+        .account-details {
+          padding: 24px;
+
+          .account-info {
+            margin-bottom: 20px;
+
+            h4 {
+              margin: 0 0 8px 0;
+              color: #333;
+              font-size: 1.2rem;
+              font-weight: 600;
+            }
+
+            .account-type {
+              margin: 0 0 16px 0;
+              color: #666;
+              font-size: 0.9rem;
+            }
+
+            .account-stats {
+              display: flex;
+              flex-direction: column;
+              gap: 8px;
+
+              .stat {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 8px 0;
+                border-bottom: 1px solid #f0f0f0;
+
+                &:last-child {
+                  border-bottom: none;
+                }
+
+                .label {
+                  font-size: 0.9rem;
+                  color: #666;
+                  font-weight: 500;
+                }
+
+                .value {
+                  font-size: 1rem;
+                  color: #333;
+                  font-weight: 600;
+
+                  &.negative {
+                    color: #dc3545;
+                  }
+
+                  &.consumed {
+                    color: #ff6b35;
+                  }
+                }
+              }
+            }
+          }
+
+          .account-actions {
+            display: flex;
+            gap: 12px;
+
+            button {
+              flex: 1;
+              padding: 10px 16px;
+              border: none;
+              border-radius: 8px;
+              font-size: 0.9rem;
+              font-weight: 500;
+              cursor: pointer;
+              transition: all 0.3s ease;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              gap: 6px;
+
+              &.btn-customize {
+                background: #E8F5E8;
+                color: #388E3C;
+
+                &:hover {
+                  background: #C8E6C8;
+                  transform: translateY(-1px);
+                }
+              }
+
+              &.btn-edit {
+                background: #E3F2FD;
+                color: #1976D2;
+
+                &:hover {
+                  background: #BBDEFB;
+                  transform: translateY(-1px);
+                }
+              }
+
+              &.btn-delete {
+                background: #FFEBEE;
+                color: #D32F2F;
+
+                &:hover {
+                  background: #FFCDD2;
+                  transform: translateY(-1px);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .empty-state {
+      background: white;
+      padding: 80px 40px;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      text-align: center;
+
+      .empty-icon {
+        font-size: 4rem;
+        margin-bottom: 20px;
+        opacity: 0.7;
+      }
+
+      h3 {
+        margin: 0 0 15px 0;
+        color: #333;
+        font-size: 1.5rem;
+        font-weight: 600;
+      }
+
+      p {
+        color: #666;
+        font-size: 1rem;
+        margin: 0 0 30px 0;
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      transform: translateY(50px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  // Responsive design
+// Responsive design mejorado
+@media (max-width: 1400px) {
+  .accounts-container {
+    .accounts-list .accounts-grid {
+      grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+      gap: 25px;
+    }
+  }
+}
+
+@media (max-width: 1200px) {
+  .accounts-container {
+    .accounts-list .accounts-grid {
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 20px;
+    }
+
+    .card-style-selector {
+      width: 95%;
+      max-width: 800px;
+      padding: 24px;
+
+      .style-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+      }
+    }
+  }
+}
+
+@media (max-width: 968px) {
+  .accounts-container {
+    .accounts-list .accounts-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .card-style-selector {
+      width: 95%;
+      padding: 20px;
+
+      h3 {
+        font-size: 1.5rem;
+        margin-bottom: 24px;
+      }
+
+      .style-grid {
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 16px;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .accounts-container {
+    padding: 15px;
+
+    .account-form-overlay {
+      padding: 15px;
+
+      .account-form {
+        padding: 25px 20px;
+        max-width: none;
+        margin: 0;
+
+        h3 {
+          font-size: 1.3rem;
+          margin-bottom: 20px;
+        }
+
+        .form-group {
+          margin-bottom: 15px;
+
+          input,
+          select {
+            padding: 14px 16px;
+            font-size: 16px; // Previene zoom en iOS
+          }
+        }
+
+        .form-actions {
+          flex-direction: column;
+          gap: 12px;
+
+          button {
+            padding: 14px;
+            font-size: 1rem;
+          }
+        }
+      }
+    }
+
+    .accounts-list {
+      .accounts-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+
+        .account-card {
+          .account-details .account-actions {
+            flex-direction: column;
+            gap: 10px;
+
+            button {
+              padding: 12px;
+            }
+          }
+        }
+      }
+
+      .empty-state {
+        padding: 60px 20px;
+
+        .empty-icon {
+          font-size: 3rem;
+        }
+
+        h3 {
+          font-size: 1.3rem;
+        }
+
+        p {
+          font-size: 0.95rem;
+        }
+      }
+    }
+  }
+
+  // Overlay del modal de personalización
+  .account-form-overlay {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background-color: rgba(0, 0, 0, 0.75) !important;
+    backdrop-filter: blur(6px) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    z-index: 9999 !important;
+    padding: 20px !important;
+    box-sizing: border-box !important;
+  }
+
+  // Interfaz de personalización de tarjetas - Rediseño limpio
+  .card-style-selector {
+    background: white !important;
+    border-radius: 16px !important;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25) !important;
+    width: 95% !important;
+    max-width: 1000px !important;
+    max-height: 85vh !important;
+    overflow-y: auto !important;
+    position: relative !important;
+    z-index: 10000 !important;
+    padding: 32px !important;
+    border: 2px solid #e2e8f0 !important;
+
+    h3 {
+      margin: 0 0 32px 0;
+      color: #2d3748;
+      font-size: 1.875rem;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .style-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin-bottom: 32px;
+
+      .style-card {
+        background: white;
+        border: 2px solid #e2e8f0;
+        border-radius: 12px;
+        overflow: hidden;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+          border-color: #3182ce;
+        }
+
+        .card-preview {
+          height: 160px;
+          padding: 20px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          color: white;
+          position: relative;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+          .card-content {
+            position: relative;
+            z-index: 2;
+
+            .card-brand {
+              font-size: 1.125rem;
+              font-weight: 600;
+              margin-bottom: 12px;
+              opacity: 0.95;
+            }
+
+            .card-number {
+              font-family: 'Courier New', monospace;
+              font-size: 1rem;
+              letter-spacing: 2px;
+              opacity: 0.9;
+            }
+          }
+
+          // Chip simulado para tarjetas
+          &::after {
+            content: '';
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 32px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+          }
+        }
+
+        .style-description {
+          padding: 16px 20px;
+          background: #f7fafc;
+          border-top: 1px solid #e2e8f0;
+          color: #4a5568;
+          font-size: 0.875rem;
+          font-weight: 500;
+          text-align: center;
+        }
+      }
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: center;
+      padding-top: 24px;
+      border-top: 1px solid #e2e8f0;
+
+      button {
+        background: #e2e8f0;
+        color: #4a5568;
+        border: none;
+        border-radius: 8px;
+        padding: 12px 32px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+          background: #cbd5e0;
+          transform: translateY(-1px);
+        }
+      }
+    }
+
+    // Scrollbar personalizada
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #cbd5e0;
+      border-radius: 3px;
+
+      &:hover {
+        background: #a0aec0;
+      }
+    }
+  }
+
+  // Animaciones
+  @keyframes shimmer {
+    0% { transform: translateX(-100%) translateY(-100%) rotate(30deg); }
+    100% { transform: translateX(100%) translateY(100%) rotate(30deg); }
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(50px) scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  // Responsive design para el selector
+  @media (max-width: 768px) {
+    .card-style-selector {
+      padding: 20px;
+      margin: 10px;
+      width: calc(100% - 20px);
+      max-height: 85vh;
+
+      h3 {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+      }
+
+      .style-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        padding: 0;
+
+        .style-card {
+          .card-preview {
+            height: 140px;
+            padding: 15px;
+
+            .card-content {
+              .card-brand {
+                font-size: 1rem;
+                margin-bottom: 10px;
+              }
+
+              .card-number {
+                font-size: 0.9rem;
+                letter-spacing: 1px;
+              }
+            }
+          }
+
+          .style-description {
+            padding: 15px;
+            font-size: 0.9rem;
+          }
+        }
+      }
+
+      .form-actions {
+        padding-top: 20px;
+
+        button {
+          width: 100%;
+          max-width: none;
+          padding: 12px 20px;
+          font-size: 1rem;
+        }
+      }
+    }
+
+    .account-form-overlay {
+      padding: 10px;
+
+      .account-form, .card-style-selector {
+        margin: 10px 0;
+      }
+    }
+  }
+
+  @media (max-width: 480px) {
+    .card-style-selector {
+      padding: 15px;
+      margin: 5px;
+      width: calc(100% - 10px);
+      
+      h3 {
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+      }
+
+      .style-grid {
+        gap: 12px;
+
+        .style-card {
+          .card-preview {
+            height: 120px;
+            padding: 12px;
+          }
+
+          .style-description {
+            padding: 12px;
+            font-size: 0.85rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Cerrar media queries
+}
+
+@media (max-width: 668px) {
+  .accounts-container {
+    .accounts-section h2 {
+      font-size: 1.8rem;
+    }
+
+    .card-style-selector {
+      width: 98%;
+      padding: 16px;
+      margin: 10px auto;
+
+      h3 {
+        font-size: 1.3rem;
+        margin-bottom: 20px;
+      }
+
+      .style-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        max-height: 360px;
+      }
+
+            }
+    }
+
+    // Estilos para style-card (usado en el HTML)
+    .style-card {
+      background: #f8fafc !important;
+      border: 2px solid #e2e8f0 !important;
+      border-radius: 12px !important;
+      padding: 16px !important;
+      cursor: pointer !important;
+      transition: all 0.3s ease !important;
+      display: flex !important;
+      flex-direction: column !important;
+
+      &:hover {
+        border-color: #3b82f6 !important;
+        box-shadow: 0 8px 25px rgba(59, 130, 246, 0.15) !important;
+        transform: translateY(-2px) !important;
+      }
+
+      .card-preview {
+        height: 160px !important;
+        border-radius: 8px !important;
+        margin-bottom: 12px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
+        color: white !important;
+        position: relative !important;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+
+        .card-content {
+          position: relative !important;
+          z-index: 2 !important;
+          padding: 16px !important;
+
+          .card-brand {
+            font-size: 1.125rem !important;
+            font-weight: 600 !important;
+            margin-bottom: 12px !important;
+            opacity: 0.95 !important;
+          }
+
+          .card-number {
+            font-family: 'Courier New', monospace !important;
+            font-size: 1rem !important;
+            letter-spacing: 2px !important;
+            opacity: 0.9 !important;
+          }
+        }
+
+        // Chip simulado para tarjetas
+        &::after {
+          content: '' !important;
+          position: absolute !important;
+          top: 16px !important;
+          right: 16px !important;
+          width: 32px !important;
+          height: 24px !important;
+          background: rgba(255, 255, 255, 0.3) !important;
+          border-radius: 4px !important;
+        }
+      }
+
+      .style-description {
+        text-align: center !important;
+        font-size: 0.9rem !important;
+        color: #4a5568 !important;
+        font-weight: 500 !important;
+      }
+    }
+
+    // Estilos originales para style-option (por si se usan)
+    .style-option {
+      padding: 12px;
+
+      .card-preview {
+        height: 120px;
+        margin-bottom: 8px;
+      }
+
+      h4 {
+        font-size: 0.9rem;
+      }
+
+      .bank-name {
+        font-size: 0.8rem;
+      }
+    }
+
+    // Acciones del modal
+    .actions, .form-actions {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 32px;
+
+      button {
+        padding: 12px 24px;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+
+        &.btn-secondary {
+          background: #6b7280;
+          color: white;
+
+          &:hover {
+            background: #4b5563;
+          }
+        }
+      }
+    }
+  }
+}
