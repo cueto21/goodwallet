@@ -92,7 +92,7 @@
   .stat-card.stat-income .stat-label,
   .stat-card.stat-income .stat-amount,
   .stat-card.stat-income .stat-count {
-    color: #0B3954 !important; // Dark blue for all income stats text
+    color: var(--color-prussian-blue) !important; // Use palette variable (overridden in dark-mode)
   }
 
   .stat-card.stat-expense .stat-amount {

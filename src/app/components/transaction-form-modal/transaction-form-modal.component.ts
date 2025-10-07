@@ -50,6 +50,10 @@ export class TransactionFormModalComponent {
 
   // UI state for custom dropdowns
   categoryDropdownOpen = signal(false);
+  // Inline add category state
+  addingCategory = false;
+  newCategoryName = '';
+  
   searchTerm = signal('');
   // Account dropdown state
   accountDropdownOpen = signal(false);
@@ -138,45 +142,61 @@ export class TransactionFormModalComponent {
       }
     });
   }
-  
-  updateFormField<K extends keyof ReturnType<typeof this.formData>>(
-    field: K,
-    value: ReturnType<typeof this.formData>[K]
-  ) {
-    this.formData.update(data => ({ ...data, [field]: value }));
+
+  // Step navigation helpers
+  nextStep(): void {
+    const s = this.currentStep();
+    if (s < 5) this.currentStep.set(s + 1);
   }
 
-  // Step navigation
-  nextStep() {
-    const maxStep = this.enableSharing() && this.formData().type === 'expense' ? 5 : 4;
-    if (this.currentStep() < maxStep) {
-      this.currentStep.update(step => step + 1);
+  prevStep(): void {
+    const s = this.currentStep();
+    if (s > 1) this.currentStep.set(s - 1);
+  }
+
+  // Inline add-category methods
+  startAddCategory() {
+    this.addingCategory = true;
+    this.newCategoryName = '';
+    setTimeout(() => {
+      const el = document.querySelector<HTMLInputElement>('.add-category-input');
+      el?.focus();
+    }, 0);
+  }
+
+  selectType(t: 'income' | 'expense' | 'Transferencia') {
+    this.updateFormField('type', t as any);
+    // Move to details step after selecting
+    this.currentStep.set(2);
+  }
+
+  async confirmAddCategory() {
+    const name = (this.newCategoryName || '').trim();
+    if (!name) { this.cancelAddCategory(); return; }
+
+    try {
+      const created: any = await this.categoryService.addCategory({ name, icon: '', color: '', type: this.formData().type === 'income' ? 'income' : 'expense' } as any);
+      if (created) {
+        // If CategoryService returns and already updated the signal, just select the new category
+        this.categories = this.categoryService.getCategories();
+        this.updateFormField('categoryId', created.id?.toString ? created.id.toString() : String(created.id));
+      }
+    } catch (err) {
+      console.error('create category failed', err);
+      // fallback: add locally
+      this.categoryService.addCategory({ name, icon: '', color: '', type: this.formData().type === 'income' ? 'income' : 'expense' } as any);
+    } finally {
+      this.addingCategory = false;
+      this.newCategoryName = '';
     }
   }
 
-  prevStep() {
-    if (this.currentStep() > 1) {
-      this.currentStep.update(step => step - 1);
-    }
+  cancelAddCategory() {
+    this.addingCategory = false;
+    this.newCategoryName = '';
   }
 
-  goToStep(step: number) {
-    const maxStep = this.enableSharing() && this.formData().type === 'expense' ? 5 : 4;
-    if (step >= 1 && step <= maxStep) {
-      this.currentStep.set(step);
-    }
-  }
-
-  // Type selection
-  selectType(type: 'income' | 'expense' | 'Transferencia') {
-    this.updateFormField('type', type);
-    this.nextStep();
-  }
-
-  onAmountChange(event: Event) {
-    const target = event.target as HTMLInputElement;
-    this.updateFormField('amount', +target.value);
-  }
+  // Inline add-category feature removed per request.
 
   onDescriptionChange(event: Event) {
     const target = event.target as HTMLInputElement;
@@ -387,6 +407,21 @@ export class TransactionFormModalComponent {
     } finally {
       this.isSubmitting.set(false);
     }
+  }
+
+  // Increment amount by n soles (integer), keep two decimals
+  updateFormField<K extends keyof ReturnType<typeof this.formData>>(
+    field: K,
+    value: ReturnType<typeof this.formData>[K]
+  ) {
+    this.formData.update(data => ({ ...data, [field]: value }));
+  }
+
+  incrementAmount(n: number) {
+    const data = this.formData();
+    const current = (data.amount === null || data.amount === undefined) ? 0 : Number(data.amount);
+    const updated = Math.round((current + Number(n)) * 100) / 100;
+    this.updateFormField('amount', updated as any);
   }
 
   onBackdropClick(event: Event) {

@@ -90,6 +90,12 @@
     grid-template-columns: 1fr;
     gap: 1rem;
   }
+
+  /* Mobile: show two cards per row to maximize use of horizontal space on phones */
+  @media (max-width: 576px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
 }
 
 // Account Cards

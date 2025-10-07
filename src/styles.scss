@@ -22,6 +22,17 @@
   --color-bittersweet-light: #ff8583;
   --color-bittersweet-dark: #e5504d;
   
+    /* Modal/theme variables fallbacks (can be overridden by ThemeService) */
+    --theme-modal-bg: #ffffff;
+    --theme-modal-text: #212529;
+    --theme-input-bg: #ffffff;
+    --theme-input-text: #212529;
+    --theme-modal-border: #e9ecef;
+    --theme-modal-muted: #6c757d;
+    --theme-btn-bg: #007bff;
+    --theme-btn-text: #ffffff;
+    --theme-secondary-bg: #6c757d;
+  
   /* Override Bootstrap color variables */
   --bs-primary: var(--color-prussian-blue);
   --bs-primary-rgb: 11, 57, 84;
@@ -34,6 +45,37 @@
   --color-success: #28a745;
   --color-info: var(--color-columbia-blue);
   --color-warning: #ffc107;
+}
+
+/* Global dark-mode palette overrides: replace bright blues/greens with neutral dark grays */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-prussian-blue: #0f1720; /* neutral dark gray */
+    --color-prussian-blue-light: #111318;
+    --color-prussian-blue-dark: #0b0f12;
+    --color-columbia-blue: #cfcfcf; /* muted light for accents */
+    --color-columbia-blue-dark: #9ea3a8;
+    --theme-btn-bg: #374151; /* default button bg in dark */
+    --theme-btn-text: #e6e6e6;
+    --bs-primary: var(--color-prussian-blue);
+    --bs-primary-rgb: 15, 23, 32;
+  }
+
+  /* Replace global primary gradient with dark gray gradient to avoid strong blue backgrounds */
+  .btn-primary {
+    background: linear-gradient(135deg, #0f1720 0%, #17191c 100%) !important;
+    border-color: #0b0f12 !important;
+    box-shadow: none !important;
+    color: var(--theme-btn-text) !important;
+    background-image: none !important;
+  }
+
+  /* Modal default backgrounds in dark mode */
+  .modal-content, .modal-header, .modal-footer, .modal-body {
+    background: #111317 !important;
+    color: #e6e6e6 !important;
+    border-color: rgba(255,255,255,0.06) !important;
+  }
 }
 
 html, body {
@@ -84,60 +126,38 @@ body > .app-container {
 
 // Estilos globales para botones - Nueva paleta de colores
 .btn-primary {
-  background: linear-gradient(135deg, var(--color-prussian-blue) 0%, var(--color-prussian-blue-light) 100%);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  color: white;
-  border: 1px solid var(--color-prussian-blue-dark);
-  padding: 12px 24px;
-  border-radius: 12px;
-  font-size: 1rem;
-  font-weight: 500;
+  /* Theme-aware primary button: background/text come from ThemeService variables */
+  background: var(--theme-btn-bg, var(--color-prussian-blue)) !important;
+  color: var(--theme-btn-text, #ffffff) !important;
+  border: 1px solid rgba(0,0,0,0.12) !important;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  box-shadow: 
-    0 8px 32px rgba(11, 57, 84, 0.25),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: transform 180ms ease, filter 180ms ease, box-shadow 180ms ease;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12) !important;
   position: relative;
   overflow: hidden;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(255, 255, 255, 0.1),
-      transparent
-    );
-    transition: left 0.6s ease;
+  &::before { display: none !important; }
+
+  &:hover:not(:disabled) {
+    filter: brightness(0.95) !important;
+    transform: translateY(-2px) !important;
   }
 
-  &:hover {
-    background: linear-gradient(135deg, var(--color-prussian-blue-light) 0%, var(--color-prussian-blue) 100%);
-    border: 1px solid var(--color-prussian-blue);
-    color: white;
-    transform: translateY(-3px) scale(1.02);
-    box-shadow: 
-      0 12px 40px rgba(11, 57, 84, 0.35),
-      inset 0 1px 0 rgba(255, 255, 255, 0.2);
-    
-    &::before {
-      left: 100%;
-    }
+  &:active:not(:disabled) {
+    transform: translateY(-1px) !important;
+    filter: brightness(0.9) !important;
   }
+}
 
-  &:active {
-    transform: translateY(-1px) scale(1.01);
-    box-shadow: 
-      0 6px 25px rgba(11, 57, 84, 0.3),
-      inset 0 1px 0 rgba(255, 255, 255, 0.15);
-  }
+/* Strong global override to ensure buttons follow the theme where other rules are less specific */
+.btn.btn-primary, button.btn-primary {
+  background: var(--theme-btn-bg, var(--color-prussian-blue)) !important;
+  color: var(--theme-btn-text, #ffffff) !important;
+  border-color: var(--theme-btn-bg, var(--color-prussian-blue)) !important;
 }
 
 .btn-secondary {

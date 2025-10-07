@@ -324,8 +324,11 @@
 
   <!-- Copia para SM/MD: Gastos por Categoría debajo de Préstamos (oculta en lg+) -->
   <div class="card border-0 shadow-sm d-block d-lg-none mb-0 categories-card-sm">
-        <div class="card-header border-0 bg-transparent">
-          <h6 class="section-title small fw-semibold text-prussian-blue">Gastos por Categoría</h6>
+        <div class="card-header border-0 bg-transparent d-flex align-items-center justify-content-between">
+          <h6 class="section-title small fw-semibold text-prussian-blue mb-0">Gastos por Categoría</h6>
+          <div>
+            <button type="button" class="btn btn-sm btn-outline-secondary" title="Añadir categoría" (click)="openAddCategoryPrompt()">＋</button>
+          </div>
         </div>
         <div class="card-body">
           @if (categoryExpenses().length === 0) {

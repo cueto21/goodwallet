@@ -83,14 +83,22 @@
                       <input type="text" class="form-control" [(ngModel)]="formData().description" name="description" placeholder="Ej: Compra en supermercado" maxlength="100" required>
                       <div class="form-text">Describe brevemente este movimiento</div>
                     </div>
-                    <!-- Monto and Fecha in same row -->
-                    <div class="row g-3 mb-3">
-                      <div class="col-6">
+                    <!-- Monto and Fecha in same row (amount column narrowed and +1/+5 quick buttons) -->
+                    <div class="row g-3 mb-3 align-items-start">
+                      <div class="col-7">
                         <label class="form-label small text-uppercase fw-semibold">Monto</label>
-                        <input type="number" class="form-control form-control-sm" [(ngModel)]="formData().amount" name="amount" placeholder="0.00" step="0.01" min="0.01" required>
+                        <div class="amount-input-group">
+                          <input type="number" class="form-control form-control-sm amount-input" [(ngModel)]="formData().amount" name="amount" placeholder="0.00" step="0.01" min="0.00">
+                          <div class="amount-quick-buttons">
+                            <div class="quick-row">
+                              <button type="button" class="btn btn-outline-secondary btn-sm" (click)="incrementAmount(1)">+1</button>
+                              <button type="button" class="btn btn-outline-secondary btn-sm" (click)="incrementAmount(0.1)">+0.10</button>
+                            </div>
+                          </div>
+                        </div>
                         <div class="form-text">Cantidad en soles (PEN)</div>
                       </div>
-                      <div class="col-6">
+                      <div class="col-5">
                         <label class="form-label small text-uppercase fw-semibold">Fecha</label>
                         <input type="date" class="form-control form-control-sm" [(ngModel)]="formData().date" name="date" required>
                       </div>
@@ -165,6 +173,32 @@
                         <div class="category-name">{{ category.name }}</div>
                       </button>
                     }
+
+                    <!-- add-category tile: muestra como botón igual a otras categorías; al activar muestra input -->
+                    @if (!addingCategory) {
+                      <button type="button"
+                              class="category-btn add-category-tile"
+                              (click)="startAddCategory()">
+                        <div class="category-icon">＋</div>
+                        <div class="category-name">Añadir categoría</div>
+                      </button>
+                    }
+
+                    @if (addingCategory) {
+                      <div class="add-category-wrapper">
+                        <div class="category-btn add-category-tile editing">
+                          <input class="add-category-input form-control"
+                                 type="text"
+                                 [(ngModel)]="newCategoryName"
+                                 name="newCategoryName"
+                                 placeholder="Nombre de la categoría"
+                                 (keydown.enter)="confirmAddCategory()"
+                                 (keydown.escape)="cancelAddCategory()"
+                                 #addCategoryInput>
+                        </div>
+                        <button type="button" class="add-category-external-btn btn btn-sm btn-primary" aria-label="Guardar categoría" (click)="confirmAddCategory()">＋</button>
+                      </div>
+                    }
                   </div>
                   <!-- Sharing option for expenses -->
                   @if (formData().type === 'expense' && friends().length > 0) {
@@ -226,26 +260,31 @@
             }
           </div>
 
-          <!-- Footer with navigation - 3 buttons in a row -->
+          <!-- Footer with responsive navigation - flex-wrap so buttons don't overlap on small screens -->
           <div class="modal-footer py-2">
-            <div class="row w-100">
-              <div class="col-4 text-start">
-                @if (currentStep() > 1) {
-                  <button type="button" class="btn btn-outline-secondary btn-sm" (click)="prevStep()">← Anterior</button>
-                }
+            <div class="d-flex flex-wrap w-100 align-items-center">
+              <!-- Center: cancel (kept centered using mx-auto) -->
+              <div class="footer-center mx-auto">
+                <button type="button" class="btn btn-outline-secondary btn-sm mb-2 mb-sm-0" (click)="closeModal()">Cancelar</button>
               </div>
-              <div class="col-4 text-center">
-                <button type="button" class="btn btn-outline-secondary btn-sm" (click)="closeModal()">Cancelar</button>
-              </div>
-              <div class="col-4 text-end">
-                @if (currentStep() === 2 || currentStep() === 3 || (currentStep() === 4 && enableSharing() && formData().type === 'expense')) {
-                  <button type="button" class="btn btn-primary btn-sm" (click)="nextStep()" [disabled]="!canProceedToNextStep()">Siguiente →</button>
-                }
-                @if (currentStep() === 4 && (!enableSharing() || formData().type !== 'expense') || currentStep() === 5) {
-                  <button type="submit" class="btn btn-success btn-sm" [disabled]="!isFormValid() || isSubmitting()">
-                    {{ isSubmitting() ? 'Guardando...' : 'Guardar' }}
-                  </button>
-                }
+
+              <!-- Row with previous and next/save (will display side-by-side on small screens) -->
+              <div class="footer-row w-100">
+                <div class="footer-left d-flex align-items-center" style="min-width:0;">
+                  @if (currentStep() > 1) {
+                    <button type="button" class="btn btn-outline-secondary btn-sm w-100" (click)="prevStep()">← Anterior</button>
+                  }
+                </div>
+                <div class="footer-right d-flex">
+                  @if (currentStep() === 2 || currentStep() === 3 || (currentStep() === 4 && enableSharing() && formData().type === 'expense')) {
+                    <button type="button" class="btn btn-primary btn-sm w-100 ms-2" (click)="nextStep()" [disabled]="!canProceedToNextStep()">Siguiente →</button>
+                  }
+                  @if (currentStep() === 4 && (!enableSharing() || formData().type !== 'expense') || currentStep() === 5) {
+                    <button type="submit" class="btn btn-success btn-sm w-100 ms-2" [disabled]="!isFormValid() || isSubmitting()">
+                      {{ isSubmitting() ? 'Guardando...' : 'Guardar' }}
+                    </button>
+                  }
+                </div>
               </div>
             </div>
           </div>

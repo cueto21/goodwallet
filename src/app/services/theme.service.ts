@@ -108,20 +108,15 @@ export class ThemeService {
       document.documentElement.style.setProperty('--theme-nav-text', '#ffffff');
     }
 
-    // Button styling: depends on mode and theme
-    if (isDark) {
-      // Dark mode: bg primary, text secondary
+    // Button styling: map strictly by theme so buttons always follow the user's rule:
+    // - Tema 1: background = color1 (primary), text = color2 (secondary)
+    // - Tema 2: background = color2 (secondary), text = color1 (primary)
+    if (this.currentThemeIndex() === 0) {
       document.documentElement.style.setProperty('--theme-btn-bg', primaryColor);
       document.documentElement.style.setProperty('--theme-btn-text', secondaryColor);
     } else {
-      // Light mode: bg secondary, text depends on theme
       document.documentElement.style.setProperty('--theme-btn-bg', secondaryColor);
-      if (isTema2) {
-        document.documentElement.style.setProperty('--theme-btn-text', primaryColor);
-      } else {
-        // Tema 1: white text
-        document.documentElement.style.setProperty('--theme-btn-text', '#ffffff');
-      }
+      document.documentElement.style.setProperty('--theme-btn-text', primaryColor);
     }
 
     // Friends button: for Tema 2, always bg secondary, color primary; for Tema 1, depends on mode

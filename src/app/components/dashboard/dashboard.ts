@@ -131,6 +131,21 @@ export class DashboardComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Simple prompt-based flow to add a new category. Keeps implementation minimal:
+   * asks for name and type, then delegates to CategoryService.addCategory.
+   */
+  openAddCategoryPrompt() {
+    const name = window.prompt('Nombre de la categoría:');
+    if (!name || !name.trim()) return;
+    const type = window.prompt('Tipo (income / expense):', 'expense') || 'expense';
+    const normalizedType = (type === 'income') ? 'income' : 'expense';
+    const icon = window.prompt('Icono (emoji o texto, opcional):', '');
+    const color = window.prompt('Color (hex, opcional):', '');
+
+    this.categoryService.addCategory({ name: name.trim(), type: normalizedType as any, icon: icon || '', color: color || '' });
+  }
+
   ngOnInit() {
     // Asegura que el contenedor de cuentas haga scroll al inicio al cargar
     setTimeout(() => {
@@ -1185,6 +1200,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   editAccount(account: any) {
+    console.log('[DEBUG] dashboard.editAccount -> opening edit modal for account:', account);
     this.selectedAccountForEdit.set(account);
     this.showEditAccountModal.set(true);
   }

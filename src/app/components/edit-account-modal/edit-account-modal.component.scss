@@ -6,21 +6,42 @@
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
   z-index: 3000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 
 .modal-container {
-  position: relative;
-  z-index: 3001;
+  /* Use fixed positioning and transform centering by default. JS centering will also set these with !important
+     to ensure the modal stays centered even if there are global conflicting rules. */
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  /* Ensure this modal container renders above global overlays that may use very large z-index values */
+  z-index: 1000001 !important;
   width: 100%;
   max-width: 450px;
   padding: 1rem;
+  box-sizing: border-box;
 }
 
 .modal-content {
-  background: white;
+  /* CSS variables with sensible defaults; themes can override these globally */
+  --modal-bg: var(--theme-modal-bg, white);
+  --modal-text: var(--theme-modal-text, #212529);
+  --modal-input-bg: var(--theme-input-bg, white);
+  --modal-input-text: var(--theme-input-text, #212529);
+  --modal-border: var(--theme-modal-border, #e9ecef);
+  --modal-muted: var(--theme-modal-muted, #6c757d);
+  --modal-btn-bg: var(--theme-btn-bg, #007bff);
+  --modal-btn-text: var(--theme-btn-text, #ffffff);
+  --modal-secondary-bg: var(--theme-secondary-bg, #6c757d);
+
+  background: var(--modal-bg);
+  color: var(--modal-text);
+  /* Make sure modal content is above the overlay and other page elements */
+  z-index: 1000002 !important;
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
   overflow: hidden;
@@ -29,37 +50,31 @@
   flex-direction: column;
 
   &.dark {
-    background: #2d2d2d;
-    color: #e0e0e0;
+    /* Neutral dark backgrounds for modal and inputs (theme colors should not change backgrounds) */
+    --modal-bg: #171717; /* slightly lighter than pure black */
+    --modal-text: #e6e6e6;
+    --modal-input-bg: #202020; /* inputs slightly lighter than modal body */
+    --modal-input-text: #e6e6e6;
+    --modal-border: #2f2f2f;
+    --modal-muted: #9aa0a6;
+    /* Keep button colors driven by theme variables (so theme affects buttons only) */
+    --modal-btn-bg: var(--theme-btn-bg, #007bff);
+    --modal-btn-text: var(--theme-btn-text, #ffffff);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   }
 
   &[data-theme="1"] {
-    .btn-primary {
-      background: var(--theme-btn-bg);
-      border-color: var(--theme-btn-bg);
-      color: var(--theme-btn-text);
-
-      &:hover:not(:disabled) {
-        background: var(--theme-btn-text);
-        border-color: var(--theme-btn-text);
-        color: var(--theme-btn-bg);
-      }
-    }
+    /* Theme mapping: only influence buttons and accent elements, not modal backgrounds */
+    --modal-btn-bg: var(--theme-btn-bg, var(--modal-btn-bg));
+    --modal-btn-text: var(--theme-btn-text, var(--modal-btn-text));
+    --modal-secondary-bg: var(--theme-secondary-bg, var(--modal-secondary-bg));
   }
 
   &[data-theme="2"] {
-    .btn-primary {
-      background: var(--theme-cards-bg);
-      border-color: var(--theme-cards-bg);
-      color: var(--theme-btn-bg);
-
-      &:hover:not(:disabled) {
-        background: var(--theme-btn-bg);
-        border-color: var(--theme-btn-bg);
-        color: var(--theme-cards-bg);
-      }
-    }
+    /* Theme mapping: only influence buttons and accent elements, not modal backgrounds */
+    --modal-btn-bg: var(--theme-btn-bg, var(--modal-btn-bg));
+    --modal-btn-text: var(--theme-btn-text, var(--modal-btn-text));
+    --modal-secondary-bg: var(--theme-secondary-bg, var(--modal-secondary-bg));
   }
 }
 
@@ -79,7 +94,7 @@
   margin: 0;
   font-size: 1.25rem;
   font-weight: 600;
-  color: #212529;
+  color: #ffffff;
 
   .dark & {
     color: #ffffff;
@@ -161,7 +176,7 @@
   display: block;
   font-weight: 500;
   margin-bottom: 0.5rem;
-  color: #212529;
+  color: var(--modal-text);
 
   .dark & {
     color: #ffffff;
@@ -171,35 +186,35 @@
 .input-group {
   display: flex;
   align-items: center;
-  border: 2px solid #e9ecef;
+  border: 2px solid var(--modal-border);
   border-radius: 8px;
   overflow: hidden;
   transition: border-color 0.2s ease;
 
   &:focus-within {
-    border-color: #007bff;
+    border-color: var(--modal-btn-bg);
   }
 
   .dark & {
-    border-color: #495057;
+    border-color: var(--modal-border);
 
     &:focus-within {
-      border-color: #00ff88;
+      border-color: var(--modal-btn-bg);
     }
   }
 }
 
 .input-prefix {
   padding: 0.75rem 1rem;
-  background: #f8f9fa;
-  border-right: 1px solid #e9ecef;
-  color: #6c757d;
+  background: var(--modal-input-bg);
+  border-right: 1px solid var(--modal-border);
+  color: var(--modal-muted);
   font-weight: 500;
 
   .dark & {
-    background: #495057;
-    border-color: #6b7280;
-    color: #adb5bd;
+    background: var(--modal-input-bg);
+    border-color: var(--modal-border);
+    color: var(--modal-muted);
   }
 }
 
@@ -207,8 +222,8 @@
   flex: 1;
   padding: 0.75rem 1rem;
   border: none;
-  background: white;
-  color: #212529;
+  background: var(--modal-input-bg);
+  color: var(--modal-input-text);
   font-size: 1rem;
 
   &:focus {
@@ -217,15 +232,15 @@
   }
 
   .dark & {
-    background: #2d2d2d;
-    color: #e0e0e0;
+    background: var(--modal-input-bg);
+    color: var(--modal-input-text);
   }
 
   &::placeholder {
-    color: #6c757d;
+    color: var(--modal-muted);
 
     .dark & {
-      color: #adb5bd;
+      color: var(--modal-muted);
     }
   }
 }
@@ -234,10 +249,10 @@
   display: block;
   margin-top: 0.25rem;
   font-size: 0.875rem;
-  color: #6c757d;
+  color: var(--modal-muted);
 
   .dark & {
-    color: #adb5bd;
+    color: var(--modal-muted);
   }
 }
 
@@ -284,10 +299,10 @@
   }
 
   input:checked + .toggle-slider {
-    background: #007bff;
+    background: #374151; /* neutral dark-gray for checked state */
 
     .dark & {
-      background: #00ff88;
+      background: #1f2937; /* darker gray in dark mode */
     }
 
     &::before {
@@ -307,53 +322,56 @@
 }
 
 .modal-footer {
-  padding: 1rem 1.5rem 1.5rem;
+  padding: 1rem 1.5rem 1.5rem; /* symmetric padding left/right */
   border-top: 1px solid #e9ecef;
   display: flex;
-  gap: 0.75rem;
-  justify-content: flex-end;
-
-  .dark & {
-    border-color: #495057;
-  }
+  justify-content: center; /* center content */
 }
 
-.btn {
-  padding: 0.75rem 1.5rem;
-  border-radius: 8px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  border: 1px solid transparent;
-  font-size: 0.9rem;
+/* Button styles removed - will use Bootstrap classes */
 
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
+/* Override global button styles with maximum specificity */
+.modal-overlay .modal-container .modal-content .modal-footer .btn,
+.modal-overlay .modal-container .modal-content .modal-footer .btn-primary,
+.modal-overlay .modal-container .modal-content .modal-footer .btn-secondary {
+  background: unset !important;
+  background-image: none !important;
+  background-color: transparent !important;
+  color: inherit !important;
+  box-shadow: none !important;
+  outline: none !important;
+  text-shadow: none !important;
+  filter: none !important;
+  border: 1px solid transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  transition: opacity 0.2s ease !important;
+  padding: 12px 24px !important;
+  border-radius: 8px !important;
+  font-weight: 500 !important;
 }
 
-.btn-secondary {
-  background: #6c757d;
-  color: white;
-  border-color: #6c757d;
-
-  &:hover:not(:disabled) {
-    background: #5a6268;
-    border-color: #5a6268;
-  }
+.modal-overlay .modal-container .modal-content .modal-footer .btn::before,
+.modal-overlay .modal-container .modal-content .modal-footer .btn-primary::before,
+.modal-overlay .modal-container .modal-content .modal-footer .btn-secondary::before {
+  display: none !important;
 }
 
-.btn-primary {
-  background: #007bff;
-  color: white;
-  border-color: #007bff;
-
-  &:hover:not(:disabled) {
-    background: #0056b3;
-    border-color: #0056b3;
-  }
+.modal-overlay .modal-container .modal-content .modal-footer .btn:hover:not(:disabled),
+.modal-overlay .modal-container .modal-content .modal-footer .btn-primary:hover:not(:disabled),
+.modal-overlay .modal-container .modal-content .modal-footer .btn-secondary:hover:not(:disabled) {
+  opacity: 0.85 !important;
+  transform: none !important;
 }
+
+.modal-overlay .modal-container .modal-content .modal-footer .btn:focus,
+.modal-overlay .modal-container .modal-content .modal-footer .btn-primary:focus,
+.modal-overlay .modal-container .modal-content .modal-footer .btn-secondary:focus {
+  box-shadow: none !important;
+  outline: 2px solid transparent !important;
+}
+
+
 
 .spinner {
   display: inline-block;
@@ -375,6 +393,7 @@
 @media (max-width: 576px) {
   .modal-container {
     padding: 0.5rem;
+    width: calc(100% - 32px);
   }
 
   .modal-content {
@@ -390,9 +409,83 @@
 
   .modal-footer {
     flex-direction: column;
-
-    .btn {
-      width: 100%;
-    }
   }
 }
+
+/* High-specificity overrides to win against global styles.scss rules that use !important */
+.modal-overlay .modal-container .modal-content {
+  background: var(--modal-bg) !important;
+  color: var(--modal-text) !important;
+}
+
+.modal-overlay .modal-container .modal-content .modal-header {
+  background: transparent !important;
+  border-bottom-color: var(--modal-border) !important;
+  color: var(--modal-text) !important;
+}
+
+.modal-overlay .modal-container .modal-content .modal-body {
+  background: transparent !important;
+  color: var(--modal-text) !important;
+}
+
+/* Inputs and prefixes */
+.modal-overlay .modal-container .modal-content .input-group,
+.modal-overlay .modal-container .modal-content .input-prefix,
+.modal-overlay .modal-container .modal-content .form-control {
+  background: var(--modal-input-bg) !important;
+  color: var(--modal-input-text) !important;
+  border-color: var(--modal-border) !important;
+}
+
+
+
+/* Ensure placeholders and small text are using muted variable */
+.modal-overlay .modal-container .modal-content ::placeholder {
+  color: var(--modal-muted) !important;
+}
+.modal-overlay .modal-container .modal-content small,
+.modal-overlay .modal-container .modal-content .form-text {
+  color: var(--modal-muted) !important;
+}
+
+/* Ensure header/footer use neutral dark backgrounds in dark mode and are not white */
+.modal-overlay .modal-container .modal-content .modal-header,
+.modal-overlay .modal-container .modal-content .modal-footer {
+  background: transparent !important;
+  /* In dark mode use a slightly lighter dark for footer/header to separate from modal body */
+}
+
+.modal-overlay .modal-container .modal-content .modal-title {
+  /* Default to modal text color as fallback */
+  color: var(--modal-text) !important;
+}
+
+/* Light-mode: map title to theme colors (invert for theme 2) */
+.modal-overlay .modal-container .modal-content[data-theme="1"] .modal-title {
+  color: var(--theme-color-2, var(--modal-text)) !important;
+}
+.modal-overlay .modal-container .modal-content[data-theme="2"] .modal-title {
+  color: var(--theme-color-1, var(--modal-text)) !important;
+}
+
+/* Dark-mode keep title white for contrast */
+.modal-overlay .modal-container .modal-content.dark .modal-title {
+  color: #ffffff !important;
+}
+
+.modal-overlay .modal-container .modal-content.dark .modal-header,
+.modal-overlay .modal-container .modal-content.dark .modal-footer {
+  background: #232323 !important; /* footer/header a bit lighter to separate */
+  color: var(--modal-text) !important;
+  border-top-color: var(--modal-border) !important;
+}
+
+/* Override global modal styles that interfere with centering */
+.modal-overlay .modal-container .modal-content {
+  width: 100% !important;
+  position: static !important;
+  margin: 0 !important;
+}
+
+/* Horizontal centering fallback for browsers that may ignore transform in some contexts */

@@ -62,9 +62,10 @@ export class CategoryService {
     };
   });
 
-  addCategory(categoryData: Omit<Category, 'id' | 'createdAt' | 'updatedAt'>): void {
+  async addCategory(categoryData: Omit<Category, 'id' | 'createdAt' | 'updatedAt'>): Promise<Category> {
     // Try to save to remote API, fallback to local
-    ApiService.post('/categories', categoryData).then((remote: any) => {
+    try {
+      const remote: any = await (await import('./api.service')).ApiService.post('/categories', categoryData);
       const cat: Category = {
         ...categoryData,
         id: remote.id || this.generateId(),
@@ -72,7 +73,9 @@ export class CategoryService {
         updatedAt: new Date()
       };
       this.categories.update(categories => [...categories, cat]);
-    }).catch(() => {
+      return cat;
+    } catch (e) {
+      // fallback local create
       const newCategory: Category = {
         ...categoryData,
         id: this.generateId(),
@@ -80,7 +83,8 @@ export class CategoryService {
         updatedAt: new Date()
       };
       this.categories.update(categories => [...categories, newCategory]);
-    });
+      return newCategory;
+    }
   }
 
   updateCategory(id: string, updates: Partial<Category>): void {
