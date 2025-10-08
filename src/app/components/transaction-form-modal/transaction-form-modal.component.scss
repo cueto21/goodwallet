@@ -23,6 +23,115 @@
 .modal-header { border-bottom: 1px solid rgba(0,0,0,0.06); }
 .modal-footer { border-top: 1px solid rgba(0,0,0,0.06); }
 
+/* Navigation buttons container - new responsive layout */
+.navigation-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  flex-wrap: nowrap; /* desktop: keep in one row */
+
+  .btn { flex: 0 0 auto; }
+
+  /* Ensure order: prev, cancel, next/save already HTML order */
+
+  @media (max-width: 640px) { /* mobile: stack vertically or wrap nicely */
+    flex-wrap: wrap;
+    justify-content: center;
+    .btn { flex: 1 1 110px; min-width: 110px; }
+  }
+}
+
+/* When there is no previous button (step 1) keep spacing consistent */
+.navigation-buttons .nav-cancel:first-child { margin-left: auto; }
+
+/* Fine tune specific buttons */
+.navigation-buttons .nav-prev { order: 1; }
+.navigation-buttons .nav-cancel { order: 2; }
+.navigation-buttons .nav-next, .navigation-buttons .nav-save { order: 3; }
+
+/* On very wide screens keep them tight to the right but same gap */
+@media (min-width: 1200px) {
+  .navigation-buttons { gap: 0.75rem; }
+}
+
+/* Nueva disposición unificada del footer en desktop */
+.transaction-form-footer .footer-layout-wrapper {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.transaction-form-footer .footer-left,
+.transaction-form-footer .footer-center,
+.transaction-form-footer .footer-right {
+  display: flex;
+  align-items: center;
+}
+
+.transaction-form-footer .footer-left { justify-content: flex-start; }
+.transaction-form-footer .footer-center { justify-content: center; }
+.transaction-form-footer .footer-right { justify-content: flex-end; gap: 0.5rem; }
+
+/* Botones sm ya definidos, pero aseguramos consistencia */
+.transaction-form-footer .btn { min-width: 110px; }
+
+/* Anterior y Siguiente usan los colores del tema */
+.transaction-form-footer .btn-prev,
+.transaction-form-footer .btn-next {
+  background: var(--theme-btn-bg, var(--color-prussian-blue)) !important;
+  color: var(--theme-btn-text, #ffffff) !important;
+  border: 1px solid var(--theme-btn-bg, var(--color-prussian-blue)) !important;
+  box-shadow: none !important;
+}
+
+.transaction-form-footer .btn-prev:hover:not(:disabled),
+.transaction-form-footer .btn-next:hover:not(:disabled) {
+  filter: brightness(0.95) !important;
+  transform: translateY(-1px);
+}
+
+/* Cancelar usa el estilo outline-secondary original */
+.transaction-form-footer .btn-cancel {
+  background: transparent !important;
+  color: #6b7280 !important;
+  border: 1px solid #d1d5db !important;
+  box-shadow: none !important;
+}
+
+.transaction-form-footer .btn-cancel:hover:not(:disabled) {
+  background: #f9fafb !important;
+  border-color: #9ca3af !important;
+  color: #374151 !important;
+  transform: translateY(-1px);
+}
+
+/* Mantener botón Guardar con diferencia visual (color más oscuro ya definido como .btn-success) */
+.transaction-form-footer .btn-save {
+  font-weight: 600;
+}
+
+/* En desktop asegurar que todo quede en una sola fila */
+@media (min-width: 768px) {
+  .transaction-form-footer .footer-layout-wrapper { flex-wrap: nowrap; }
+  .transaction-form-footer .footer-left,
+  .transaction-form-footer .footer-center,
+  .transaction-form-footer .footer-right { flex: 0 0 auto; }
+}
+
+/* En mobile mantener comportamiento previo (centrado y posible wrap) */
+@media (max-width: 576px) {
+  .transaction-form-footer .footer-layout-wrapper {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .transaction-form-footer .footer-left, .transaction-form-footer .footer-right { width: 48%; justify-content: center; }
+  .transaction-form-footer .footer-center { width: 100%; order: -1; margin-bottom: 0.5rem; }
+  .transaction-form-footer .btn { width: 100%; }
+}
+
 /* Close (X) button in header: follow theme colors and be visible on top of modal */
 .modal-header .btn-close {
   background-image: none !important; /* remove bootstrap SVG */
@@ -856,7 +965,7 @@
 */
 .modal-footer .footer-center .btn,
 .modal-footer .footer-row .btn,
-.modal-footer .btn-outline-secondary,
+.modal-footer .btn-outline-secondary:not(.btn-cancel),
 .modal-footer .btn-primary,
 .modal-footer .btn-success {
   background: var(--theme-btn-bg, var(--color-prussian-blue)) !important;

@@ -260,31 +260,31 @@
             }
           </div>
 
-          <!-- Footer with responsive navigation - flex-wrap so buttons don't overlap on small screens -->
-          <div class="modal-footer py-2">
-            <div class="d-flex flex-wrap w-100 align-items-center">
-              <!-- Center: cancel (kept centered using mx-auto) -->
-              <div class="footer-center mx-auto">
-                <button type="button" class="btn btn-outline-secondary btn-sm mb-2 mb-sm-0" (click)="closeModal()">Cancelar</button>
+          <!-- Footer con estructura original + orden unificado en desktop -->
+          <div class="modal-footer py-2 transaction-form-footer">
+            <div class="d-flex flex-wrap w-100 align-items-center footer-layout-wrapper">
+              <!-- Botón Anterior (izquierda) -->
+              <div class="footer-left">
+                @if (currentStep() > 1) {
+                  <button type="button" class="btn btn-outline-secondary btn-sm btn-prev" (click)="prevStep()">← Anterior</button>
+                }
               </div>
 
-              <!-- Row with previous and next/save (will display side-by-side on small screens) -->
-              <div class="footer-row w-100">
-                <div class="footer-left d-flex align-items-center" style="min-width:0;">
-                  @if (currentStep() > 1) {
-                    <button type="button" class="btn btn-outline-secondary btn-sm w-100" (click)="prevStep()">← Anterior</button>
-                  }
-                </div>
-                <div class="footer-right d-flex">
-                  @if (currentStep() === 2 || currentStep() === 3 || (currentStep() === 4 && enableSharing() && formData().type === 'expense')) {
-                    <button type="button" class="btn btn-primary btn-sm w-100 ms-2" (click)="nextStep()" [disabled]="!canProceedToNextStep()">Siguiente →</button>
-                  }
-                  @if (currentStep() === 4 && (!enableSharing() || formData().type !== 'expense') || currentStep() === 5) {
-                    <button type="submit" class="btn btn-success btn-sm w-100 ms-2" [disabled]="!isFormValid() || isSubmitting()">
-                      {{ isSubmitting() ? 'Guardando...' : 'Guardar' }}
-                    </button>
-                  }
-                </div>
+              <!-- Botón Cancelar (centro en desktop visualmente, centrado en mobile) -->
+              <div class="footer-center">
+                <button type="button" class="btn btn-outline-secondary btn-sm btn-cancel" (click)="closeModal()">Cancelar</button>
+              </div>
+
+              <!-- Botón Siguiente o Guardar (derecha) -->
+              <div class="footer-right">
+                @if (currentStep() === 2 || currentStep() === 3 || (currentStep() === 4 && enableSharing() && formData().type === 'expense')) {
+                  <button type="button" class="btn btn-outline-secondary btn-sm btn-next" (click)="nextStep()" [disabled]="!canProceedToNextStep()">Siguiente →</button>
+                }
+                @if (currentStep() === 4 && (!enableSharing() || formData().type !== 'expense') || currentStep() === 5) {
+                  <button type="submit" class="btn btn-success btn-sm btn-save" [disabled]="!isFormValid() || isSubmitting()">
+                    {{ isSubmitting() ? 'Guardando...' : 'Guardar' }}
+                  </button>
+                }
               </div>
             </div>
           </div>

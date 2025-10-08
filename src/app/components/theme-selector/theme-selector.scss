@@ -1,9 +1,15 @@
 .theme-selector {
   position: fixed;
-  right: 20px;
-  top: 50%;
-  transform: translateY(-50%);
   z-index: 1000;
+  // Initial position will be set by JavaScript
+  
+  &.dragging {
+    transition: none !important; // Disable transitions on container while dragging
+  }
+  
+  &.snapping {
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important; // Smooth snap animation
+  }
 }
 
 .theme-btn {
@@ -19,6 +25,10 @@
   cursor: pointer;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   transition: all 0.2s ease;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 
   &:hover {
     opacity: 0.8;
@@ -29,18 +39,34 @@
   &:active {
     transform: scale(0.95);
   }
+
+  &.dragging {
+    opacity: 0.7;
+    transform: scale(1.1);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    transition: none !important; // Disable transitions while dragging
+  }
 }
 
 .theme-dropdown {
   position: absolute;
   top: 60px;
-  right: 0;
   background: #fff;
   border: 1px solid #ddd;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   min-width: 150px;
   z-index: 1001;
+
+  &.left {
+    left: 0;
+    right: auto;
+  }
+
+  &.right {
+    right: 0;
+    left: auto;
+  }
 }
 
 .theme-option {

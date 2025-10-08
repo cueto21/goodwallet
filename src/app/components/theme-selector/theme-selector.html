@@ -1,8 +1,12 @@
 <div class="theme-selector">
-  <button class="theme-btn" (click)="toggleDropdown()" title="Seleccionar tema">
+  <button class="theme-btn"
+    (click)="toggleDropdown(); $event.stopPropagation()"
+    (pointerdown)="onPointerDown($event); $event.stopPropagation()"
+    [class.dragging]="isDragging()"
+    title="Seleccionar tema">
     ⚙️
   </button>
-  <div class="theme-dropdown" *ngIf="dropdownOpen()">
+  <div class="theme-dropdown" [class]="dropdownClass()" *ngIf="dropdownOpen()" (click)="$event.stopPropagation()">
     <div class="theme-option"
          *ngFor="let theme of themes; let i = index"
          [class.active]="i === currentThemeIndex()"

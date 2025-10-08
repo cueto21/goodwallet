@@ -111,7 +111,7 @@
                   <div class="text-end">
                     <small class="account-amount-title d-block">Meta de ahorro</small>
                     <div class="account-amount-value fw-bold">
-                      @if (account.goals?.isActive && account.goals?.balanceTarget) { {{ formatCurrency(account.goals?.balanceTarget || 0) }} } @else { <span class="opacity-50">-</span> }
+                      @if (account.goals && account.goals.balanceTarget) { {{ formatCurrency(account.goals.balanceTarget) }} } @else { <span class="opacity-50">-</span> }
                     </div>
                   </div>
                 </div>
