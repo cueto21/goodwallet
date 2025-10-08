@@ -35,7 +35,27 @@
 	padding-right:0.15rem;
 }
 .chip-mini{border-radius:4px;width:32px!important;height:20px!important;margin-right:0.5rem}
-.bg-balance{background:linear-gradient(135deg,var(--color-prussian-blue) 0%,var(--color-prussian-blue-light) 100%);color:var(--color-columbia-blue)!important}
+.bg-balance{
+	background: var(--theme-balance-bg, linear-gradient(135deg,var(--color-prussian-blue) 0%,var(--color-prussian-blue-light) 100%));
+	color: var(--theme-balance-text, var(--color-columbia-blue)) !important;
+}
+
+/* Theme-based balance card styles for desktop */
+@media (min-width: 768px) {
+	/* Keep prior intent but rely on theme variables set by ThemeService */
+	.dashboard[data-theme="1"] .bg-balance {
+		background: var(--theme-balance-bg, #ffffff) !important;
+		color: var(--theme-balance-text, var(--theme-btn-bg)) !important;
+		border: 1px solid rgba(0,0,0,0.1) !important;
+	}
+
+	.dashboard[data-theme="1"].dark .bg-balance {
+		background: var(--theme-balance-bg) !important;
+		color: var(--theme-balance-text, #ffffff) !important;
+		border: 1px solid var(--theme-balance-bg) !important;
+	}
+}
+
 .bg-prestado{background:linear-gradient(135deg,var(--color-columbia-blue) 0%,var(--color-columbia-blue-light) 100%);color:var(--color-prussian-blue)!important}
 .bg-adeudado{background:linear-gradient(135deg,var(--color-bittersweet) 0%,var(--color-bittersweet-light) 100%);color:inherit}
 .dashboard .bg-success-subtle{background:linear-gradient(135deg,var(--color-columbia-blue) 0%,var(--color-columbia-blue-light) 100%)!important;color:var(--color-prussian-blue)!important}
@@ -340,12 +360,12 @@
 
 /* Circular quick action buttons (create movement / create loan) in dark mode */
 .dashboard.dark .menu-btn-circle {
-	background-color: #CCE0F0 !important;
-	color: #144A65 !important;
-	border-color: rgba(20,74,101,0.12) !important;
+	background-color: var(--theme-btn-bg) !important;
+	color: var(--theme-btn-text) !important;
+	border-color: var(--theme-btn-bg) !important;
 }
 .dashboard.dark .menu-btn-circle:hover {
-	background-color: #c0dbe8 !important;
+	filter: brightness(0.9) !important;
 }
 
 /* Pagination text/buttons in dark mode */
@@ -437,12 +457,12 @@
 
 /* Circular quick action buttons (create movement / create loan) in dark mode */
 .dashboard.dark .menu-btn-circle {
-	background-color: #CCE0F0 !important;
-	color: #144A65 !important;
-	border-color: rgba(20,74,101,0.12) !important;
+	background-color: var(--theme-btn-bg) !important;
+	color: var(--theme-btn-text) !important;
+	border-color: var(--theme-btn-bg) !important;
 }
 .dashboard.dark .menu-btn-circle:hover {
-	background-color: #c0dbe8 !important;
+	filter: brightness(0.9) !important;
 }
 
 /* ===== MODAL STYLES FOR ACCOUNT FORM MODAL ===== */
@@ -1216,12 +1236,12 @@
 
 .dashboard[data-theme="2"] .delete-transaction-btn {
 	background: var(--theme-cards-bg) !important;
-	color: var(--theme-btn-bg) !important;
+	color: var(--theme-btn-text) !important;
 	border-color: var(--theme-cards-bg) !important;
 
 	&:hover {
 		background: var(--theme-btn-bg) !important;
-		color: var(--theme-cards-bg) !important;
+		color: var(--theme-btn-text) !important;
 		border-color: var(--theme-btn-bg) !important;
 	}
 }

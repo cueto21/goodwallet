@@ -1,5 +1,5 @@
 <div class="theme-selector">
-  <button class="theme-btn"
+  <button class="theme-btn" draggable="false"
     (click)="toggleDropdown(); $event.stopPropagation()"
     (pointerdown)="onPointerDown($event); $event.stopPropagation()"
     [class.dragging]="isDragging()"

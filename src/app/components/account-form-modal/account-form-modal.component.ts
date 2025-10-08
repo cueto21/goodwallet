@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AccountService } from '../../services/account';
 import { CardStyleService } from '../../services/card-style.service';
+import { ModalVisibilityService } from '../../services/modal-visibility.service';
 
 interface NewAccountForm {
   name: string;
@@ -170,6 +171,7 @@ interface NewAccountForm {
 export class AccountFormModalComponent {
   private accountService = inject(AccountService);
   private cardStyleService = inject(CardStyleService);
+  private modalVisibility = inject(ModalVisibilityService);
   private originalScrollY = 0; // Variable para guardar la posición original del scroll
   
   // Inputs y Outputs
@@ -209,6 +211,7 @@ export class AccountFormModalComponent {
     // Efecto para manejar el scroll del body y prevenir scroll fuera del modal
     effect(() => {
       if (this.isOpen()) {
+        this.modalVisibility.registerModal();
         // Guardar posición de scroll actual
         this.originalScrollY = window.scrollY;
         
@@ -223,6 +226,7 @@ export class AccountFormModalComponent {
         }
         
       } else {
+        this.modalVisibility.unregisterModal();
         // Restaurar scroll del body
         document.body.classList.remove('modal-open');
         document.body.style.overflow = '';
@@ -267,6 +271,7 @@ export class AccountFormModalComponent {
     this.currentStep.set(1); // Reset to first step
     this.resetForm();
     this.onClose.emit();
+    this.modalVisibility.unregisterModal();
   }
 
   selectCardStyle(style: any): void {

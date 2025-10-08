@@ -391,7 +391,18 @@
 
 .metric-card.bg-balance {
 	background: var(--theme-balance-bg, linear-gradient(135deg, #BFD7EA 0%, #87CEEB 100%));
-	/* color defined inline in HTML */
+	color: var(--theme-balance-text) !important;
+}
+
+/* Tema 1 - fondo de balance card específico */
+[data-theme="1"] .metric-card.bg-balance {
+	background: var(--theme-balance-bg, var(--theme-cards-bg)) !important;
+	color: var(--theme-balance-text, var(--theme-cards-text)) !important;
+}
+
+[data-theme="1"].dark .metric-card.bg-balance {
+	background: var(--theme-balance-bg, var(--theme-cards-bg)) !important;
+	color: var(--theme-balance-text, var(--theme-cards-text)) !important;
 }
 
 .metric-card.bg-prestado {
@@ -412,6 +423,17 @@
 .text-balance {
 	color: var(--theme-balance-text, #0B3954) !important;
 	opacity: 1 !important;
+}
+
+/* Theme-based balance text styles for desktop */
+@media (min-width: 768px) {
+  [data-theme="1"] .text-balance {
+    color: var(--theme-btn-bg) !important;
+  }
+  
+  [data-theme="1"].dark .text-balance {
+    color: #ffffff !important;
+  }
 }
 
 /* Friends button theming */

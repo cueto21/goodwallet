@@ -2,6 +2,7 @@ import { Component, signal, inject, output, input, effect, computed } from '@ang
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TransactionService } from '../../services/transaction';
+import { ModalVisibilityService } from '../../services/modal-visibility.service';
 import { AccountService } from '../../services/account';
 import { CategoryService } from '../../services/category';
 import { FriendsService } from '../../services/friends';
@@ -18,6 +19,7 @@ export class TransactionFormModalComponent {
   private accountService = inject(AccountService);
   private categoryService = inject(CategoryService);
   private friendsService = inject(FriendsService);
+  private modalVisibility = inject(ModalVisibilityService);
   private originalScrollY = 0; // Variable para guardar la posición original del scroll
 
   // Inputs y outputs
@@ -135,10 +137,13 @@ export class TransactionFormModalComponent {
       return undefined;
     });
 
-    // Load friends when modal opens
+    // Load friends & register modal visibility when modal opens
     effect(() => {
       if (this.isOpen()) {
+        this.modalVisibility.registerModal();
         this.friendsService.loadFriends();
+      } else {
+        this.modalVisibility.unregisterModal();
       }
     });
   }
@@ -484,6 +489,7 @@ export class TransactionFormModalComponent {
   closeModal(): void {
     this.resetForm();
     this.onClose.emit();
+    this.modalVisibility.unregisterModal();
   }
   
   private resetForm() {

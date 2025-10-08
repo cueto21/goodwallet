@@ -32,6 +32,13 @@
     border-radius: 10px; /* 6. Menos redondeado */
         padding: 8px 0; /* Ajustamos el padding vertical */
         z-index: 1000;
+        transition: opacity .2s ease, transform .25s ease;
+    }
+
+    .bottom-nav.hidden-by-modal {
+        opacity: 0;
+        pointer-events: none;
+        transform: translate(-50%, 30px); /* keep centering but move down */
     }
 
     .bottom-nav ul {

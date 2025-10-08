@@ -1,204 +1,184 @@
 @if (isOpen()) {
-  <div class="modal-backdrop" 
-       (click)="onBackdropClick($event)"
-       (wheel)="onBackdropScroll($event)"
-       (touchmove)="onBackdropScroll($event)">
-    <div class="modal-content" 
-         (click)="$event.stopPropagation()"
-         (wheel)="onModalContentScroll($event)"
-         (touchmove)="onModalContentScroll($event)">
-      <div class="modal-header">
-        <h3>Nuevo Préstamo</h3>
-        <button class="close-btn" (click)="closeModal()">&times;</button>
+  <div class="loan-modal-backdrop" (click)="onBackdropClick($event)">
+    <div class="loan-modal" (click)="$event.stopPropagation()">
+      <div class="loan-modal-header">
+        <h3 class="loan-modal-title">Nuevo Préstamo</h3>
+        <button type="button" class="btn-close" (click)="closeModal()">✕</button>
       </div>
-      
-      <div class="modal-body">
-        <form (ngSubmit)="onSubmit()" class="loan-form">
-          
-          <!-- Layout principal de dos columnas -->
-          <div class="main-form-layout">
-            
-            <!-- Columna 1: Información Básica -->
-            <div class="form-column">
-              <div class="form-column-title">Información Básica</div>
-              
-              <!-- Tipo de préstamo -->
-              <div class="form-group">
-                <label>Tipo de préstamo:</label>
-                <div class="radio-group">
-                  <label class="radio-option" [class.selected]="formData().type === 'lent'">
-                    <input 
-                      type="radio" 
-                      name="type" 
-                      value="lent" 
-                      [checked]="formData().type === 'lent'"
-                      (change)="updateFormField('type', 'lent')">
-                    <span class="radio-label lent">Yo presté</span>
-                  </label>
-                  <label class="radio-option" [class.selected]="formData().type === 'borrowed'">
-                    <input 
-                      type="radio" 
-                      name="type" 
-                      value="borrowed" 
-                      [checked]="formData().type === 'borrowed'"
-                      (change)="updateFormField('type', 'borrowed')">
-                    <span class="radio-label borrowed">Me prestaron</span>
-                  </label>
+
+      <!-- Step Indicator -->
+      <div class="step-indicator">
+        <div class="step-item" [class.active]="currentStep() === 1" [class.completed]="currentStep() > 1">
+          <div class="step-number">1</div>
+          <div class="step-label">Tipo & Persona</div>
+        </div>
+        <div class="step-connector" [class.active]="currentStep() > 1"></div>
+        <div class="step-item" [class.active]="currentStep() === 2" [class.completed]="currentStep() > 2">
+          <div class="step-number">2</div>
+          <div class="step-label">Monto & Fechas</div>
+        </div>
+        <div class="step-connector" [class.active]="currentStep() > 2"></div>
+        <div class="step-item" [class.active]="currentStep() === 3" [class.completed]="currentStep() > 3">
+          <div class="step-number">3</div>
+          <div class="step-label">Detalles & Cuotas</div>
+        </div>
+        <div class="step-connector" [class.active]="currentStep() > 3"></div>
+        <div class="step-item" [class.active]="currentStep() === 4">
+          <div class="step-number">4</div>
+          <div class="step-label">Resumen</div>
+        </div>
+      </div>
+
+      <div class="loan-modal-body">
+        <!-- STEP 1 -->
+        @if (currentStep() === 1) {
+          <div class="step-content">
+            <div class="form-grid two-cols">
+              <div class="form-group full">
+                <label>Tipo de préstamo</label>
+                <div class="type-options">
+                  <button type="button" class="type-card" [class.selected]="formData().type === 'lent'" (click)="updateFormField('type','lent')">
+                    <span class="type-icon">🤝</span>
+                    <span class="type-title">Yo presté</span>
+                  </button>
+                  <button type="button" class="type-card" [class.selected]="formData().type === 'borrowed'" (click)="updateFormField('type','borrowed')">
+                    <span class="type-icon">💸</span>
+                    <span class="type-title">Me prestaron</span>
+                  </button>
                 </div>
               </div>
-
-              <!-- Monto -->
               <div class="form-group">
-                <label>Monto (PEN):</label>
-                <input 
-                  type="number" 
-                  min="0.01" 
-                  step="0.01" 
-                  placeholder="0.00"
-                  [value]="formData().amount || ''"
-                  (input)="onAmountChange($event)"
-                  required>
+                <label>Persona</label>
+                <input type="text" [value]="formData().personName" (input)="onPersonNameChange($event)" placeholder="Nombre de la persona" />
               </div>
-
-              <!-- Persona -->
-              <div class="form-group">
-                <label>Persona:</label>
-                <input 
-                  type="text" 
-                  placeholder="Nombre de la persona"
-                  [value]="formData().personName"
-                  (input)="onPersonNameChange($event)"
-                  required>
-              </div>
-
-              <!-- Estado -->
-              <div class="form-group">
-                <label>Estado:</label>
-                <select 
-                  [value]="formData().status"
-                  (change)="onStatusChange($event)"
-                  required>
+              <div class="form-group" style="display: none;">
+                <label>Estado</label>
+                <select [value]="formData().status" (change)="onStatusChange($event)">
                   <option value="pending">Pendiente</option>
                   <option value="paid">Pagado</option>
                   <option value="overdue">Vencido</option>
                 </select>
               </div>
             </div>
+          </div>
+        }
 
-            <!-- Columna 2: Detalles y Configuración -->
-            <div class="form-column">
-              <div class="form-column-title">Detalles</div>
-              
-              <!-- Fecha del préstamo -->
-              <div class="form-group">
-                <label>Fecha del préstamo:</label>
-                <input 
-                  type="date" 
-                  [value]="formData().date"
-                  (input)="onDateChange($event)"
-                  required>
+        <!-- STEP 2 -->
+        @if (currentStep() === 2) {
+          <div class="step-content">
+            <div class="form-grid one-col">
+              <div class="form-group amount-group">
+                <div class="amount-input-container">
+                  <div class="amount-input-wrapper">
+                    <label>Monto (PEN)</label>
+                    <input type="number" min="0.01" step="0.01" placeholder="0.00" [value]="formData().amount || ''" (input)="onAmountChange($event)" />
+                  </div>
+                  <div class="amount-buttons">
+                    <button type="button" class="amount-btn amount-btn-add" (click)="adjustAmount(0.1)">+0.1</button>
+                    <button type="button" class="amount-btn amount-btn-add" (click)="adjustAmount(10)">+10</button>
+                    <button type="button" class="amount-btn amount-btn-add" (click)="adjustAmount(20)">+20</button>
+                    <button type="button" class="amount-btn amount-btn-subtract" (click)="adjustAmount(-0.1)">-0.1</button>
+                    <button type="button" class="amount-btn amount-btn-subtract" (click)="adjustAmount(-10)">-10</button>
+                    <button type="button" class="amount-btn amount-btn-subtract" (click)="adjustAmount(-20)">-20</button>
+                  </div>
+                </div>
               </div>
-
-              <!-- Configuración de cuotas -->
-              <div class="form-group">
-                <label class="checkbox-container">
-                  <input 
-                    type="checkbox" 
-                    [checked]="formData().hasInstallments"
-                    (change)="onInstallmentsChange($event)">
-                  <span class="checkbox-text">Pagar en cuotas</span>
+              <div class="dates-row">
+                <div class="form-group">
+                  <label>Fecha del préstamo</label>
+                  <input type="date" [value]="formData().date" (input)="onDateChange($event)" />
+                </div>
+                @if (!formData().hasInstallments) {
+                  <div class="form-group">
+                    <label>Fecha de vencimiento</label>
+                    <input type="date" [value]="formData().dueDate" (input)="onDueDateChange($event)" />
+                  </div>
+                }
+                @if (formData().hasInstallments) {
+                  <div class="form-group">
+                    <label>Primera cuota</label>
+                    <input type="date" [value]="formData().firstInstallmentDate" (input)="onFirstInstallmentDateChange($event)" />
+                  </div>
+                }
+              </div>
+              <div class="form-group full">
+                <label class="inline-checkbox">
+                  <input type="checkbox" [checked]="formData().hasInstallments" (change)="onInstallmentsChange($event)" />
+                  <span>Pagar en cuotas</span>
                 </label>
               </div>
-
-              <!-- Campos de cuotas (condicionalmente) -->
               @if (formData().hasInstallments) {
-                <div class="installments-section">
+                <div class="installments-row">
                   <div class="form-group">
-                    <label>Frecuencia de pago:</label>
-                    <select 
-                      [value]="formData().paymentFrequency"
-                      (change)="onPaymentFrequencyChange($event)"
-                      required>
+                    <label>Frecuencia de pago</label>
+                    <select [value]="formData().paymentFrequency" (change)="onPaymentFrequencyChange($event)">
                       <option value="daily">Diario</option>
                       <option value="weekly">Semanal</option>
                       <option value="biweekly">Cada 15 días</option>
                       <option value="monthly">Mensual</option>
                     </select>
                   </div>
-
                   <div class="form-group">
-                    <label>Número de cuotas:</label>
-                    <input 
-                      type="number" 
-                      min="1" 
-                      max="365"
-                      placeholder="12"
-                      [value]="formData().totalInstallments"
-                      (input)="onTotalInstallmentsChange($event)"
-                      required>
-                  </div>
-
-                  <div class="form-group">
-                    <label>Primera cuota:</label>
-                    <input 
-                      type="date" 
-                      [value]="formData().firstInstallmentDate"
-                      (input)="onFirstInstallmentDateChange($event)"
-                      required>
-                  </div>
-
-                  <div class="installment-preview">
-                    <div class="preview-info">
-                      <span class="preview-label">Vista previa:</span>
-                      <span class="preview-amount">
-                        {{ formData().totalInstallments }} cuotas {{ getFrequencyText() }} de {{ formatCurrency(installmentAmount()) }}
-                      </span>
-                    </div>
+                    <label>Número de cuotas</label>
+                    <input type="number" min="1" max="365" [value]="formData().totalInstallments" (input)="onTotalInstallmentsChange($event)" />
                   </div>
                 </div>
-              } @else {
-                <!-- Fecha de vencimiento (solo si no hay cuotas) -->
-                <div class="form-group">
-                  <label>Fecha de vencimiento:</label>
-                  <input 
-                    type="date" 
-                    [value]="formData().dueDate"
-                    (input)="onDueDateChange($event)"
-                    required>
+                <div class="preview-box full">
+                  <div class="preview-line">{{ formData().totalInstallments }} cuotas {{ getFrequencyText() }} de {{ formatCurrency(installmentAmount()) }}</div>
                 </div>
               }
+            </div>
+          </div>
+        }
 
-              <!-- Descripción -->
-              <div class="form-group">
-                <label>Descripción:</label>
-                <textarea 
-                  placeholder="Describe el motivo del préstamo..."
-                  [value]="formData().description"
-                  (input)="onDescriptionChange($event)"
-                  rows="3"
-                  maxlength="200"
-                  required></textarea>
+        <!-- STEP 3 -->
+        @if (currentStep() === 3) {
+          <div class="step-content">
+            <div class="form-grid one-col">
+              <div class="form-group full">
+                <label>Descripción</label>
+                <textarea rows="4" maxlength="200" placeholder="Describe el motivo del préstamo..." [value]="formData().description" (input)="onDescriptionChange($event)"></textarea>
               </div>
             </div>
           </div>
+        }
 
-          <!-- Acciones del formulario -->
-          <div class="form-actions">
-            <button type="button" class="btn btn-cancel" (click)="closeModal()">
-              Cancelar
-            </button>
-            <button 
-              type="submit" 
-              class="btn btn-submit" 
-              [disabled]="!isFormValid() || isSubmitting()">
-              @if (isSubmitting()) {
-                Guardando...
-              } @else {
-                Crear Préstamo
-              }
-            </button>
+        <!-- STEP 4 (Resumen) -->
+        @if (currentStep() === 4) {
+          <div class="step-content summary">
+            <div class="summary-grid">
+              <div class="summary-item"><span class="label">Tipo:</span><span class="value">{{ formData().type === 'lent' ? 'Yo presté' : 'Me prestaron' }}</span></div>
+              <div class="summary-item"><span class="label">Persona:</span><span class="value">{{ formData().personName }}</span></div>
+              <div class="summary-item"><span class="label">Estado:</span><span class="value">{{ formData().status }}</span></div>
+              <div class="summary-item"><span class="label">Monto:</span><span class="value">{{ formatCurrency(formData().amount || 0) }}</span></div>
+              <div class="summary-item" *ngIf="!formData().hasInstallments"><span class="label">Vencimiento:</span><span class="value">{{ formData().dueDate }}</span></div>
+              <div class="summary-item" *ngIf="formData().hasInstallments"><span class="label">Primera cuota:</span><span class="value">{{ formData().firstInstallmentDate }}</span></div>
+              <div class="summary-item" *ngIf="formData().hasInstallments"><span class="label">Frecuencia:</span><span class="value">{{ getFrequencyText() }}</span></div>
+              <div class="summary-item" *ngIf="formData().hasInstallments"><span class="label">Cuotas:</span><span class="value">{{ formData().totalInstallments }} x {{ formatCurrency(installmentAmount()) }}</span></div>
+              <div class="summary-item full"><span class="label">Descripción:</span><span class="value multiline">{{ formData().description }}</span></div>
+            </div>
           </div>
-        </form>
+        }
+      </div>
+
+      <!-- Footer Navigation -->
+      <div class="loan-modal-footer">
+        <div class="footer-layout-wrapper">
+          <div class="footer-center">
+            <button type="button" class="btn btn-sm btn-cancel" (click)="closeModal()">Cancelar</button>
+          </div>
+          <div class="footer-navigation">
+            <div class="footer-left">
+              <button type="button" class="btn btn-sm btn-prev" (click)="prevStep()" [disabled]="currentStep() === 1">Anterior</button>
+            </div>
+            <div class="footer-right">
+              <button type="button" class="btn btn-sm btn-next" *ngIf="!isOnLastStep()" (click)="nextStep()" [disabled]="!canProceedToNextStep()">Siguiente</button>
+              <button type="button" class="btn btn-sm btn-save" *ngIf="isOnLastStep()" (click)="onSubmit()" [disabled]="!isFormValid() || isSubmitting()">
+                {{ isSubmitting() ? 'Guardando...' : 'Guardar' }}
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

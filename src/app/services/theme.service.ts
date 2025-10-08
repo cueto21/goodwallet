@@ -12,7 +12,10 @@ export interface Theme {
 export class ThemeService {
   private themes: Theme[] = [
     { name: 'Tema 1', colors: ['#D7263D', '#02182B'] },
-    { name: 'Tema 2', colors: ['#eaebed', '#006989'] }
+    { name: 'Tema 2', colors: ['#eaebed', '#006989'] },
+    { name: 'Tema 3', colors: ['#EEE5DA', '#262424'] },
+    { name: 'Tema 4', colors: ['#EFDFBB', '#722F37'] },
+    { name: 'Tema 5', colors: ['#F092DD', '#392F5A'] }
   ];
 
   currentThemeIndex = signal(0);
@@ -149,12 +152,25 @@ export class ThemeService {
       document.documentElement.style.setProperty('--theme-expenses-text', primaryColor);
     }
 
-    // Balance card: only Tema 2 in dark mode gets themed
+    // Balance card behavior:
+    // - Tema 2 + dark: preserve existing behavior (balance bg = primary, text = secondary)
+    // - Tema 1: user requested special mapping:
+    //     * dark mode => background = color1 (primary), text = white
+    //     * light mode => background = color2 (secondary), text = white
     if (isTema2 && isDark) {
       document.documentElement.style.setProperty('--theme-balance-bg', primaryColor);
       document.documentElement.style.setProperty('--theme-balance-text', secondaryColor);
+    } else if (!isTema2) {
+      // Tema 1: apply requested mapping regardless of viewport/media queries
+      if (isDark) {
+        document.documentElement.style.setProperty('--theme-balance-bg', primaryColor);
+        document.documentElement.style.setProperty('--theme-balance-text', '#ffffff');
+      } else {
+        document.documentElement.style.setProperty('--theme-balance-bg', secondaryColor);
+        document.documentElement.style.setProperty('--theme-balance-text', '#ffffff');
+      }
     } else {
-      // Remove the properties to use defaults
+      // Other cases (e.g., Tema2 in light) -> remove to fall back to defaults
       document.documentElement.style.removeProperty('--theme-balance-bg');
       document.documentElement.style.removeProperty('--theme-balance-text');
     }

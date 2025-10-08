@@ -43,13 +43,26 @@ export class ThemeSelector implements OnInit, OnDestroy {
     const savedX = localStorage.getItem('theme-btn-x');
     const savedY = localStorage.getItem('theme-btn-y');
     if (savedX && savedY) {
-      this.currentX.set(parseInt(savedX, 10));
-      this.currentY.set(parseInt(savedY, 10));
+      // parse and clamp to viewport to avoid being off-screen
+      let px = parseInt(savedX, 10);
+      let py = parseInt(savedY, 10);
+      if (isNaN(px) || isNaN(py)) {
+        px = window.innerWidth - 56; // 36px width + 20px margin
+        py = Math.floor(window.innerHeight / 2 - 18); // center for 36px height
+      } else {
+        // clamp coordinates to viewport (leave 10px margin)
+        const maxX = Math.max(0, window.innerWidth - 36 - 10);
+        const maxY = Math.max(0, window.innerHeight - 36 - 10);
+        px = Math.max(10, Math.min(px, maxX));
+        py = Math.max(10, Math.min(py, maxY));
+      }
+      this.currentX.set(px);
+      this.currentY.set(py);
       this.updatePosition();
     } else {
       // Default position: right side, middle
-      this.currentX.set(window.innerWidth - 70); // 50px width + 20px margin
-      this.currentY.set(window.innerHeight / 2 - 25); // Center vertically
+      this.currentX.set(window.innerWidth - 56); // 36px width + 20px margin
+      this.currentY.set(window.innerHeight / 2 - 18); // Center vertically for 36px height
     }
 
     // Add listener to close dropdown when clicking outside (ignore while actively dragging)
@@ -91,11 +104,19 @@ export class ThemeSelector implements OnInit, OnDestroy {
   }
 
   toggleDropdown() {
-    if (!this.preventClick) {
-      const isLeft = this.currentX() < window.innerWidth / 2;
-      this.dropdownClass.set(isLeft ? 'left' : 'right');
-      this.dropdownOpen.update(v => !v);
+    // If a recent drag set preventClick, allow closing the dropdown by clicking
+    // the gear (but still prevent opening immediately after a drag).
+    if (this.preventClick && !this.dropdownOpen()) {
+      // clicking while prevented and dropdown closed -> ignore (prevents accidental open)
+      this.preventClick = false;
+      return;
     }
+
+    const isLeft = this.currentX() < window.innerWidth / 2;
+    this.dropdownClass.set(isLeft ? 'left' : 'right');
+    this.dropdownOpen.update(v => !v);
+
+    // clear the preventClick flag so subsequent clicks behave normally
     this.preventClick = false;
   }
 
@@ -110,34 +131,30 @@ export class ThemeSelector implements OnInit, OnDestroy {
 
   // Pointer-based handlers to unify mouse/touch and avoid outside-click moving
   onPointerDown(event: PointerEvent) {
-    // Only start drag if pointer is on the button element
+    // Only potential drag if pointer is on the button element
     const target = event.target as HTMLElement;
     const btn = this.elRef.nativeElement.querySelector('.theme-btn') as HTMLElement;
     if (!btn || !btn.contains(target)) return;
 
-    // Prevent default behavior and stop propagation
     event.preventDefault();
     event.stopPropagation();
 
     this.pointerId = event.pointerId;
-    this.preventClick = false;
-    this.isDragging.set(true); // Start dragging immediately
+    this.preventClick = false; // allow click unless movement threshold exceeded
+    this.isDragging.set(false); // WILL become true only after threshold
     this.dragStartX = event.clientX;
     this.dragStartY = event.clientY;
     this.initialX = this.currentX();
     this.initialY = this.currentY();
 
-    // Close dropdown when starting to drag
-    this.dropdownOpen.set(false);
+    // Capture pointer (best effort)
+    try {
+      if (btn && typeof (btn as any).setPointerCapture === 'function') {
+        (btn as any).setPointerCapture(event.pointerId);
+      }
+    } catch {}
 
-    // Add dragging class to disable transitions
-    const container = this.elRef.nativeElement.querySelector('.theme-selector') as HTMLElement;
-    const button = this.elRef.nativeElement.querySelector('.theme-btn') as HTMLElement;
-    if (container) container.classList.add('dragging');
-    if (button) button.classList.add('dragging');
-
-    // Remove pointer capture - use simple document listeners instead
-    // Attach listeners to document for better coverage
+    // Attach listeners
     this.pointerMoveListener = this.renderer.listen('document', 'pointermove', (e: PointerEvent) => {
       if (e.pointerId === this.pointerId) {
         e.preventDefault();
@@ -154,36 +171,42 @@ export class ThemeSelector implements OnInit, OnDestroy {
         this.onPointerUp(e);
       }
     });
-    console.debug('[theme-selector] pointerdown - dragging started', { pointerId: this.pointerId, x: this.dragStartX, y: this.dragStartY });
   }
 
   private onPointerMove(e: PointerEvent) {
-    // Ensure this move belongs to the active pointer
     if (this.pointerId === null || e.pointerId !== this.pointerId) return;
-    
-    // If not dragging, ignore
-    if (!this.isDragging()) return;
 
-    const clientX = e.clientX;
-    const clientY = e.clientY;
-    const deltaX = clientX - this.dragStartX;
-    const deltaY = clientY - this.dragStartY;
+    const deltaX = e.clientX - this.dragStartX;
+    const deltaY = e.clientY - this.dragStartY;
 
-    this.preventClick = true;
+    // Movement threshold (in px) to distinguish click from drag
+    const threshold = 5;
+    if (!this.isDragging()) {
+      if (Math.abs(deltaX) < threshold && Math.abs(deltaY) < threshold) {
+        return; // still a potential click
+      }
+      // Threshold passed -> begin drag
+      this.isDragging.set(true);
+      this.preventClick = true; // block opening via impending click
+      // Close dropdown only once actual drag starts
+      if (this.dropdownOpen()) this.dropdownOpen.set(false);
+      // Add dragging classes
+      const container = this.elRef.nativeElement.querySelector('.theme-selector') as HTMLElement;
+      const button = this.elRef.nativeElement.querySelector('.theme-btn') as HTMLElement;
+      if (container) container.classList.add('dragging');
+      if (button) button.classList.add('dragging');
+    }
 
     let newX = this.initialX + deltaX;
     let newY = this.initialY + deltaY;
-
-    // Constrain to viewport
-    const btnWidth = 50;
-    const btnHeight = 50;
+    const btnWidth = 36;
+    const btnHeight = 36;
     newX = Math.max(0, Math.min(window.innerWidth - btnWidth, newX));
     newY = Math.max(0, Math.min(window.innerHeight - btnHeight, newY));
 
     this.currentX.set(newX);
     this.currentY.set(newY);
     this.updatePosition();
-    console.debug('[theme-selector] move', { x: newX, y: newY });
   }
 
   private onPointerUp(e: PointerEvent) {
@@ -203,6 +226,14 @@ export class ThemeSelector implements OnInit, OnDestroy {
         
         console.debug('[theme-selector] dragend', { x: this.currentX(), y: this.currentY() });
       }
+
+      // release pointer capture if available
+      try {
+        const btnEl = this.elRef.nativeElement.querySelector('.theme-btn') as HTMLElement;
+        if (btnEl && this.pointerId !== null && typeof (btnEl as any).releasePointerCapture === 'function') {
+          (btnEl as any).releasePointerCapture(this.pointerId);
+        }
+      } catch (err) {}
 
       // cleanup
       this.pointerId = null;
@@ -225,8 +256,8 @@ export class ThemeSelector implements OnInit, OnDestroy {
     const currentX = this.currentX();
     const currentY = this.currentY();
     const screenWidth = window.innerWidth;
-    const btnWidth = 50;
-    const margin = 10; // margin from edge
+  const btnWidth = 36;
+  const margin = 10; // margin from edge
     
     // Determine if we're closer to left or right side
     const isCloserToLeft = currentX < (screenWidth / 2);

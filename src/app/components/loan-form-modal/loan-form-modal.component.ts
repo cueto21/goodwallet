@@ -2,6 +2,7 @@ import { Component, signal, inject, output, input, effect, computed } from '@ang
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { LoanService } from '../../services/loan.service';
+import { ModalVisibilityService } from '../../services/modal-visibility.service';
 import { Loan } from '../../models/loan.interface';
 
 @Component({
@@ -13,6 +14,7 @@ import { Loan } from '../../models/loan.interface';
 })
 export class LoanFormModalComponent {
   private loanService = inject(LoanService);
+  private modalVisibility = inject(ModalVisibilityService);
   private originalScrollY = 0; // Variable para guardar la posición original del scroll
 
   // Inputs y outputs
@@ -50,6 +52,10 @@ export class LoanFormModalComponent {
   // Backward compatibility - mantener monthlyInstallment para código existente
   monthlyInstallment = computed(() => this.installmentAmount());
 
+  // Wizard steps similar to transaction modal
+  currentStep = signal(1); // 1=Tipo/Persona, 2=Monto/Fechas, 3=Descripción/Cuotas, 4=Resumen
+  totalSteps = 4;
+
   constructor() {
     // Effect para preseleccionar tipo
     effect(() => {
@@ -62,6 +68,7 @@ export class LoanFormModalComponent {
     // Effect para manejar el scroll del body cuando se abre/cierra el modal
     effect(() => {
       if (this.isOpen()) {
+        this.modalVisibility.registerModal();
         // Guardar posición de scroll actual
         this.originalScrollY = window.scrollY;
         
@@ -76,6 +83,7 @@ export class LoanFormModalComponent {
         }
         
       } else {
+        this.modalVisibility.unregisterModal();
         // Restaurar scroll del body
         document.body.classList.remove('modal-open');
         document.body.style.overflow = '';
@@ -119,6 +127,12 @@ export class LoanFormModalComponent {
   onAmountChange(event: Event) {
     const target = event.target as HTMLInputElement;
     this.updateFormField('amount', +target.value);
+  }
+
+  adjustAmount(adjustment: number) {
+    const currentAmount = this.formData().amount || 0;
+    const newAmount = Math.max(0, parseFloat((currentAmount + adjustment).toFixed(2)));
+    this.updateFormField('amount', newAmount);
   }
 
   onDescriptionChange(event: Event) {
@@ -277,9 +291,53 @@ export class LoanFormModalComponent {
     }
   }
 
+  /* ===================== WIZARD NAVIGATION ===================== */
+  canProceedToNextStep(): boolean {
+    const d = this.formData();
+    switch (this.currentStep()) {
+      case 1:
+        return !!(d.personName && d.personName.trim().length > 0 && d.type && d.status);
+      case 2:
+        if (d.hasInstallments) {
+          return !!(d.amount > 0 && d.date && d.firstInstallmentDate && d.totalInstallments > 0);
+        } else {
+          return !!(d.amount > 0 && d.date && d.dueDate);
+        }
+      case 3:
+        return !!(d.description && d.description.trim().length > 0);
+      case 4:
+        return this.isFormValid();
+      default:
+        return true;
+    }
+  }
+
+  nextStep() {
+    if (this.currentStep() < this.totalSteps && this.canProceedToNextStep()) {
+      this.currentStep.update(s => s + 1);
+    }
+  }
+
+  prevStep() {
+    if (this.currentStep() > 1) {
+      this.currentStep.update(s => s - 1);
+    }
+  }
+
+  isOnLastStep(): boolean { return this.currentStep() === this.totalSteps; }
+
+  goSaveOrNext() {
+    if (this.isOnLastStep()) {
+      this.onSubmit();
+    } else {
+      this.nextStep();
+    }
+  }
+
   closeModal(): void {
     this.resetForm();
     this.onClose.emit();
+    this.modalVisibility.unregisterModal();
   }
   
   private resetForm() {
