@@ -1,35 +1,36 @@
 
 
 <nav class="bottom-nav" [class.hidden-by-modal]="anyModalOpen()">
-    <ul>
-        <li>
+    <ul #ul>
+        <li #navItem>
             <a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
                 <span class="nav-img icon-home" aria-hidden="true"></span>
                 <span>Inicio</span>
             </a>
         </li>
-        <li>
+        <li class="hidden" #navItem>
             <a routerLink="/accounts" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
                 <span class="nav-img icon-accounts" aria-hidden="true"></span>
                 <span>Cuentas</span>
             </a>
         </li>
-        <li> <a routerLink="/loans" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <li #navItem> <a routerLink="/loans" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
                 <span class="nav-img icon-loans" aria-hidden="true"></span>
                 <span>Préstamos</span>
             </a>
         </li>
-        <li>
+        <li #navItem>
             <a routerLink="/recurring-transactions" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
                 <span class="nav-img icon-recurring" aria-hidden="true"></span>
                 <span>Recurrentes</span>
             </a>
         </li>
-        <li>
+        <li #navItem>
             <a (click)="emitToggleAccount()">
                 <span class="nav-img icon-user" aria-hidden="true"></span>
                 <span>Cuenta</span>
             </a>
         </li>
+        <div class="indicator" #indicator></div>
     </ul>
 </nav>

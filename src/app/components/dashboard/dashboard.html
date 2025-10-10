@@ -16,13 +16,13 @@
         <div class="col-4">
           <div class="metric-card bg-prestado rounded shadow-sm text-center py-1 mb-1 d-flex flex-column justify-content-center">
             <div class="small opacity-75" style="color: #0B3954 !important;">Prestado</div>
-            <div class="fw-bold" style="color: #0B3954 !important; font-size: 1rem;">{{ formatCurrency(totalLent()) }}</div>
+            <div class="fw-bold" [style.color]="'var(--theme-lent-amount)'" style="font-size: 1rem;">{{ formatCurrency(totalLent()) }}</div>
           </div>
         </div>
         <div class="col-4">
           <div class="metric-card bg-adeudado rounded shadow-sm text-center py-1 mb-1 d-flex flex-column justify-content-center">
             <div class="small opacity-75" style="color: #ffffff !important;">Adeudado</div>
-            <div class="fw-bold" style="color: #ffffff !important; font-size: 1rem;">{{ formatCurrency(totalBorrowed()) }}</div>
+            <div class="fw-bold" [style.color]="'var(--theme-borrowed-amount)'" style="font-size: 1rem;">{{ formatCurrency(totalBorrowed()) }}</div>
           </div>
         </div>
       </div>
@@ -183,7 +183,7 @@
             <div class="col-6 col-sm-12 col-md-6 col-lg-6">
               <div class="bg-expenses-theme rounded shadow-sm text-center py-1">
                 <div class="small text-expenses-theme">Gastos mes</div>
-                <div class="fw-bold text-expenses-theme" style="font-size: 1rem;">{{ formatCurrency(monthlyExpenses()) }}</div>
+                <div class="fw-bold transaction-amount" style="font-size: 1rem;">{{ formatCurrency(monthlyExpenses()) }}</div>
               </div>
             </div>
           </div>
@@ -224,13 +224,13 @@
                         <button class="btn btn-sm btn-primary" style="font-size: 0.7rem;" (click)="paySharedTransaction(transaction.sharedTx)">Pagar</button>
                       } @else if (transaction.type === 'pending-approval') {
                         <div class="d-flex align-items-center gap-1">
-                          <span class="fw-bold text-success" style="font-size: 0.8rem;">+{{ formatCurrency(transaction.amount) }}</span>
+                          <span class="fw-bold transaction-amount" style="font-size: 0.9rem; font-weight: 800 !important;">+{{ formatCurrency(transaction.amount) }}</span>
                           <button class="btn btn-sm btn-success" style="font-size: 0.7rem;" (click)="approveSharedTransaction(transaction.sharedTx)">Aprobar</button>
                         </div>
                       } @else if (transaction.type === 'income') {
-                        <span class="fw-bold text-success" style="font-size: 0.8rem;">+{{ formatCurrency(transaction.amount) }}</span>
+                        <span class="fw-bold transaction-amount" style="font-size: 0.9rem; font-weight: 800 !important;">+{{ formatCurrency(transaction.amount) }}</span>
                       } @else {
-                        <span class="fw-bold" style="font-size: 0.9rem; color: #FF6663 !important; font-weight: 800 !important;">-{{ formatCurrency(transaction.amount) }}</span>
+                        <span class="fw-bold transaction-amount" style="font-size: 0.9rem; font-weight: 800 !important;">-{{ formatCurrency(transaction.amount) }}</span>
                       }
                       <!-- Delete button -->
                       @if (transaction.type !== 'shared-expense' && transaction.type !== 'pending-approval') {
@@ -279,13 +279,13 @@
           <div class="row text-center g-2 mb-3">
             <div class="col-6">
                 <div class="border-end">
-                <h6 class="fw-bold mb-0" [style.color]="darkMode() ? '#CCE0F0' : '#0B3954'" style="font-size: 1rem;">{{ formatCurrency(totalLent()) }}</h6>
+                <h6 class="fw-bold mb-0 transaction-amount" style="font-size: 1rem;">{{ formatCurrency(totalLent()) }}</h6>
                 <small class="text-muted">Prestado</small>
               </div>
             </div>
             <div class="col-6">
               <div>
-                <h6 class="fw-bold mb-0" style="color: #FF6663 !important; font-size: 1rem;">{{ formatCurrency(totalBorrowed()) }}</h6>
+                <h6 class="fw-bold mb-0 transaction-amount" style="font-size: 1rem;">{{ formatCurrency(totalBorrowed()) }}</h6>
                 <small class="text-muted">Pedido</small>
               </div>
             </div>
@@ -305,16 +305,17 @@
                       }
                     </div>
                   <div class="d-flex align-items-center">
-                    @if (item.isOverdue) {
-                      @if (getDaysUntilDue(item.dueDate) === 0) {
-                        <span class="badge me-2" style="font-size: 0.6rem; background-color: #fff2cc; color: #8a6d3b;">Hoy</span>
-                      } @else {
-                        <span class="badge me-2" style="font-size: 0.6rem; background-color: #f8d7da; color: #721c24;">{{ Math.abs(getDaysUntilDue(item.dueDate)) }}d</span>
-                      }
+                    @if (getDaysUntilDue(item.dueDate) < 0) {
+                      <!-- Realmente vencido (días negativos) - Rojo -->
+                      <span class="badge me-2" style="font-size: 0.6rem; background-color: #f8d7da; color: #721c24;">{{ Math.abs(getDaysUntilDue(item.dueDate)) }}d</span>
+                    } @else if (getDaysUntilDue(item.dueDate) === 0) {
+                      <!-- Vence hoy - Amarillo -->
+                      <span class="badge me-2" style="font-size: 0.6rem; background-color: #fff2cc; color: #8a6d3b;">Hoy</span>
                     } @else {
+                      <!-- Días restantes (positivos) - Amarillo -->
                       <span class="badge me-2" style="font-size: 0.6rem; background-color: #fff2cc; color: #8a6d3b;">{{ getDaysUntilDue(item.dueDate) }}d</span>
                     }
-                    <span class="fw-bold small" [ngClass]="{'text-prestado': item.type==='lent', 'text-bittersweet': item.type==='borrowed'}">{{ formatCurrency(item.amount) }}</span>
+                    <span class="fw-bold small transaction-amount">{{ formatCurrency(item.amount) }}</span>
                   </div>
                 </div>
               }
@@ -354,7 +355,7 @@
                     </div>
                   </div>
                 </div>
-                  <small class="fw-bold ms-2 category-amount" style="font-weight: 800 !important;">{{ formatCurrency(category.amount) }}</small>
+                  <small class="fw-bold ms-2 category-amount transaction-amount" style="font-weight: 800 !important;">{{ formatCurrency(category.amount) }}</small>
               </div>
             }
           }
@@ -394,7 +395,7 @@
                     </div>
                   </div>
                 </div>
-                  <small class="fw-bold ms-2 category-amount" style="font-weight: 800 !important;">{{ formatCurrency(category.amount) }}</small>
+                  <small class="fw-bold ms-2 category-amount transaction-amount" style="font-weight: 800 !important;">{{ formatCurrency(category.amount) }}</small>
               </div>
             }
           }

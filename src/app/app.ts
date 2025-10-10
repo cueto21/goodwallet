@@ -40,6 +40,7 @@ export class App implements OnInit {
   sidebarVisible = this.sidebarService.sidebarVisible;
   sidebarCollapsed = this.sidebarService.sidebarCollapsed;
   darkMode = this.darkModeService.darkMode;
+  currentThemeIndex = this.themeService.currentThemeIndex;
 
   async ngOnInit() {
     // Intentar cargar el usuario actual al inicializar la app

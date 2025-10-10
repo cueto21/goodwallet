@@ -126,11 +126,34 @@ export class LoansV2Component implements OnInit {
   }
 
   formatDate(date: Date): string {
-    return new Date(date).toLocaleDateString('es-PE', {
+    // If date is UTC (like "2025-10-10T00:00:00.000Z"), extract the date part directly
+    const dateObj = new Date(date);
+    const isoString = dateObj.toISOString();
+    
+    // Extract the date part from ISO string (YYYY-MM-DD)
+    const datePart = isoString.split('T')[0];
+    const [year, month, day] = datePart.split('-').map(Number);
+    
+    // Create a new date using UTC components to avoid timezone conversion
+    const normalizedDate = new Date(Date.UTC(year, month - 1, day));
+    
+    const formattedDate = normalizedDate.toLocaleDateString('es-PE', {
       day: '2-digit',
       month: 'short',
-      year: 'numeric'
+      year: 'numeric',
+      timeZone: 'UTC' // Force UTC to prevent timezone conversion
     });
+    
+    console.log(`[DEBUG formatDate]`, {
+      originalDate: date,
+      originalDateISO: isoString,
+      extractedDatePart: datePart,
+      normalizedDateUTC: normalizedDate.toISOString(),
+      formattedDate: formattedDate,
+      currentTimezone: Intl.DateTimeFormat().resolvedOptions().timeZone
+    });
+    
+    return formattedDate;
   }
 
   isOverdue(loan: Loan): boolean {
@@ -147,10 +170,40 @@ export class LoansV2Component implements OnInit {
         .filter(inst => inst.status === 'pending' || inst.status === 'partial')
         .sort((a, b) => new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime())[0];
       if (nextInstallment) {
-        const dueDate = new Date(nextInstallment.dueDate);
-        dueDate.setHours(0, 0, 0, 0);
+        // Get today's date as YYYY-MM-DD in local time
+        const todayDate = new Date();
+        const todayStr = todayDate.getFullYear() + '-' + 
+                        String(todayDate.getMonth() + 1).padStart(2, '0') + '-' + 
+                        String(todayDate.getDate()).padStart(2, '0');
+        
+        // For UTC dates, extract the date part directly from ISO string
+        const dueDateObj = new Date(nextInstallment.dueDate);
+        const dueDateISO = dueDateObj.toISOString();
+        const dueDateStr = dueDateISO.split('T')[0]; // Extract YYYY-MM-DD part
+        
+        // Create normalized dates from the date strings
+        const todayNormalized = new Date(todayStr + 'T00:00:00');
+        const dueDate = new Date(dueDateStr + 'T00:00:00');
+        
+        const isOverdueResult = dueDate.getTime() < todayNormalized.getTime();
+        
+        console.log(`[DEBUG isOverdue] Loan: ${loan.personName}`, {
+          originalDueDate: nextInstallment.dueDate,
+          dueDateISO: dueDateISO,
+          extractedDatePart: dueDateStr,
+          todayStr,
+          todayNormalized: todayNormalized.toISOString(),
+          dueDateNormalized: dueDate.toISOString(),
+          todayGetTime: todayNormalized.getTime(),
+          dueDateGetTime: dueDate.getTime(),
+          comparison: `${dueDate.getTime()} < ${todayNormalized.getTime()}`,
+          isOverdue: isOverdueResult,
+          installmentNumber: nextInstallment.installmentNumber,
+          installmentStatus: nextInstallment.status
+        });
+        
         // overdue only if dueDate is strictly before today
-        return dueDate.getTime() < today.getTime();
+        return isOverdueResult;
       }
       return false;
     }
@@ -163,9 +216,22 @@ export class LoansV2Component implements OnInit {
   }
 
   getDaysUntilDue(dueDate: Date): number {
+    // Get today's date as YYYY-MM-DD in local time
     const today = new Date();
-    const due = new Date(dueDate);
-    const diffTime = due.getTime() - today.getTime();
+    const todayStr = today.getFullYear() + '-' + 
+                    String(today.getMonth() + 1).padStart(2, '0') + '-' + 
+                    String(today.getDate()).padStart(2, '0');
+    
+    // For UTC dates, extract the date part directly from ISO string
+    const dueDateObj = new Date(dueDate);
+    const dueDateISO = dueDateObj.toISOString();
+    const dueDateStr = dueDateISO.split('T')[0]; // Extract YYYY-MM-DD part
+    
+    // Create normalized dates from the date strings
+    const todayDate = new Date(todayStr + 'T00:00:00');
+    const dueDateNormalized = new Date(dueDateStr + 'T00:00:00');
+    
+    const diffTime = dueDateNormalized.getTime() - todayDate.getTime();
     return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
   }
 
@@ -197,7 +263,18 @@ export class LoansV2Component implements OnInit {
     const nextInstallment = loan.installments.installmentsList
       .find(inst => inst.status === 'pending' || inst.status === 'partial');
     
-    return nextInstallment ? nextInstallment.dueDate : null;
+    if (nextInstallment) {
+      console.log(`[DEBUG getNextPaymentDate] Loan: ${loan.personName}`, {
+        installmentNumber: nextInstallment.installmentNumber,
+        status: nextInstallment.status,
+        dueDateFromEndpoint: nextInstallment.dueDate,
+        dueDateType: typeof nextInstallment.dueDate,
+        dueDateParsed: new Date(nextInstallment.dueDate).toISOString(),
+        dueDateLocal: new Date(nextInstallment.dueDate).toLocaleDateString('es-PE')
+      });
+    }
+    
+    return nextInstallment ? new Date(nextInstallment.dueDate) : null;
   }
 
   getFinalPaymentDate(loan: Loan): Date | null {
@@ -211,10 +288,35 @@ export class LoansV2Component implements OnInit {
     const nextDate = this.getNextPaymentDate(loan);
     if (!nextDate) return 0;
     
+    // Get today's date as YYYY-MM-DD in local time
     const today = new Date();
-    const next = new Date(nextDate);
-    const diffTime = next.getTime() - today.getTime();
-    return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    const todayStr = today.getFullYear() + '-' + 
+                    String(today.getMonth() + 1).padStart(2, '0') + '-' + 
+                    String(today.getDate()).padStart(2, '0');
+    
+    // For UTC dates, extract the date part directly from ISO string
+    const nextDateObj = new Date(nextDate);
+    const nextDateISO = nextDateObj.toISOString();
+    const nextDateStr = nextDateISO.split('T')[0]; // Extract YYYY-MM-DD part
+    
+    // Create new dates from the date strings to avoid timezone issues
+    const todayDate = new Date(todayStr + 'T00:00:00');
+    const nextDateNormalized = new Date(nextDateStr + 'T00:00:00');
+    
+    const diffTime = nextDateNormalized.getTime() - todayDate.getTime();
+    const daysDiff = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    
+    console.log(`[DEBUG getDaysUntilNextPayment] Loan: ${loan.personName}`, {
+      nextDateISO,
+      extractedDatePart: nextDateStr,
+      todayStr,
+      todayDate: todayDate.toISOString(),
+      nextDateNormalized: nextDateNormalized.toISOString(),
+      diffTimeMs: diffTime,
+      daysDifference: daysDiff
+    });
+    
+    return daysDiff;
   }
 
   // Installment methods

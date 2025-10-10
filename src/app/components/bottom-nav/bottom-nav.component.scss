@@ -46,8 +46,10 @@
         margin: 0;
         padding: 0;
         display: flex;
-        justify-content: space-around;
+        justify-content: center;
         align-items: center;
+        gap: 15px;
+        position: relative;
     }
 
     .bottom-nav ul li {
@@ -60,8 +62,9 @@
         align-items: center;
         text-decoration: none;
         color: var(--theme-nav-text);
-        padding: 5px;
+        padding: 8px 10px 4px 10px;
         transition: color 0.18s ease;
+        position: relative;
     }
 
     .bottom-nav ul li a i {
@@ -130,6 +133,34 @@
         color: #ffffff !important;
     }
 
+    /* Theme 3: override hover and active colors to use theme-nav-text (color2) */
+    :host-context(.app-container[data-theme="3"]) .bottom-nav ul li:hover a,
+    :host-context(.app-container[data-theme="3"]) .bottom-nav ul li.active a,
+    :host-context(.app-container[data-theme="3"]) .bottom-nav ul li a.active {
+        color: var(--theme-nav-text) !important;
+    }
+
+    /* Theme 3: add subtle background for active state to differentiate selected item */
+    :host-context(.app-container[data-theme="3"]) .bottom-nav ul li.active a,
+    :host-context(.app-container[data-theme="3"]) .bottom-nav ul li a.active {
+        background-color: rgba(38, 36, 36, 0.15) !important;
+        border-radius: 8px;
+    }
+
+    /* Theme 4: override hover and active colors to use theme-nav-text (color1) */
+    :host-context(.app-container[data-theme="4"]) .bottom-nav ul li:hover a,
+    :host-context(.app-container[data-theme="4"]) .bottom-nav ul li.active a,
+    :host-context(.app-container[data-theme="4"]) .bottom-nav ul li a.active {
+        color: var(--theme-nav-text) !important;
+    }
+
+    /* Theme 4: add subtle background for active state to differentiate selected item */
+    :host-context(.app-container[data-theme="4"]) .bottom-nav ul li.active a,
+    :host-context(.app-container[data-theme="4"]) .bottom-nav ul li a.active {
+        background-color: rgba(239, 223, 187, 0.15) !important; /* Color 1 with opacity */
+        border-radius: 8px;
+    }
+
     /* Make masked icons scale on hover/active and transition nicely */
     .bottom-nav ul li.active a .nav-img,
     .bottom-nav ul li a.active .nav-img,
@@ -139,5 +170,31 @@
 
     .bottom-nav ul li a .nav-img {
         transition: transform 0.18s ease, background-color 0.18s ease;
+    }
+
+    /* Hide the accounts button temporarily */
+    .bottom-nav ul li.hidden {
+        display: none;
+    }
+
+    .bottom-nav ul .indicator {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 24px;
+        height: 2px;
+        background-color: #ffffff;
+        transition: left 0.3s ease, width 0.3s ease;
+        border-radius: 1px;
+    }
+
+    /* Theme 3: indicator color matches active text */
+    :host-context(.app-container[data-theme="3"]) .bottom-nav ul .indicator {
+        background-color: var(--theme-nav-text);
+    }
+
+    /* Theme 4: indicator color matches active text */
+    :host-context(.app-container[data-theme="4"]) .bottom-nav ul .indicator {
+        background-color: var(--theme-nav-text);
     }
 }

@@ -227,8 +227,8 @@
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: #0B3954; /* Prussian Blue */
-  color: #BFD7EA; /* Columbia Blue for icon/text */
+  background: var(--theme-btn-bg); /* Color 1 (primary) */
+  color: var(--theme-btn-text); /* Color 2 (secondary) */
   border: none;
   display: flex;
   align-items: center;
@@ -241,7 +241,8 @@
   &:hover {
     transform: translateY(-2px) scale(1.05);
     box-shadow: 0 6px 18px rgba(11, 57, 84, 0.28);
-    background: #063047; /* darker Prussian Blue on hover */
+    background: var(--theme-btn-text); /* Color 2 on hover */
+    color: var(--theme-btn-bg); /* Color 1 on hover */
   }
   
   &:active {
@@ -252,7 +253,7 @@
     font-size: 20px;
     font-weight: 700;
     line-height: 1;
-    color: #BFD7EA; /* Columbia Blue icon */
+    color: inherit; /* Inherits from parent button color */
   }
   
   @media (max-width: 480px) {
@@ -323,7 +324,7 @@
     color: white;
     
     &:hover:not(:disabled) {
-      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+      box-shadow: none;
       transform: translateY(-1px);
     }
   }
@@ -439,8 +440,8 @@
   }
 
   &.stat-borrowed {
-    /* Background color 2 (secondary) for borrowed totals */
-    background: var(--theme-cards-bg) !important; /* color 2 */
+    /* Background color 2 (secondary) for borrowed totals - inverted colors */
+    background: var(--theme-btn-text) !important; /* inverted from lent */
     border-left: none;
     border: 1px solid rgba(59, 130, 246, 0.12) !important;
     border-radius: inherit !important;
@@ -1085,7 +1086,7 @@
 .installments-badge {
   /* Theme colors for installments badge */
   background: var(--theme-cards-bg);
-  color: var(--theme-btn-bg);
+  color: var(--theme-btn-text);
   padding: 2px 8px;
   border-radius: 12px;
   font-size: 0.7rem;
@@ -2185,6 +2186,7 @@
 .card-actions .btn.btn-danger:hover:not(:disabled) {
   background: #ff4f4a; /* slightly darker on hover */
   transform: translateY(-1px);
+  box-shadow: none !important;
 }
 
 .card-actions .btn.btn-danger:active:not(:disabled) {

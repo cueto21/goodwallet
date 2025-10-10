@@ -101,8 +101,18 @@ export class ThemeService {
     }
 
     // Bottom nav: depends on theme
+    const isTema3 = this.currentThemeIndex() === 2;
+    const isTema4 = this.currentThemeIndex() === 3;
     if (isTema2) {
       // Tema 2: bg secondary, text primary
+      document.documentElement.style.setProperty('--theme-nav-bg', secondaryColor);
+      document.documentElement.style.setProperty('--theme-nav-text', primaryColor);
+    } else if (isTema3) {
+      // Tema 3: bg secondary (color2), text primary (color1)
+      document.documentElement.style.setProperty('--theme-nav-bg', secondaryColor);
+      document.documentElement.style.setProperty('--theme-nav-text', primaryColor);
+    } else if (isTema4) {
+      // Tema 4: bg secondary (color2), text primary (color1)
       document.documentElement.style.setProperty('--theme-nav-bg', secondaryColor);
       document.documentElement.style.setProperty('--theme-nav-text', primaryColor);
     } else {
@@ -157,10 +167,12 @@ export class ThemeService {
     // - Tema 1: user requested special mapping:
     //     * dark mode => background = color1 (primary), text = white
     //     * light mode => background = color2 (secondary), text = white
+    // - Tema 3: bg = color1 (primary), text = color2 (secondary)
+    // - Tema 4: bg = color1 (primary), text = color2 (secondary)
     if (isTema2 && isDark) {
       document.documentElement.style.setProperty('--theme-balance-bg', primaryColor);
       document.documentElement.style.setProperty('--theme-balance-text', secondaryColor);
-    } else if (!isTema2) {
+    } else if (this.currentThemeIndex() === 0) {
       // Tema 1: apply requested mapping regardless of viewport/media queries
       if (isDark) {
         document.documentElement.style.setProperty('--theme-balance-bg', primaryColor);
@@ -169,6 +181,14 @@ export class ThemeService {
         document.documentElement.style.setProperty('--theme-balance-bg', secondaryColor);
         document.documentElement.style.setProperty('--theme-balance-text', '#ffffff');
       }
+    } else if (this.currentThemeIndex() === 2) {
+      // Tema 3: bg = color1 (primary), text = color2 (secondary)
+      document.documentElement.style.setProperty('--theme-balance-bg', primaryColor);
+      document.documentElement.style.setProperty('--theme-balance-text', secondaryColor);
+    } else if (this.currentThemeIndex() === 3) {
+      // Tema 4: bg = color1 (primary), text = color2 (secondary)
+      document.documentElement.style.setProperty('--theme-balance-bg', primaryColor);
+      document.documentElement.style.setProperty('--theme-balance-text', secondaryColor);
     } else {
       // Other cases (e.g., Tema2 in light) -> remove to fall back to defaults
       document.documentElement.style.removeProperty('--theme-balance-bg');
@@ -190,6 +210,22 @@ export class ThemeService {
         document.documentElement.style.setProperty('--theme-cards-bg', primaryColor);
         document.documentElement.style.setProperty('--theme-cards-text', '#ffffff');
       }
+    }
+
+    // Transaction amounts: dark mode = color 1, light mode = color 2
+    if (isDark) {
+      document.documentElement.style.setProperty('--theme-transaction-amount', primaryColor);
+    } else {
+      document.documentElement.style.setProperty('--theme-transaction-amount', secondaryColor);
+    }
+
+    // Loan amounts in top metrics: use theme-aware colors
+    if (isDark) {
+      document.documentElement.style.setProperty('--theme-lent-amount', primaryColor);
+      document.documentElement.style.setProperty('--theme-borrowed-amount', '#ffffff');
+    } else {
+      document.documentElement.style.setProperty('--theme-lent-amount', secondaryColor);
+      document.documentElement.style.setProperty('--theme-borrowed-amount', '#ffffff');
     }
   }
 }

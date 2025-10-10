@@ -683,7 +683,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           if (installment.status !== 'pending' && installment.status !== 'overdue') return;
           
           const installmentDueDate = new Date(installment.dueDate);
-          const isOverdue = installmentDueDate < today;
+          const isOverdue = this.isOverdue(installmentDueDate);
           const isToday = installmentDueDate.toDateString() === today.toDateString();
           const isUpcoming = installmentDueDate <= thirtyDaysFromNow;
 
@@ -695,7 +695,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
               amount: installment.amount,
               dueDate: installmentDueDate,
               type: loan.type,
-              isOverdue: isOverdue || isToday,
+              isOverdue: isOverdue,
               isInstallment: true,
               installmentNumber: installment.installmentNumber,
               totalInstallments: loan.installments?.totalInstallments || 0,
@@ -707,7 +707,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         // Préstamo sin cuotas - procesarlo completo
         if (loan.dueDate) {
           const loanDueDate = new Date(loan.dueDate);
-          const isOverdue = loanDueDate < today;
+          const isOverdue = this.isOverdue(loanDueDate);
           const isToday = loanDueDate.toDateString() === today.toDateString();
           const isUpcoming = loanDueDate <= thirtyDaysFromNow;
 
@@ -719,7 +719,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
               amount: loan.amount,
               dueDate: loanDueDate,
               type: loan.type,
-              isOverdue: isOverdue || isToday,
+              isOverdue: isOverdue,
               isInstallment: false
             });
           }
@@ -750,7 +750,27 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   formatDate(date: Date | string): string {
     const d = typeof date === 'string' ? new Date(date) : date;
-    return this.dateUtil.formatForDisplay(d);
+    
+    // If date is UTC (like "2025-10-10T00:00:00.000Z"), extract the date part directly
+    const dateObj = new Date(d);
+    const isoString = dateObj.toISOString();
+    
+    // Extract the date part from ISO string (YYYY-MM-DD)
+    const datePart = isoString.split('T')[0];
+    const [year, month, day] = datePart.split('-').map(Number);
+    
+    // Create a new date using UTC components to avoid timezone conversion
+    const normalizedDate = new Date(Date.UTC(year, month - 1, day));
+    
+    console.log(`[Dashboard formatDate]`, {
+      originalDate: date,
+      originalDateISO: isoString,
+      extractedDatePart: datePart,
+      normalizedDateUTC: normalizedDate.toISOString(),
+      currentTimezone: Intl.DateTimeFormat().resolvedOptions().timeZone
+    });
+    
+    return this.dateUtil.formatForDisplay(normalizedDate);
   }
 
   getCurrentMonthName(): string {
@@ -785,9 +805,22 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   getDaysUntilDue(dueDate: Date): number {
+    // Get today's date as YYYY-MM-DD in local time
     const today = new Date();
-    const due = new Date(dueDate);
-    const timeDifference = due.getTime() - today.getTime();
+    const todayStr = today.getFullYear() + '-' + 
+                    String(today.getMonth() + 1).padStart(2, '0') + '-' + 
+                    String(today.getDate()).padStart(2, '0');
+    
+    // For UTC dates, extract the date part directly from ISO string
+    const dueDateObj = new Date(dueDate);
+    const dueDateISO = dueDateObj.toISOString();
+    const dueDateStr = dueDateISO.split('T')[0]; // Extract YYYY-MM-DD part
+    
+    // Create normalized dates from the date strings
+    const todayDate = new Date(todayStr + 'T00:00:00');
+    const dueDateNormalized = new Date(dueDateStr + 'T00:00:00');
+    
+    const timeDifference = dueDateNormalized.getTime() - todayDate.getTime();
     const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
     return daysDifference;
   }
@@ -1214,5 +1247,35 @@ export class DashboardComponent implements OnInit, OnDestroy {
     // The account service will automatically update the signals
     // We might want to show a success message or handle any additional logic
     console.log('Account updated:', updatedAccount);
+  }
+
+  // Method to determine if a date is overdue (matches logic from loans-v2 component)
+  isOverdue(date: Date): boolean {
+    // Get today's date as YYYY-MM-DD in local time
+    const today = new Date();
+    const todayStr = today.getFullYear() + '-' + 
+                    String(today.getMonth() + 1).padStart(2, '0') + '-' + 
+                    String(today.getDate()).padStart(2, '0');
+    
+    // For UTC dates, extract the date part directly from ISO string
+    const dueDateObj = new Date(date);
+    const dueDateISO = dueDateObj.toISOString();
+    const dueDateStr = dueDateISO.split('T')[0]; // Extract YYYY-MM-DD part
+    
+    // Create normalized dates from the date strings
+    const todayDate = new Date(todayStr + 'T00:00:00');
+    const dueDateNormalized = new Date(dueDateStr + 'T00:00:00');
+    
+    console.log(`[Dashboard isOverdue]`, {
+      originalDate: date,
+      dueDateISO: dueDateISO,
+      extractedDatePart: dueDateStr,
+      todayStr: todayStr,
+      todayNormalized: todayDate.toISOString(),
+      dueDateNormalized: dueDateNormalized.toISOString(),
+      isOverdue: dueDateNormalized < todayDate
+    });
+    
+    return dueDateNormalized < todayDate;
   }
 }
