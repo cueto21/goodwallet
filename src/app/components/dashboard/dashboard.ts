@@ -377,8 +377,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
     const sum = filtered.reduce((sumAcc, l) => {
       if (l.installments?.enabled) {
         const instSum = (l.installments.installmentsList || [])
-          .filter(inst => inst.status === 'pending' || inst.status === 'overdue')
-          .reduce((s, inst) => s + Number(inst.amount || 0), 0);
+          .filter(inst => inst.status === 'pending' || inst.status === 'overdue' || inst.status === 'partial')
+          .reduce((s, inst) => {
+            if (inst.status === 'partial') {
+              const remaining = Number(inst.amount || 0) - Number(inst.partialAmountPaid || 0);
+              return s + (remaining > 0 ? remaining : 0);
+            }
+            return s + Number(inst.amount || 0);
+          }, 0);
         return sumAcc + (isNaN(instSum) ? 0 : instSum);
       }
       const amt = Number(l.amount || 0);
@@ -405,7 +411,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       .filter(transaction => selectedIds.has(transaction.accountId))
       // sort by date descending (newest first)
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-      .slice(0, 5)
+      .slice(0, 7)
       .map(transaction => {
         // Resolve category name safely (support legacy category ids via mapOldCategoryId)
         const originalCategoryId = transaction.categoryId || 'no-category';
@@ -431,6 +437,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
   // Pagination for Movimientos
   currentPage = signal(1);
   pageSize = signal(5);
+
+  // Pagination for Loans
+  currentLoanPage = signal(1);
+  loanPageSize = signal(7);
 
   // All filtered transactions (no slice) used to compute pagination
   filteredTransactions = computed(() => {
@@ -560,6 +570,28 @@ export class DashboardComponent implements OnInit, OnDestroy {
     if (this.currentPage() < 1) this.currentPage.set(1);
   });
 
+  // Loan pagination methods
+  prevLoanPage() {
+    if (this.currentLoanPage() > 1) this.currentLoanPage.update(p => p - 1);
+  }
+
+  nextLoanPage() {
+    if (this.currentLoanPage() < this.loanTotalPages()) this.currentLoanPage.update(p => p + 1);
+  }
+
+  goToLoanPage(n: number) {
+    const t = this.loanTotalPages();
+    const target = Math.min(Math.max(1, n), t);
+    this.currentLoanPage.set(target);
+  }
+
+  // Keep current loan page in-range when data changes
+  private _loanPageRangeEffect = effect(() => {
+    const tp = this.loanTotalPages();
+    if (this.currentLoanPage() > tp) this.currentLoanPage.set(tp);
+    if (this.currentLoanPage() < 1) this.currentLoanPage.set(1);
+  });
+
   // Mapeo de IDs antiguos a nuevos para compatibilidad
   private mapOldCategoryId(oldId: string): string {
     const categoryMappings: Record<string, string> = {
@@ -651,11 +683,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
   recentLoans = computed(() => {
     return this.loans()
       .sort((a, b) => new Date(b.createdAt || b.date).getTime() - new Date(a.createdAt || a.date).getTime())
-      .slice(0, 5);
+      .slice(0, 7);
   });
 
-  // Préstamos y cuotas próximos a vencer o ya vencidos
-  upcomingLoans = computed(() => {
+  // Préstamos y cuotas próximos a vencer o ya vencidos (todos, sin paginación)
+  allUpcomingLoans = computed(() => {
     const today = new Date();
     const thirtyDaysFromNow = new Date(today.getTime() + (30 * 24 * 60 * 60 * 1000));
     
@@ -736,8 +768,21 @@ export class DashboardComponent implements OnInit, OnDestroy {
         }
         // Los vencidos van primero
         return a.isOverdue ? -1 : 1;
-      })
-      .slice(0, 5);
+      });
+  });
+
+  // Paginación para préstamos
+  loanTotalPages = computed(() => {
+    const total = Math.max(1, Math.ceil(this.allUpcomingLoans().length / this.loanPageSize()));
+    return total;
+  });
+
+  upcomingLoans = computed(() => {
+    const page = Math.max(1, this.currentLoanPage());
+    const size = Math.max(1, this.loanPageSize());
+    const start = (page - 1) * size;
+    const end = start + size;
+    return this.allUpcomingLoans().slice(start, end);
   });
 
   // UTILITY METHODS

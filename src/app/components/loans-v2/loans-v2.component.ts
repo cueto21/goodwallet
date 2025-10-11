@@ -61,13 +61,45 @@ export class LoansV2Component implements OnInit {
   lentLoans = computed(() => this.loans().filter(loan => loan.type === 'lent'));
   borrowedLoans = computed(() => this.loans().filter(loan => loan.type === 'borrowed'));
   
-  totalLent = computed(() => 
-    this.lentLoans().reduce((sum, loan) => sum + loan.amount, 0)
-  );
+  totalLent = computed(() => {
+    return this.lentLoans()
+      .filter(loan => loan.status === 'pending' || loan.status === 'overdue')
+      .reduce((sum, loan) => {
+        if (loan.installments?.enabled) {
+          const instSum = (loan.installments.installmentsList || [])
+            .filter(inst => inst.status === 'pending' || inst.status === 'overdue' || inst.status === 'partial')
+            .reduce((s, inst) => {
+              if (inst.status === 'partial') {
+                const remaining = Number(inst.amount || 0) - Number(inst.partialAmountPaid || 0);
+                return s + (remaining > 0 ? remaining : 0);
+              }
+              return s + Number(inst.amount || 0);
+            }, 0);
+          return sum + (isNaN(instSum) ? 0 : instSum);
+        }
+        return sum + Number(loan.amount || 0);
+      }, 0);
+  });
   
-  totalBorrowed = computed(() => 
-    this.borrowedLoans().reduce((sum, loan) => sum + loan.amount, 0)
-  );
+  totalBorrowed = computed(() => {
+    return this.borrowedLoans()
+      .filter(loan => loan.status === 'pending' || loan.status === 'overdue')
+      .reduce((sum, loan) => {
+        if (loan.installments?.enabled) {
+          const instSum = (loan.installments.installmentsList || [])
+            .filter(inst => inst.status === 'pending' || inst.status === 'overdue' || inst.status === 'partial')
+            .reduce((s, inst) => {
+              if (inst.status === 'partial') {
+                const remaining = Number(inst.amount || 0) - Number(inst.partialAmountPaid || 0);
+                return s + (remaining > 0 ? remaining : 0);
+              }
+              return s + Number(inst.amount || 0);
+            }, 0);
+          return sum + (isNaN(instSum) ? 0 : instSum);
+        }
+        return sum + Number(loan.amount || 0);
+      }, 0);
+  });
 
   filteredLoans = computed(() => {
     let filtered = this.loans();

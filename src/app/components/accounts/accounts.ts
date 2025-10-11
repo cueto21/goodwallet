@@ -1,14 +1,15 @@
-import { Component, inject, computed, OnInit, HostListener } from '@angular/core';
+import { Component, inject, computed, OnInit, HostListener, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AccountService } from '../../services/account';
 import { DarkModeService } from '../../services/dark-mode.service';
 import { CardStyleService } from '../../services/card-style.service';
+import { EditAccountModalComponent } from '../edit-account-modal/edit-account-modal.component';
 import { Account } from '../../models/account.interface';
 
 @Component({
   selector: 'app-accounts',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, EditAccountModalComponent],
   templateUrl: './accounts.html',
   styleUrl: './accounts.scss'
 })
@@ -25,6 +26,10 @@ export class AccountsComponent implements OnInit {
   currentStep = 1;
   totalSteps = 2;
   private originalBodyOverflow = '';
+
+  // Edit account modal
+  showEditAccountModal = signal(false);
+  selectedAccountForEdit = signal<any>(null);
 
   // Form properties
   newAccount = {
@@ -139,9 +144,25 @@ export class AccountsComponent implements OnInit {
     this.currentStep = 1;
   }
 
-  // Simple edit method - just show alert for now
+  // Edit account method
   editAccount(accountId: string) {
-    alert('Funcionalidad de edición próximamente disponible');
+    const account = this.accounts().find(a => a.id === accountId);
+    if (account) {
+      this.selectedAccountForEdit.set(account);
+      this.showEditAccountModal.set(true);
+    }
+  }
+
+  // Close edit account modal
+  closeEditAccountModal() {
+    this.showEditAccountModal.set(false);
+    this.selectedAccountForEdit.set(null);
+  }
+
+  // Handle account updated
+  onAccountEdited(updatedAccount: any) {
+    // The account service will automatically update the signals
+    console.log('Account updated:', updatedAccount);
   }
 
   // Delete account
@@ -171,10 +192,6 @@ export class AccountsComponent implements OnInit {
   }
 
   formatBalance(account: Account): string {
-    if (account.type === 'credit') {
-      const available = (account.creditLimit || 0) + account.balance;
-      return available.toLocaleString('es-PE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    }
     return account.balance.toLocaleString('es-PE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   }
 

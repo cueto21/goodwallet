@@ -21,7 +21,7 @@
 
           <!-- Balance Section -->
           <div class="form-section">
-            <label class="form-label">Saldo Actual</label>
+            <label class="form-label">{{ account().type === 'credit' ? 'Monto Disponible' : 'Saldo Actual' }}</label>
             <div class="input-group">
               <span class="input-prefix">S/</span>
               <input
@@ -32,8 +32,26 @@
                 placeholder="0.00"
               />
             </div>
-            <small class="form-text">El saldo actual de la cuenta</small>
+            <small class="form-text">{{ account().type === 'credit' ? 'Monto disponible en la tarjeta' : 'El saldo actual de la cuenta' }}</small>
           </div>
+
+          <!-- Credit Limit Section (only for credit cards) -->
+          @if (account().type === 'credit') {
+            <div class="form-section">
+              <label class="form-label">Límite de Crédito</label>
+              <div class="input-group">
+                <span class="input-prefix">S/</span>
+                <input
+                  type="number"
+                  class="form-control"
+                  step="0.01"
+                  [(ngModel)]="editData().creditLimit"
+                  placeholder="0.00"
+                />
+              </div>
+              <small class="form-text">Límite total de la tarjeta de crédito</small>
+            </div>
+          }
 
           <!-- Savings Goal Section (only for savings accounts) - always show input (no toggle) -->
           @if (account().type === 'savings') {

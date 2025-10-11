@@ -43,7 +43,7 @@
             </div>
             <div class="info-row">
               <span>Usado:</span>
-              <span>USD {{ formatNumber(getAbsoluteValue(account.balance)) }}</span>
+              <span>USD {{ formatNumber((account.creditLimit || 0) - (account.balance || 0)) }}</span>
             </div>
           </div>
 
@@ -154,6 +154,14 @@
                  <small id="limit-help" class="form-text">Límite total de la tarjeta de crédito</small>
                </div>
              </div>
+         
+             <!-- Edit Account Modal -->
+             <app-edit-account-modal
+               [account]="selectedAccountForEdit()"
+               [isOpen]="showEditAccountModal()"
+               (onClose)="closeEditAccountModal()"
+               (onAccountUpdated)="onAccountEdited($event)">
+             </app-edit-account-modal>
            </div>
          </div>
 

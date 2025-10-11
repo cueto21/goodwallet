@@ -7,22 +7,21 @@
   <div class="col-12 order-1">
   <div class="row g-1 mb-2 top-metrics">
         <div class="col-4">
-          <div class="metric-card bg-balance rounded shadow-sm text-center py-1 mb-1 d-flex flex-column justify-content-center"
-               [style.color]="'var(--theme-balance-text, var(--color-columbia-blue))'">
-            <div class="small opacity-75">Balance</div>
-            <div class="fw-bold" style="font-size: 1rem;">{{ formatCurrency(totalBalance()) }}</div>
+          <div class="metric-card bg-balance rounded shadow-sm text-center py-1 mb-1 d-flex flex-column justify-content-center">
+            <div class="small opacity-75 text-balance">Balance</div>
+            <div class="fw-bold text-balance" style="font-size: 1rem;">{{ formatCurrency(totalBalance()) }}</div>
           </div>
         </div>
         <div class="col-4">
           <div class="metric-card bg-prestado rounded shadow-sm text-center py-1 mb-1 d-flex flex-column justify-content-center">
-            <div class="small opacity-75" style="color: #0B3954 !important;">Prestado</div>
-            <div class="fw-bold" [style.color]="'var(--theme-lent-amount)'" style="font-size: 1rem;">{{ formatCurrency(totalLent()) }}</div>
+            <div class="small opacity-75 text-theme">Prestado</div>
+            <div class="fw-bold text-theme" style="font-size: 1rem;">{{ formatCurrency(totalLent()) }}</div>
           </div>
         </div>
         <div class="col-4">
           <div class="metric-card bg-adeudado rounded shadow-sm text-center py-1 mb-1 d-flex flex-column justify-content-center">
-            <div class="small opacity-75" style="color: #ffffff !important;">Adeudado</div>
-            <div class="fw-bold" [style.color]="'var(--theme-borrowed-amount)'" style="font-size: 1rem;">{{ formatCurrency(totalBorrowed()) }}</div>
+            <div class="small opacity-75 text-theme">Adeudado</div>
+            <div class="fw-bold text-theme" style="font-size: 1rem;">{{ formatCurrency(totalBorrowed()) }}</div>
           </div>
         </div>
       </div>
@@ -43,18 +42,16 @@
               </div>
             }
           </div>
-          <!-- Edit button for savings accounts -->
-          @if (account.type === 'savings') {
-            <div class="position-absolute account-edit-badge-container">
-              <button
-                type="button"
-                class="btn btn-sm account-edit-btn"
-                (click)="editAccount(account); $event.stopPropagation()"
-                title="Editar cuenta">
-                <small>✏️</small>
-              </button>
-            </div>
-          }
+          <!-- Edit button for all accounts -->
+          <div class="position-absolute account-edit-badge-container">
+            <button
+              type="button"
+              class="btn btn-sm account-edit-btn"
+              (click)="editAccount(account); $event.stopPropagation()"
+              title="Editar cuenta">
+              <small>✏️</small>
+            </button>
+          </div>
           <!-- Reorganized layout: credit cards keep original structure; savings use a 3-row layout inside a padded container -->
           @if (account.type === 'credit') {
             <div class="d-flex flex-column justify-content-between h-100 flex-grow-1">
@@ -75,7 +72,7 @@
                 <div class="col-auto ps-0 me-3">
                   <div class="text-start">
                     <small class="account-amount-title d-block">Disponible</small>
-                    <div class="account-amount-value fw-bold">{{ formatCurrency((account.creditLimit || 0) + (account.balance || 0)) }}</div>
+                    <div class="account-amount-value fw-bold">{{ formatCurrency(account.balance || 0) }}</div>
                   </div>
                 </div>
                 <div class="col-auto ms-auto pe-0 ps-0 text-end">
@@ -255,7 +252,15 @@
     <div class="card border-0 shadow-sm px-1 py-1 h-lg-100 mb-0 loans-card">
         <div class="card-header border-0 bg-transparent">
           <div class="d-flex align-items-center justify-content-between">
-            <h6 class="section-title small fw-semibold text-prussian-blue mb-0">Préstamos</h6>
+            <div class="d-flex align-items-center">
+              <h6 class="section-title small fw-semibold text-prussian-blue mb-0">Préstamos</h6>
+              <!-- Inline pager: exact copy of movements pager -->
+              <div class="movements-pager ms-2 d-inline-flex align-items-center" role="navigation" aria-label="Paginación de préstamos">
+                <button type="button" class="btn btn-sm pager-btn" aria-label="Anterior" (click)="prevLoanPage()" [disabled]="currentLoanPage() === 1">‹</button>
+                <span class="pager-info mx-1 small text-muted">{{ currentLoanPage() }} / {{ loanTotalPages() }}</span>
+                <button type="button" class="btn btn-sm pager-btn" aria-label="Siguiente" (click)="nextLoanPage()" [disabled]="currentLoanPage() === loanTotalPages()">›</button>
+              </div>
+            </div>
             <div class="quick-menu-wrapper position-relative">
               <button type="button"
                       class="btn btn-sm menu-btn-circle"

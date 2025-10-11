@@ -68,6 +68,7 @@ export class EditAccountModalComponent implements OnInit, OnDestroy {
   // Form data
   editData = signal({
     balance: 0,
+    creditLimit: 0,
     goals: {
       isActive: false,
       balanceTarget: undefined as number | undefined
@@ -82,6 +83,7 @@ export class EditAccountModalComponent implements OnInit, OnDestroy {
       if (this.account() && this.isOpen()) {
         this.editData.set({
           balance: this.account().balance || 0,
+          creditLimit: this.account().creditLimit ? parseFloat(this.account().creditLimit) : 0,
           goals: {
             isActive: this.account().goals?.isActive || false,
             balanceTarget: this.account().goals?.balanceTarget || null
@@ -212,10 +214,15 @@ export class EditAccountModalComponent implements OnInit, OnDestroy {
 
     this.isSaving.set(true);
     try {
-      const updates = {
+      const updates: any = {
         balance: this.editData().balance,
         goals: this.editData().goals
       };
+
+      // Include creditLimit for credit cards
+      if (this.account().type === 'credit') {
+        updates.creditLimit = this.editData().creditLimit;
+      }
 
       await this.accountService.updateAccount(this.account().id, updates);
       this.onAccountUpdated.emit({ ...this.account(), ...updates });
